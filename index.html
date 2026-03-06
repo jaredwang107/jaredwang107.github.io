@@ -173,6 +173,43 @@
   .pin-key.del { color: var(--danger); }
   .pin-error { color: var(--danger); font-size: 0.75rem; text-align: center; margin-top: 0.5rem; display: none; }
 
+
+  /* ACCOUNT DASHBOARD */
+  .dashboard-overlay { position: fixed; inset: 0; background: var(--bg); z-index: 500; display: none; overflow-y: auto; }
+  .dashboard-overlay.open { display: block; }
+  .dashboard-nav { display: flex; align-items: center; justify-content: space-between; padding: 1.25rem 3rem; border-bottom: 1px solid var(--border); background: rgba(10,10,15,0.95); backdrop-filter: blur(20px); position: sticky; top: 0; z-index: 10; }
+  .dashboard-body { max-width: 1000px; margin: 0 auto; padding: 3rem 2rem; }
+  .dashboard-greeting { font-family: 'Syne', sans-serif; font-size: 2rem; font-weight: 800; letter-spacing: -0.03em; margin-bottom: 0.4rem; }
+  .dashboard-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-top: 2.5rem; }
+  .dash-card { background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 1.75rem; }
+  .dash-card-title { font-family: 'Syne', sans-serif; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-bottom: 1.25rem; display: flex; align-items: center; gap: 0.5rem; }
+  .dash-avatar { width: 64px; height: 64px; border-radius: 50%; background: linear-gradient(135deg, var(--accent2), var(--accent)); display: flex; align-items: center; justify-content: center; font-family: 'Syne', sans-serif; font-size: 1.5rem; font-weight: 800; color: white; margin-bottom: 1rem; }
+  .dash-name { font-family: 'Syne', sans-serif; font-size: 1.2rem; font-weight: 700; margin-bottom: 0.2rem; }
+  .dash-email { font-size: 0.78rem; color: var(--muted); margin-bottom: 1rem; }
+  .dash-plan-badge { display: inline-flex; align-items: center; gap: 0.4rem; padding: 0.35rem 0.85rem; border-radius: 100px; font-size: 0.7rem; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; }
+  .dash-plan-badge.free { background: rgba(107,107,136,0.15); border: 1px solid var(--border); color: var(--muted); }
+  .dash-plan-badge.pro { background: rgba(0,229,255,0.1); border: 1px solid rgba(0,229,255,0.3); color: var(--accent); }
+  .dash-plan-badge.business { background: rgba(124,58,237,0.1); border: 1px solid rgba(124,58,237,0.3); color: #a78bfa; }
+  .dash-stat { display: flex; flex-direction: column; gap: 0.3rem; padding: 1rem; background: var(--surface); border-radius: 8px; border: 1px solid var(--border); }
+  .dash-stat-val { font-family: 'Syne', sans-serif; font-size: 1.8rem; font-weight: 800; color: var(--accent); line-height: 1; }
+  .dash-stat-label { font-size: 0.7rem; color: var(--muted); }
+  .dash-stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; }
+  .dash-history-item { display: flex; align-items: center; gap: 0.75rem; padding: 0.65rem 0; border-bottom: 1px solid var(--border); font-size: 0.78rem; }
+  .dash-history-item:last-child { border-bottom: none; }
+  .dash-history-ext { padding: 0.25rem 0.5rem; border-radius: 4px; font-size: 0.62rem; font-weight: 700; background: var(--accent2); color: white; min-width: 42px; text-align: center; }
+  .dash-history-arrow { color: var(--muted); font-size: 0.7rem; }
+  .dash-history-name { flex: 1; color: var(--muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .dash-history-time { font-size: 0.65rem; color: var(--border); flex-shrink: 0; }
+  .dash-input { background: var(--bg); border: 1px solid var(--border); color: var(--text); padding: 0.6rem 0.85rem; border-radius: 6px; font-family: 'DM Mono', monospace; font-size: 0.78rem; width: 100%; outline: none; transition: border-color 0.2s; }
+  .dash-input:focus { border-color: var(--accent); }
+  .dash-btn { padding: 0.6rem 1.25rem; border-radius: 6px; font-family: 'Syne', sans-serif; font-size: 0.8rem; font-weight: 700; cursor: pointer; transition: all 0.2s; border: 1px solid var(--border); background: transparent; color: var(--text); }
+  .dash-btn:hover { border-color: var(--accent); color: var(--accent); }
+  .dash-btn.primary { background: var(--accent); color: #000; border-color: var(--accent); }
+  .dash-btn.primary:hover { opacity: 0.85; }
+  .dash-btn.danger { border-color: rgba(239,68,68,0.4); color: var(--danger); }
+  .dash-btn.danger:hover { background: rgba(239,68,68,0.08); }
+  .dash-success { color: var(--success); font-size: 0.75rem; margin-top: 0.5rem; display: none; }
+  @media (max-width: 768px) { .dashboard-grid { grid-template-columns: 1fr; } .dashboard-nav { padding: 1rem 1.5rem; } .dashboard-body { padding: 2rem 1rem; } }
   /* PAYMENT TABS */
   .pay-tabs { display: flex; gap: 0.5rem; margin-bottom: 1.5rem; }
   .pay-tab { flex: 1; padding: 0.6rem; border: 1px solid var(--border); border-radius: 8px; background: var(--surface); color: var(--muted); font-family: 'DM Mono', monospace; font-size: 0.75rem; cursor: pointer; transition: all 0.2s; display: flex; align-items: center; justify-content: center; gap: 0.4rem; }
@@ -189,6 +226,43 @@
     nav { padding: 1rem 1.5rem; }
     nav ul { display: none; }
   
+
+  /* ACCOUNT DASHBOARD */
+  .dashboard-overlay { position: fixed; inset: 0; background: var(--bg); z-index: 500; display: none; overflow-y: auto; }
+  .dashboard-overlay.open { display: block; }
+  .dashboard-nav { display: flex; align-items: center; justify-content: space-between; padding: 1.25rem 3rem; border-bottom: 1px solid var(--border); background: rgba(10,10,15,0.95); backdrop-filter: blur(20px); position: sticky; top: 0; z-index: 10; }
+  .dashboard-body { max-width: 1000px; margin: 0 auto; padding: 3rem 2rem; }
+  .dashboard-greeting { font-family: 'Syne', sans-serif; font-size: 2rem; font-weight: 800; letter-spacing: -0.03em; margin-bottom: 0.4rem; }
+  .dashboard-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-top: 2.5rem; }
+  .dash-card { background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 1.75rem; }
+  .dash-card-title { font-family: 'Syne', sans-serif; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-bottom: 1.25rem; display: flex; align-items: center; gap: 0.5rem; }
+  .dash-avatar { width: 64px; height: 64px; border-radius: 50%; background: linear-gradient(135deg, var(--accent2), var(--accent)); display: flex; align-items: center; justify-content: center; font-family: 'Syne', sans-serif; font-size: 1.5rem; font-weight: 800; color: white; margin-bottom: 1rem; }
+  .dash-name { font-family: 'Syne', sans-serif; font-size: 1.2rem; font-weight: 700; margin-bottom: 0.2rem; }
+  .dash-email { font-size: 0.78rem; color: var(--muted); margin-bottom: 1rem; }
+  .dash-plan-badge { display: inline-flex; align-items: center; gap: 0.4rem; padding: 0.35rem 0.85rem; border-radius: 100px; font-size: 0.7rem; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; }
+  .dash-plan-badge.free { background: rgba(107,107,136,0.15); border: 1px solid var(--border); color: var(--muted); }
+  .dash-plan-badge.pro { background: rgba(0,229,255,0.1); border: 1px solid rgba(0,229,255,0.3); color: var(--accent); }
+  .dash-plan-badge.business { background: rgba(124,58,237,0.1); border: 1px solid rgba(124,58,237,0.3); color: #a78bfa; }
+  .dash-stat { display: flex; flex-direction: column; gap: 0.3rem; padding: 1rem; background: var(--surface); border-radius: 8px; border: 1px solid var(--border); }
+  .dash-stat-val { font-family: 'Syne', sans-serif; font-size: 1.8rem; font-weight: 800; color: var(--accent); line-height: 1; }
+  .dash-stat-label { font-size: 0.7rem; color: var(--muted); }
+  .dash-stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; }
+  .dash-history-item { display: flex; align-items: center; gap: 0.75rem; padding: 0.65rem 0; border-bottom: 1px solid var(--border); font-size: 0.78rem; }
+  .dash-history-item:last-child { border-bottom: none; }
+  .dash-history-ext { padding: 0.25rem 0.5rem; border-radius: 4px; font-size: 0.62rem; font-weight: 700; background: var(--accent2); color: white; min-width: 42px; text-align: center; }
+  .dash-history-arrow { color: var(--muted); font-size: 0.7rem; }
+  .dash-history-name { flex: 1; color: var(--muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .dash-history-time { font-size: 0.65rem; color: var(--border); flex-shrink: 0; }
+  .dash-input { background: var(--bg); border: 1px solid var(--border); color: var(--text); padding: 0.6rem 0.85rem; border-radius: 6px; font-family: 'DM Mono', monospace; font-size: 0.78rem; width: 100%; outline: none; transition: border-color 0.2s; }
+  .dash-input:focus { border-color: var(--accent); }
+  .dash-btn { padding: 0.6rem 1.25rem; border-radius: 6px; font-family: 'Syne', sans-serif; font-size: 0.8rem; font-weight: 700; cursor: pointer; transition: all 0.2s; border: 1px solid var(--border); background: transparent; color: var(--text); }
+  .dash-btn:hover { border-color: var(--accent); color: var(--accent); }
+  .dash-btn.primary { background: var(--accent); color: #000; border-color: var(--accent); }
+  .dash-btn.primary:hover { opacity: 0.85; }
+  .dash-btn.danger { border-color: rgba(239,68,68,0.4); color: var(--danger); }
+  .dash-btn.danger:hover { background: rgba(239,68,68,0.08); }
+  .dash-success { color: var(--success); font-size: 0.75rem; margin-top: 0.5rem; display: none; }
+  @media (max-width: 768px) { .dashboard-grid { grid-template-columns: 1fr; } .dashboard-nav { padding: 1rem 1.5rem; } .dashboard-body { padding: 2rem 1rem; } }
   /* PAYMENT TABS */
   .pay-tabs { display: flex; gap: 0.5rem; margin-bottom: 1.5rem; }
   .pay-tab { flex: 1; padding: 0.6rem; border: 1px solid var(--border); border-radius: 8px; background: var(--surface); color: var(--muted); font-family: 'DM Mono', monospace; font-size: 0.75rem; cursor: pointer; transition: all 0.2s; display: flex; align-items: center; justify-content: center; gap: 0.4rem; }
@@ -203,6 +277,85 @@
   footer { padding: 2rem 1.5rem; flex-direction: column; text-align: center; }
     .format-browser { padding: 3rem 1rem; }
   }
+
+  /* ── FULL-PAGE DASHBOARD ─────────────────────────── */
+  .db-page { position:fixed; inset:0; z-index:800; background:var(--bg); display:none; overflow:hidden; }
+  .db-page.open { display:flex; }
+  /* sidebar */
+  .db-sidebar { width:240px; flex-shrink:0; background:var(--surface); border-right:1px solid var(--border); display:flex; flex-direction:column; padding:2rem 0; height:100vh; }
+  .db-logo { display:flex; align-items:center; gap:0.6rem; padding:0 1.5rem 2rem; text-decoration:none; }
+  .db-logo-text { font-family:'Syne',sans-serif; font-weight:800; font-size:1.1rem; color:var(--text); letter-spacing:-0.03em; }
+  .db-logo-text span { color:var(--accent); }
+  .db-nav { list-style:none; flex:1; padding:0 0.75rem; }
+  .db-nav li { margin-bottom:0.25rem; }
+  .db-nav-btn { width:100%; display:flex; align-items:center; gap:0.75rem; padding:0.7rem 0.85rem; border-radius:8px; background:transparent; border:none; color:var(--muted); font-family:'DM Mono',monospace; font-size:0.78rem; cursor:pointer; transition:all 0.2s; text-align:left; }
+  .db-nav-btn:hover { background:rgba(255,255,255,0.04); color:var(--text); }
+  .db-nav-btn.active { background:rgba(0,229,255,0.08); color:var(--accent); border:1px solid rgba(0,229,255,0.15); }
+  .db-nav-icon { font-size:1rem; width:20px; text-align:center; }
+  .db-sidebar-footer { padding:1.25rem 1.5rem; border-top:1px solid var(--border); }
+  .db-user-chip { display:flex; align-items:center; gap:0.6rem; }
+  .db-mini-avatar { width:32px; height:32px; border-radius:50%; background:linear-gradient(135deg,var(--accent2),var(--accent)); display:flex; align-items:center; justify-content:center; font-family:'Syne',sans-serif; font-size:0.7rem; font-weight:800; color:white; flex-shrink:0; }
+  .db-user-info { flex:1; min-width:0; }
+  .db-user-name { font-size:0.78rem; font-weight:600; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .db-user-plan { font-size:0.62rem; color:var(--muted); }
+  /* main content */
+  .db-main { flex:1; overflow-y:auto; height:100vh; }
+  .db-topbar { display:flex; align-items:center; justify-content:space-between; padding:1.5rem 2.5rem; border-bottom:1px solid var(--border); background:rgba(10,10,15,0.8); backdrop-filter:blur(20px); position:sticky; top:0; z-index:10; }
+  .db-page-title { font-family:'Syne',sans-serif; font-size:1.3rem; font-weight:800; letter-spacing:-0.02em; }
+  .db-topbar-actions { display:flex; gap:0.75rem; align-items:center; }
+  .db-btn { padding:0.5rem 1.1rem; border-radius:6px; font-family:'Syne',sans-serif; font-size:0.78rem; font-weight:700; cursor:pointer; transition:all 0.2s; border:1px solid var(--border); background:transparent; color:var(--muted); }
+  .db-btn:hover { color:var(--text); border-color:var(--text); }
+  .db-btn.primary { background:var(--accent); color:#000; border-color:var(--accent); }
+  .db-btn.primary:hover { opacity:0.85; }
+  .db-btn.danger { border-color:rgba(239,68,68,0.35); color:var(--danger); }
+  .db-btn.danger:hover { background:rgba(239,68,68,0.08); }
+  .db-content { padding:2.5rem; }
+  /* panels */
+  .db-panel { display:none; }
+  .db-panel.active { display:block; }
+  /* stat cards */
+  .db-stats-row { display:grid; grid-template-columns:repeat(4,1fr); gap:1rem; margin-bottom:2rem; }
+  .db-stat-card { background:var(--card); border:1px solid var(--border); border-radius:12px; padding:1.5rem; position:relative; overflow:hidden; transition:border-color 0.3s; }
+  .db-stat-card:hover { border-color:rgba(0,229,255,0.3); }
+  .db-stat-card::before { content:''; position:absolute; inset:0; background:linear-gradient(135deg,rgba(0,229,255,0.03),transparent); pointer-events:none; }
+  .db-stat-val { font-family:'Syne',sans-serif; font-size:2.2rem; font-weight:800; line-height:1; margin-bottom:0.4rem; background:linear-gradient(135deg,var(--accent),#7c3aed); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+  .db-stat-label { font-size:0.72rem; color:var(--muted); letter-spacing:0.04em; }
+  .db-stat-icon { position:absolute; top:1.25rem; right:1.25rem; font-size:1.4rem; opacity:0.35; }
+  /* grid cards */
+  .db-grid-2 { display:grid; grid-template-columns:1fr 1fr; gap:1.5rem; margin-bottom:1.5rem; }
+  .db-grid-3 { display:grid; grid-template-columns:1fr 1fr 1fr; gap:1.5rem; margin-bottom:1.5rem; }
+  .db-card { background:var(--card); border:1px solid var(--border); border-radius:14px; padding:1.75rem; }
+  .db-card-title { font-family:'Syne',sans-serif; font-size:0.72rem; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; color:var(--muted); margin-bottom:1.25rem; display:flex; align-items:center; justify-content:space-between; }
+  /* history list */
+  .db-history-row { display:flex; align-items:center; gap:0.75rem; padding:0.7rem 0; border-bottom:1px solid rgba(42,42,58,0.6); }
+  .db-history-row:last-child { border-bottom:none; }
+  .db-ext-pill { padding:0.2rem 0.5rem; border-radius:4px; font-size:0.6rem; font-weight:700; color:white; min-width:38px; text-align:center; flex-shrink:0; }
+  .db-history-name { flex:1; font-size:0.78rem; color:var(--muted); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+  .db-history-time { font-size:0.65rem; color:var(--border); flex-shrink:0; }
+  /* profile form */
+  .db-form-row { display:grid; grid-template-columns:1fr 1fr; gap:1rem; margin-bottom:1rem; }
+  .db-field label { display:block; font-size:0.67rem; letter-spacing:0.08em; text-transform:uppercase; color:var(--muted); margin-bottom:0.4rem; }
+  .db-input { width:100%; background:var(--bg); border:1px solid var(--border); color:var(--text); padding:0.65rem 0.9rem; border-radius:8px; font-family:'DM Mono',monospace; font-size:0.8rem; outline:none; transition:border-color 0.2s; }
+  .db-input:focus { border-color:var(--accent); }
+  /* plan card */
+  .db-plan-card { background:linear-gradient(135deg,rgba(0,229,255,0.06),rgba(124,58,237,0.06)); border:1px solid rgba(0,229,255,0.2); border-radius:14px; padding:1.75rem; display:flex; align-items:center; justify-content:space-between; gap:1rem; margin-bottom:1.5rem; }
+  .db-plan-name { font-family:'Syne',sans-serif; font-size:1.3rem; font-weight:800; }
+  .db-plan-desc { font-size:0.75rem; color:var(--muted); margin-top:0.25rem; }
+  .db-plan-badge { padding:0.3rem 0.85rem; border-radius:100px; font-size:0.65rem; font-weight:700; letter-spacing:0.06em; text-transform:uppercase; }
+  /* activity bar */
+  .db-activity-bar { display:flex; align-items:flex-end; gap:3px; height:48px; margin-top:0.5rem; }
+  .db-bar { flex:1; background:rgba(0,229,255,0.15); border-radius:3px 3px 0 0; transition:height 0.5s ease; min-height:4px; }
+  .db-bar:hover { background:rgba(0,229,255,0.4); }
+  /* welcome banner */
+  .db-welcome { background:linear-gradient(135deg,rgba(0,229,255,0.07),rgba(124,58,237,0.07)); border:1px solid var(--border); border-radius:14px; padding:2rem; margin-bottom:2rem; display:flex; align-items:center; justify-content:space-between; gap:1rem; }
+  .db-welcome-title { font-family:'Syne',sans-serif; font-size:1.6rem; font-weight:800; letter-spacing:-0.03em; margin-bottom:0.4rem; }
+  .db-welcome-sub { font-size:0.8rem; color:var(--muted); }
+  /* success/error inline */
+  .db-msg { font-size:0.75rem; margin-top:0.75rem; display:none; padding:0.6rem 0.85rem; border-radius:6px; }
+  .db-msg.ok { background:rgba(16,185,129,0.08); border:1px solid rgba(16,185,129,0.25); color:var(--success); }
+  .db-msg.err { background:rgba(239,68,68,0.08); border:1px solid rgba(239,68,68,0.25); color:var(--danger); }
+  @media(max-width:768px){ .db-sidebar{display:none} .db-stats-row{grid-template-columns:1fr 1fr} .db-grid-2,.db-grid-3{grid-template-columns:1fr} .db-content{padding:1.5rem} }
+
 </style>
 </head>
 <body>
@@ -224,7 +377,7 @@
     <li id="navSignIn"><a href="#" onclick="openAuthModal('signin')">Sign In</a></li>
     <li id="navUserLi" style="display:none">
       <span style="display:flex;align-items:center;gap:0.75rem">
-        <span id="navUserName" style="color:var(--text);font-size:0.8rem"></span>
+        <a href="#" onclick="openDashboardPage(); return false;" id="navUserName" style="color:var(--text);font-size:0.8rem;text-decoration:none;transition:color 0.2s" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='var(--text)'"></a>
         <a href="#" onclick="signOut()" style="color:var(--muted);font-size:0.75rem;text-decoration:none;border:1px solid var(--border);padding:0.3rem 0.75rem;border-radius:4px;transition:all 0.2s" onmouseover="this.style.borderColor='var(--text)'" onmouseout="this.style.borderColor='var(--border)'">Sign Out</a>
       </span>
     </li>
@@ -240,7 +393,10 @@
   <h1>Convert<span class="accent-line"> anything.</span><br><span class="dim">Instantly.</span></h1>
   <p class="hero-sub">The most complete file converter on the web. Images, video, audio, documents, archives, 3D models, CAD files, ebooks, fonts, databases, subtitles, GIS data, and more — all in one place.</p>
   <div class="converter-widget">
-    <div class="drop-zone" id="dropZone">
+    <div id="apiKeyNotice" style="background:rgba(245,158,11,0.08);border:1px solid rgba(245,158,11,0.3);border-radius:8px;padding:0.75rem 1rem;margin-bottom:1.25rem;font-size:0.75rem;color:var(--accent3);display:flex;align-items:center;gap:0.6rem">
+    ⚠️ <span>To enable all 400+ format conversions, add your <strong>CloudConvert API key</strong> — get one free at <a href="https://cloudconvert.com" target="_blank" style="color:var(--accent3)">cloudconvert.com</a>, then open the HTML file and replace <code style="background:rgba(0,0,0,0.3);padding:0.1rem 0.35rem;border-radius:3px">YOUR_API_KEY_HERE</code> at the top of the script.</span>
+  </div>
+  <div class="drop-zone" id="dropZone">
       <span class="drop-icon">📂</span>
       <div class="drop-title">Drop any file here</div>
       <div class="drop-sub">or <span>browse</span> to upload · Max <span>2 GB</span> per file · <span>400+</span> formats</div>
@@ -301,7 +457,7 @@
     <div class="pricing-card featured">
       <div class="featured-badge">MOST POPULAR</div>
       <div class="plan-name">Pro</div>
-      <div class="plan-price"><sup>$</sup>9</div>
+      <div class="plan-price"><sup>$</sup>9<span style="font-size:1.4rem;vertical-align:-0.15em;opacity:0.7">.</span>99</div>
       <div class="plan-period">/ month</div>
       <ul class="plan-features">
         <li class="active"><span class="check">✓</span>Unlimited conversions</li>
@@ -312,11 +468,11 @@
         <li class="active"><span class="check">✓</span>Advanced encoding options</li>
         <li><span class="cross">✗</span>API access</li>
       </ul>
-      <button class="btn-plan primary" onclick="openModal('Pro')">Start Pro — $9/mo</button>
+      <button class="btn-plan primary" onclick="openModal('Pro')">Start Pro — $9.99/mo</button>
     </div>
     <div class="pricing-card">
       <div class="plan-name">Business</div>
-      <div class="plan-price"><sup>$</sup>29</div>
+      <div class="plan-price"><sup>$</sup>24<span style="font-size:1.4rem;vertical-align:-0.15em;opacity:0.7">.</span>99</div>
       <div class="plan-period">/ month</div>
       <ul class="plan-features">
         <li class="active"><span class="check">✓</span>Everything in Pro</li>
@@ -347,31 +503,99 @@
 </footer>
 
 
-<!-- AUTH MODAL (Sign In / Register) -->
+
+
+<!-- AUTH MODAL (Sign In / Register / Account) -->
 <div class="modal-overlay" id="authOverlay" onclick="closeAuthOnBg(event)" style="z-index:1002">
   <div class="modal" style="max-width:420px">
     <button class="modal-close" onclick="closeAuthModal()">×</button>
-    <div style="display:flex;gap:0;margin-bottom:1.75rem;border:1px solid var(--border);border-radius:8px;overflow:hidden">
-      <button id="authTabSignin" onclick="switchAuthTab('signin')" style="flex:1;padding:0.65rem;background:var(--accent);color:#000;border:none;font-family:'Syne',sans-serif;font-size:0.82rem;font-weight:700;cursor:pointer;transition:all 0.2s">Sign In</button>
-      <button id="authTabRegister" onclick="switchAuthTab('register')" style="flex:1;padding:0.65rem;background:transparent;color:var(--muted);border:none;font-family:'Syne',sans-serif;font-size:0.82rem;font-weight:700;cursor:pointer;transition:all 0.2s">Create Account</button>
-    </div>
-    <div id="authModalTitle" class="modal-title" style="margin-bottom:0.4rem">Welcome back</div>
-    <p id="authModalSub" class="modal-sub">Sign in to your ConvertFlow account.</p>
 
-    <div class="form-group"><label>Email Address</label><input type="email" id="authEmail" placeholder="jane@example.com"></div>
-    <div class="form-group" style="position:relative">
-      <label>Password</label>
-      <input type="password" id="authPassword" placeholder="••••••••" style="padding-right:2.5rem">
-      <button onclick="toggleAuthPw()" style="position:absolute;right:0.75rem;top:2rem;background:none;border:none;color:var(--muted);cursor:pointer;font-size:0.8rem">👁</button>
+    <!-- LOGIN / REGISTER PANEL -->
+    <div id="authLoginPanel">
+      <div style="display:flex;gap:0;margin-bottom:1.75rem;border:1px solid var(--border);border-radius:8px;overflow:hidden">
+        <button id="authTabSignin" onclick="switchAuthTab('signin')" style="flex:1;padding:0.65rem;background:var(--accent);color:#000;border:none;font-family:'Syne',sans-serif;font-size:0.82rem;font-weight:700;cursor:pointer;transition:all 0.2s">Sign In</button>
+        <button id="authTabRegister" onclick="switchAuthTab('register')" style="flex:1;padding:0.65rem;background:transparent;color:var(--muted);border:none;font-family:'Syne',sans-serif;font-size:0.82rem;font-weight:700;cursor:pointer;transition:all 0.2s">Create Account</button>
+      </div>
+      <div id="authModalTitle" class="modal-title" style="margin-bottom:0.4rem">Welcome back</div>
+      <p id="authModalSub" class="modal-sub">Sign in to your ConvertFlow account.</p>
+      <div class="form-group"><label>Email Address</label><input type="email" id="authEmail" placeholder="jane@example.com"></div>
+      <div class="form-group" style="position:relative">
+        <label>Password</label>
+        <input type="password" id="authPassword" placeholder="••••••••" style="padding-right:2.5rem">
+        <button onclick="toggleAuthPw()" style="position:absolute;right:0.75rem;top:2rem;background:none;border:none;color:var(--muted);cursor:pointer;font-size:0.8rem">👁</button>
+      </div>
+      <div class="form-group" id="authNameGroup" style="display:none"><label>Full Name</label><input type="text" id="authName" placeholder="Jane Smith"></div>
+      <div class="form-group" id="authConfirmGroup" style="display:none">
+        <label>Confirm Password</label>
+        <input type="password" id="authConfirm" placeholder="••••••••">
+      </div>
+      <div id="authError" style="color:var(--danger);font-size:0.75rem;margin-bottom:1rem;display:none;background:rgba(239,68,68,0.08);border:1px solid rgba(239,68,68,0.25);border-radius:6px;padding:0.6rem 0.75rem"></div>
+      <button class="btn-submit" id="authSubmitBtn" onclick="handleAuth()">Sign In</button>
+      <p class="fine-print" style="margin-top:0.75rem">🔒 Your data is stored locally and never shared.</p>
     </div>
-    <div class="form-group" id="authNameGroup" style="display:none"><label>Full Name</label><input type="text" id="authName" placeholder="Jane Smith"></div>
-    <div class="form-group" id="authConfirmGroup" style="display:none">
-      <label>Confirm Password</label>
-      <input type="password" id="authConfirm" placeholder="••••••••">
+
+    <!-- ACCOUNT PANEL (shown after login) -->
+    <div id="authAccountPanel" style="display:none">
+      <!-- Avatar + name -->
+      <div style="display:flex;align-items:center;gap:1rem;margin-bottom:1.5rem">
+        <div id="accAvatar" style="width:52px;height:52px;border-radius:50%;background:linear-gradient(135deg,var(--accent2),var(--accent));display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-size:1.2rem;font-weight:800;color:white;flex-shrink:0"></div>
+        <div>
+          <div id="accName" style="font-family:'Syne',sans-serif;font-size:1.1rem;font-weight:800;margin-bottom:0.2rem"></div>
+          <div id="accEmail" style="font-size:0.75rem;color:var(--muted)"></div>
+        </div>
+        <span id="accPlanBadge" style="margin-left:auto;padding:0.3rem 0.75rem;border-radius:100px;font-size:0.65rem;font-weight:700;letter-spacing:0.05em;text-transform:uppercase"></span>
+      </div>
+
+      <!-- Stats row -->
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:0.6rem;margin-bottom:1.5rem">
+        <div style="background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:0.75rem;text-align:center">
+          <div id="accConversions" style="font-family:'Syne',sans-serif;font-size:1.4rem;font-weight:800;color:var(--accent)">0</div>
+          <div style="font-size:0.62rem;color:var(--muted);margin-top:0.2rem">Conversions</div>
+        </div>
+        <div style="background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:0.75rem;text-align:center">
+          <div id="accFormats" style="font-family:'Syne',sans-serif;font-size:1.4rem;font-weight:800;color:var(--accent)">0</div>
+          <div style="font-size:0.62rem;color:var(--muted);margin-top:0.2rem">Formats</div>
+        </div>
+        <div style="background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:0.75rem;text-align:center">
+          <div id="accData" style="font-family:'Syne',sans-serif;font-size:1.4rem;font-weight:800;color:var(--accent)">0</div>
+          <div style="font-size:0.62rem;color:var(--muted);margin-top:0.2rem">MB Used</div>
+        </div>
+      </div>
+
+      <!-- Recent conversions -->
+      <div style="margin-bottom:1.5rem">
+        <div style="font-size:0.68rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);margin-bottom:0.75rem">Recent Conversions</div>
+        <div id="accHistory"></div>
+      </div>
+
+      <!-- Tabs: Edit Profile / Security -->
+      <div style="display:flex;gap:0;border:1px solid var(--border);border-radius:8px;overflow:hidden;margin-bottom:1.25rem">
+        <button id="accTabProfile" onclick="switchAccTab('profile')" style="flex:1;padding:0.55rem;background:var(--accent);color:#000;border:none;font-family:'Syne',sans-serif;font-size:0.75rem;font-weight:700;cursor:pointer;transition:all 0.2s">Edit Profile</button>
+        <button id="accTabSecurity" onclick="switchAccTab('security')" style="flex:1;padding:0.55rem;background:transparent;color:var(--muted);border:none;font-family:'Syne',sans-serif;font-size:0.75rem;font-weight:700;cursor:pointer;transition:all 0.2s">Security</button>
+      </div>
+
+      <!-- Edit Profile sub-panel -->
+      <div id="accProfilePanel">
+        <div class="form-group" style="margin-bottom:0.85rem"><label>Full Name</label><input type="text" id="accEditName" class="dash-input" placeholder="Your name"></div>
+        <div class="form-group" style="margin-bottom:0.85rem"><label>Email</label><input type="email" id="accEditEmail" class="dash-input" placeholder="your@email.com"></div>
+        <button class="btn-submit" onclick="saveAccProfile()" style="margin-bottom:0.5rem">Save Changes</button>
+        <div id="accProfileMsg" style="color:var(--success);font-size:0.75rem;text-align:center;display:none">✅ Profile updated!</div>
+      </div>
+
+      <!-- Security sub-panel -->
+      <div id="accSecurityPanel" style="display:none">
+        <div class="form-group" style="margin-bottom:0.85rem"><label>Current Password</label><input type="password" id="accCurPw" class="dash-input" placeholder="••••••••"></div>
+        <div class="form-group" style="margin-bottom:0.85rem"><label>New Password</label><input type="password" id="accNewPw" class="dash-input" placeholder="••••••••"></div>
+        <div class="form-group" style="margin-bottom:0.85rem"><label>Confirm New Password</label><input type="password" id="accConPw" class="dash-input" placeholder="••••••••"></div>
+        <button class="btn-submit" onclick="saveAccPassword()" style="margin-bottom:0.5rem">Update Password</button>
+        <div id="accPwMsg" style="font-size:0.75rem;text-align:center;display:none"></div>
+        <hr style="border:none;border-top:1px solid var(--border);margin:1rem 0">
+        <button onclick="deleteAccount()" style="width:100%;padding:0.7rem;background:transparent;border:1px solid rgba(239,68,68,0.35);color:var(--danger);border-radius:8px;font-family:'Syne',sans-serif;font-size:0.85rem;font-weight:700;cursor:pointer;transition:all 0.2s" onmouseover="this.style.background='rgba(239,68,68,0.08)'" onmouseout="this.style.background='transparent'">Delete Account</button>
+      </div>
+
+      <!-- Sign out -->
+      <button onclick="signOut(); closeAuthModal();" style="width:100%;margin-top:1rem;padding:0.6rem;background:transparent;border:1px solid var(--border);color:var(--muted);border-radius:8px;font-family:'DM Mono',monospace;font-size:0.78rem;cursor:pointer;transition:all 0.2s" onmouseover="this.style.borderColor='var(--text)';this.style.color='var(--text)'" onmouseout="this.style.borderColor='var(--border)';this.style.color='var(--muted)'">Sign Out</button>
     </div>
-    <div id="authError" style="color:var(--danger);font-size:0.75rem;margin-bottom:1rem;display:none;background:rgba(239,68,68,0.08);border:1px solid rgba(239,68,68,0.25);border-radius:6px;padding:0.6rem 0.75rem"></div>
-    <button class="btn-submit" id="authSubmitBtn" onclick="handleAuth()">Sign In</button>
-    <p class="fine-print" style="margin-top:0.75rem">🔒 Your data is stored locally and never shared.</p>
   </div>
 </div>
 
@@ -434,7 +658,7 @@
     <p class="modal-sub" id="modalSub"></p>
     <div class="modal-plan-display">
       <span class="plan" id="modalPlanName">Pro Plan</span>
-      <span class="price" id="modalPlanPrice">$9 / month</span>
+      <span class="price" id="modalPlanPrice">$9.99 / month</span>
     </div>
     <div class="form-group"><label>Full Name</label><input type="text" placeholder="Jane Smith"></div>
     <div class="form-group"><label>Email Address</label><input type="email" placeholder="jane@example.com"></div>
@@ -465,7 +689,18 @@
   </div>
 </div>
 
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+
+// ── IN-MEMORY STORE (replaces localStorage for sandbox compatibility) ──
+const _store = {};
+const localStorage = {
+  getItem: (k) => _store[k] !== undefined ? _store[k] : null,
+  setItem: (k, v) => { _store[k] = v; },
+  removeItem: (k) => { delete _store[k]; }
+};
+
+function isValidEmail(email) { return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email); }
+
 const CATEGORIES = [
   { id:'image', icon:'🖼️', name:'Images', formats:[
     {ext:'JPEG',name:'Joint Photographic Experts Group'},{ext:'JPG',name:'JPEG Image'},{ext:'PNG',name:'Portable Network Graphics'},
@@ -796,29 +1031,280 @@ function renderFileList() {
 
 function removeFile(i) { files.splice(i, 1); renderFileList(); }
 
+// ── CLOUDCONVERT API KEY — replace with your own from cloudconvert.com ──
+// API key is stored securely in Netlify environment variables — never exposed in the browser
+const CLOUDCONVERT_API_KEY = null;
+
 function startConvert() {
   if (!files.length) return;
   clearStatus();
   const btn = document.getElementById('convertBtn');
   btn.disabled = true; btn.textContent = '⚙️ Converting...';
-  let done = 0;
-  files.forEach((f, i) => {
+  let idx = 0;
+  function processNext() {
+    if (idx >= files.length) { finishConvert(); return; }
+    const i = idx++;
+    const f = files[i];
     const pw = document.getElementById(`pw-${i}`);
     const pf = document.getElementById(`pf-${i}`);
+    const sel = document.querySelectorAll('.format-select')[i];
+    const targetFmt = sel ? sel.value.toLowerCase() : 'pdf';
     if (pw) pw.style.display = 'block';
-    let prog = 0;
-    const iv = setInterval(() => {
-      prog += Math.random() * 14 + 4;
-      if (prog >= 100) { prog = 100; clearInterval(iv); done++; if (done === files.length) finishConvert(); }
-      if (pf) pf.style.width = prog + '%';
-    }, 50 + Math.random() * 80);
+    const setProgress = p => { if (pf) pf.style.width = p + '%'; };
+
+    setProgress(10);
+    convertFile(f, targetFmt, setProgress)
+      .then(({ blob, filename }) => {
+        setProgress(100);
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url; a.download = filename;
+        document.body.appendChild(a); a.click();
+        document.body.removeChild(a);
+        setTimeout(() => URL.revokeObjectURL(url), 3000);
+        setTimeout(processNext, 400);
+      })
+      .catch(err => {
+        console.error(err);
+        if (pw) pw.style.display = 'none';
+        showStatus(`⚠️ "${f.name}": ${err.message}`, 'error');
+        btn.disabled = false; btn.textContent = '⚡ Convert All Files';
+      });
+  }
+  processNext();
+}
+
+async function convertFile(file, targetFmt, setProgress) {
+  const srcExt   = file.name.split('.').pop().toLowerCase();
+  const baseName = file.name.replace(/\.[^.]+$/, '');
+  const filename = `${baseName}.${targetFmt}`;
+
+  // ── In-browser fast path: image ↔ image via Canvas ──────────
+  const imgFmts = ['jpg','jpeg','png','webp','gif','bmp','tiff','avif','ico'];
+  if (imgFmts.includes(srcExt) && imgFmts.includes(targetFmt)) {
+    return imgConvert(file, targetFmt, filename, setProgress);
+  }
+  // SVG → raster
+  if (srcExt === 'svg' && imgFmts.includes(targetFmt)) {
+    return imgConvert(file, targetFmt, filename, setProgress);
+  }
+  // raster → SVG (embed)
+  if (imgFmts.includes(srcExt) && targetFmt === 'svg') {
+    const dataUrl = await fileToDataURL(file);
+    const w = await imgWidth(file), h = await imgHeight(file);
+    const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${w}" height="${h}"><image href="${dataUrl}" width="${w}" height="${h}"/></svg>`;
+    return { blob: new Blob([svg], { type: 'image/svg+xml' }), filename };
+  }
+  // text ↔ text
+  const txtFmts = ['txt','md','markdown','html','htm','csv','json','xml','yaml','yml','log','css','js','ts','py','java','c','cpp','rs','go','sh','php','rb'];
+  if (txtFmts.includes(srcExt) && txtFmts.includes(targetFmt)) {
+    return textConvert(file, srcExt, targetFmt, filename, setProgress);
+  }
+  // any → zip
+  if (targetFmt === 'zip') {
+    return zipConvert(file, baseName, setProgress);
+  }
+  // image → pdf
+  if (imgFmts.includes(srcExt) && targetFmt === 'pdf') {
+    return imgToPdf(file, srcExt, filename, setProgress);
+  }
+  // text → pdf
+  if (txtFmts.includes(srcExt) && targetFmt === 'pdf') {
+    return textToPdf(file, filename, setProgress);
+  }
+
+  // ── CloudConvert API for everything else ─────────────────────
+  // Key is handled server-side via Netlify function
+  return cloudConvert(file, targetFmt, filename, setProgress);
+}
+
+// ── CloudConvert via Netlify proxy (keeps API key secret) ────
+async function cloudConvert(file, targetFmt, filename, setProgress) {
+  const proxy = '/.netlify/functions/convert';
+
+  // 1. Create job via proxy
+  setProgress(15);
+  const jobRes = await fetch(proxy, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      action: 'create_job',
+      body: {
+        tasks: {
+          'import-file': { operation: 'import/upload' },
+          'convert':     { operation: 'convert', input: 'import-file', output_format: targetFmt },
+          'export-file': { operation: 'export/url', input: 'convert' }
+        }
+      }
+    })
   });
+  if (!jobRes.ok) throw new Error('Conversion service unavailable');
+  const job = await jobRes.json();
+  const uploadTask = job.data.tasks.find(t => t.name === 'import-file');
+
+  // 2. Upload file directly to CloudConvert (their S3, no CORS issue)
+  setProgress(30);
+  const form = new FormData();
+  Object.entries(uploadTask.result.form.parameters).forEach(([k,v]) => form.append(k,v));
+  form.append('file', file);
+  const upRes = await fetch(uploadTask.result.form.url, { method: 'POST', body: form });
+  if (!upRes.ok) throw new Error('Upload failed');
+
+  // 3. Poll via proxy
+  setProgress(50);
+  let exportTask;
+  for (let attempt = 0; attempt < 60; attempt++) {
+    await new Promise(r => setTimeout(r, 2000));
+    const pollRes = await fetch(proxy, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ action: 'poll_job', jobId: job.data.id })
+    });
+    const pollData = await pollRes.json();
+    const status = pollData.data.status;
+    if (status === 'error') throw new Error('Conversion failed — format may not be supported');
+    if (status === 'finished') {
+      exportTask = pollData.data.tasks.find(t => t.name === 'export-file');
+      break;
+    }
+    setProgress(Math.min(85, 50 + attempt * 1.5));
+  }
+  if (!exportTask) throw new Error('Conversion timed out');
+
+  // 4. Download result
+  setProgress(90);
+  const dlRes = await fetch(exportTask.result.files[0].url);
+  if (!dlRes.ok) throw new Error('Download failed');
+  const blob = await dlRes.blob();
+  setProgress(98);
+  return { blob, filename };
+}
+
+// ── In-browser helpers ───────────────────────────────────────
+async function imgConvert(file, targetFmt, filename, setProgress) {
+  return new Promise((resolve, reject) => {
+    const img = new Image();
+    img.onload = () => {
+      const canvas = document.createElement('canvas');
+      canvas.width = img.naturalWidth || img.width;
+      canvas.height = img.naturalHeight || img.height;
+      const ctx = canvas.getContext('2d');
+      if (['jpg','jpeg'].includes(targetFmt)) { ctx.fillStyle = '#fff'; ctx.fillRect(0,0,canvas.width,canvas.height); }
+      ctx.drawImage(img, 0, 0);
+      setProgress(75);
+      const mime = targetFmt==='jpg'||targetFmt==='jpeg' ? 'image/jpeg' : targetFmt==='webp' ? 'image/webp' : 'image/png';
+      canvas.toBlob(blob => {
+        if (!blob) return reject(new Error('Canvas conversion failed'));
+        setProgress(95); resolve({ blob, filename });
+      }, mime, 0.93);
+    };
+    img.onerror = () => reject(new Error('Could not load image'));
+    img.src = URL.createObjectURL(file);
+  });
+}
+
+async function textConvert(file, srcExt, targetFmt, filename, setProgress) {
+  let text = await file.text();
+  setProgress(50);
+  if (['txt','md','markdown'].includes(srcExt) && ['html','htm'].includes(targetFmt)) {
+    text = `<!DOCTYPE html><html><head><meta charset="UTF-8"><style>body{font-family:sans-serif;max-width:800px;margin:2rem auto;padding:0 1rem;line-height:1.7}</style></head><body>\n`
+      + text.split('\n').map(l => {
+          if (l.startsWith('### ')) return `<h3>${l.slice(4)}</h3>`;
+          if (l.startsWith('## '))  return `<h2>${l.slice(3)}</h2>`;
+          if (l.startsWith('# '))   return `<h1>${l.slice(2)}</h1>`;
+          if (l.startsWith('- '))   return `<li>${l.slice(2)}</li>`;
+          if (!l.trim())            return '<br>';
+          return `<p>${l}</p>`;
+        }).join('\n') + '\n</body></html>';
+  } else if (['html','htm'].includes(srcExt) && targetFmt === 'txt') {
+    text = text.replace(/<style[^>]*>[\s\S]*?<\/style>/gi,'').replace(/<script[^>]*>[\s\S]*?<\/script>/gi,'').replace(/<[^>]+>/g,'').replace(/\n{3,}/g,'\n\n').trim();
+  } else if (srcExt === 'json' && targetFmt === 'csv') {
+    try {
+      const arr = JSON.parse(text); const rows = Array.isArray(arr) ? arr : [arr];
+      const keys = Object.keys(rows[0]||{});
+      text = [keys.join(','), ...rows.map(r => keys.map(k => JSON.stringify(r[k]??'')).join(','))].join('\n');
+    } catch(e) {}
+  } else if (srcExt === 'csv' && targetFmt === 'json') {
+    const rows = text.trim().split('\n').map(r => r.split(','));
+    text = JSON.stringify(rows.slice(1).map(r => Object.fromEntries(rows[0].map((h,i) => [h.trim(), r[i]?.trim()]))), null, 2);
+  }
+  setProgress(92);
+  return { blob: new Blob([text], { type: 'text/plain' }), filename };
+}
+
+async function zipConvert(file, baseName, setProgress) {
+  await loadScript('https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js');
+  const zip = new window.JSZip();
+  zip.file(file.name, file);
+  setProgress(60);
+  const blob = await zip.generateAsync({ type: 'blob', compression: 'DEFLATE', compressionOptions: { level: 6 } });
+  setProgress(95);
+  return { blob, filename: baseName + '.zip' };
+}
+
+async function imgToPdf(file, srcExt, filename, setProgress) {
+  await loadScript('https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js');
+  return new Promise((resolve, reject) => {
+    const img = new Image();
+    img.onload = () => {
+      const { jsPDF } = window.jspdf;
+      const pdf = new jsPDF({ orientation: img.width > img.height ? 'l' : 'p', unit: 'px', format: [img.width, img.height] });
+      pdf.addImage(img, ['jpg','jpeg'].includes(srcExt) ? 'JPEG' : 'PNG', 0, 0, img.width, img.height);
+      setProgress(92);
+      resolve({ blob: pdf.output('blob'), filename });
+    };
+    img.onerror = () => reject(new Error('Could not load image'));
+    img.src = URL.createObjectURL(file);
+  });
+}
+
+async function textToPdf(file, filename, setProgress) {
+  await loadScript('https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js');
+  const text = await file.text();
+  const { jsPDF } = window.jspdf;
+  const pdf = new jsPDF();
+  const lines = pdf.splitTextToSize(text, 180);
+  let y = 15;
+  lines.forEach(line => { if (y > 280) { pdf.addPage(); y = 15; } pdf.text(line, 15, y); y += 7; });
+  setProgress(92);
+  return { blob: pdf.output('blob'), filename };
+}
+
+function fileToDataURL(file) {
+  return new Promise((res, rej) => { const r = new FileReader(); r.onload = () => res(r.result); r.onerror = rej; r.readAsDataURL(file); });
+}
+function imgWidth(file)  { return new Promise(res => { const i = new Image(); i.onload = () => res(i.naturalWidth);  i.src = URL.createObjectURL(file); }); }
+function imgHeight(file) { return new Promise(res => { const i = new Image(); i.onload = () => res(i.naturalHeight); i.src = URL.createObjectURL(file); }); }
+
+const _loadedScripts = {};
+function loadScript(src) {
+  if (_loadedScripts[src]) return _loadedScripts[src];
+  _loadedScripts[src] = new Promise((resolve, reject) => {
+    const s = document.createElement('script');
+    s.src = src; s.onload = resolve; s.onerror = () => reject(new Error(`Failed to load ${src}`));
+    document.head.appendChild(s);
+  });
+  return _loadedScripts[src];
 }
 
 function finishConvert() {
   const btn = document.getElementById('convertBtn');
   btn.disabled = false; btn.textContent = '⚡ Convert All Files';
-  showStatus(`✅ ${files.length} file${files.length > 1 ? 's' : ''} converted successfully! Download links ready.`, 'success');
+  showStatus(`✅ ${files.length} file${files.length > 1 ? 's' : ''} converted — check your downloads!`, 'success');
+  // Track stats
+  const stats = JSON.parse(localStorage.getItem('cf_stats') || '{"conversions":0,"bytes":0,"formats":[]}');
+  const history = JSON.parse(localStorage.getItem('cf_history') || '[]');
+  const selects = document.querySelectorAll('.format-select');
+  files.forEach((f, i) => {
+    const ext = f.name.split('.').pop() || 'bin';
+    const toFmt = selects[i] ? selects[i].value : 'PDF';
+    stats.conversions++;
+    stats.bytes = (stats.bytes || 0) + f.size;
+    stats.formats = [...(stats.formats || []), ext.toUpperCase()];
+    history.unshift({ from: ext.toUpperCase(), to: toFmt, name: f.name, color: getCatColor(ext), time: new Date().toLocaleTimeString('en-US', {hour:'2-digit', minute:'2-digit'}) });
+  });
+  localStorage.setItem('cf_stats', JSON.stringify(stats));
+  localStorage.setItem('cf_history', JSON.stringify(history.slice(0,50)));
 }
 
 function showStatus(msg, type) { const el = document.getElementById('statusMsg'); el.innerHTML = msg; el.className = `status-msg ${type}`; }
@@ -826,8 +1312,8 @@ function clearStatus() { document.getElementById('statusMsg').className = 'statu
 
 const PLANS = {
   Free:     { price:'Free',       label:'Create Free Account', sub:'Start converting up to 500 MB files, 10 per day.', payment:false },
-  Pro:      { price:'$9 / month', label:'Start Pro — $9/mo',   sub:'Unlimited conversions up to 2 GB. All 400+ formats. Cancel anytime.', payment:true },
-  Business: { price:'$29 / month',label:'Get Business — $29/mo',sub:'Everything in Pro plus API access, team seats, and priority support.', payment:true },
+  Pro:      { price:'$9.99 / month', label:'Start Pro — $9.99/mo',   sub:'Unlimited conversions up to 2 GB. All 400+ formats. Cancel anytime.', payment:true },
+  Business: { price:'$24.99 / month',label:'Get Business — $24.99/mo',sub:'Everything in Pro plus API access, team seats, and priority support.', payment:true },
 };
 
 function openModal(plan) {
@@ -867,13 +1353,16 @@ function handleSubscribe() {
     return;
   }
 
-  // Card payment
-  const cardInput = document.querySelector('#payPanel-card input[placeholder*="4242"]');
-  const expInput  = document.querySelector('#payPanel-card input[placeholder*="MM"]');
-  const cvcInput  = document.querySelector('#payPanel-card input[placeholder*="123"]');
-  if (cardInput && cardInput.value.replace(/\s/g,'').length < 16) { showModalError('Please enter a valid 16-digit card number.'); return; }
-  if (expInput  && expInput.value.length < 5)  { showModalError('Please enter a valid expiry date (MM / YY).'); return; }
-  if (cvcInput  && cvcInput.value.length < 3)  { showModalError('Please enter a valid CVC.'); return; }
+  // Card payment — only validate if payment section is visible (paid plans)
+  const paymentVisible = document.getElementById('paymentSection').style.display !== 'none';
+  if (paymentVisible) {
+    const cardInput = document.querySelector('#payPanel-card input[placeholder*="4242"]');
+    const expInput  = document.querySelector('#payPanel-card input[placeholder*="MM"]');
+    const cvcInput  = document.querySelector('#payPanel-card input[placeholder*="123"]');
+    if (cardInput && cardInput.value.replace(/\s/g,'').length < 16) { showModalError('Please enter a valid 16-digit card number.'); return; }
+    if (expInput  && expInput.value.length < 5)  { showModalError('Please enter a valid expiry date (MM / YY).'); return; }
+    if (cvcInput  && cvcInput.value.length < 3)  { showModalError('Please enter a valid CVC.'); return; }
+  }
 
   processPayment();
 }
@@ -904,7 +1393,10 @@ function processPayment() {
       btn.disabled = false;
       btn.onclick = handleSubscribe;
       isPro = true; renderFileList();
-      showStatus(`🎉 Welcome to ConvertFlow ${planName}! All features unlocked.`, 'success');
+      const msg = planName === 'Free'
+        ? `🎉 Welcome to ConvertFlow! Your free account is ready.`
+        : `🎉 Welcome to ConvertFlow ${planName}! All features unlocked.`;
+      showStatus(msg, 'success');
     }, 1200);
   }, 1800);
 }
@@ -1113,6 +1605,21 @@ function switchPayTab(tab, btn) {
 let currentAuthTab = 'signin';
 
 function openAuthModal(tab) {
+  // If already logged in, show account panel directly
+  const stored = localStorage.getItem('cf_user');
+  if (stored) {
+    try {
+      const user = JSON.parse(stored);
+      document.getElementById('authLoginPanel').style.display = 'none';
+      document.getElementById('authAccountPanel').style.display = 'block';
+      showAccountPanel(user);
+      document.getElementById('authOverlay').classList.add('open');
+      return;
+    } catch(e) {}
+  }
+  // Otherwise show login/register
+  document.getElementById('authLoginPanel').style.display = 'block';
+  document.getElementById('authAccountPanel').style.display = 'none';
   switchAuthTab(tab || 'signin');
   document.getElementById('authEmail').value = '';
   document.getElementById('authPassword').value = '';
@@ -1122,7 +1629,9 @@ function openAuthModal(tab) {
   document.getElementById('authOverlay').classList.add('open');
 }
 
-function closeAuthModal() { document.getElementById('authOverlay').classList.remove('open'); }
+function closeAuthModal() {
+  document.getElementById('authOverlay').classList.remove('open');
+}
 function closeAuthOnBg(e) { if (e.target === document.getElementById('authOverlay')) closeAuthModal(); }
 
 function switchAuthTab(tab) {
@@ -1151,7 +1660,7 @@ function showAuthError(msg) {
 }
 function hideAuthError() { document.getElementById('authError').style.display = 'none'; }
 
-function isValidEmail(email) { return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email); }
+
 
 function handleAuth() {
   const email = document.getElementById('authEmail').value.trim();
@@ -1190,12 +1699,122 @@ function loginUser(user) {
   btn.textContent = '✅ Success!'; btn.disabled = true;
   setTimeout(() => {
     btn.disabled = false;
+    btn.textContent = currentAuthTab === 'signin' ? 'Sign In' : 'Create Account';
     closeAuthModal();
     updateNavForUser(user);
     if (user.plan && user.plan !== 'Free') { isPro = true; renderFileList(); }
-    showStatus(`👋 Welcome back, ${user.name.split(' ')[0]}! You're signed in.`, 'success');
-    btn.textContent = currentAuthTab === 'signin' ? 'Sign In' : 'Create Account';
+    openDashboardPage();
   }, 900);
+}
+
+function showAccountPanel(user) {
+  document.getElementById('authLoginPanel').style.display = 'none';
+  document.getElementById('authAccountPanel').style.display = 'block';
+
+  // Avatar initials
+  const initials = user.name.split(' ').map(n => n[0]).join('').toUpperCase().slice(0,2);
+  document.getElementById('accAvatar').textContent = initials;
+  document.getElementById('accName').textContent = user.name;
+  document.getElementById('accEmail').textContent = user.email;
+
+  // Plan badge
+  const plan = user.plan || 'Free';
+  const badge = document.getElementById('accPlanBadge');
+  badge.textContent = plan + ' Plan';
+  const colors = { Free: 'rgba(107,107,136,0.2);color:var(--muted);border:1px solid var(--border)', Pro: 'rgba(0,229,255,0.12);color:var(--accent);border:1px solid rgba(0,229,255,0.3)', Business: 'rgba(124,58,237,0.12);color:#a78bfa;border:1px solid rgba(124,58,237,0.3)' };
+  badge.style.cssText += ';background:' + (colors[plan] || colors.Free);
+
+  // Stats
+  const stats = JSON.parse(localStorage.getItem('cf_stats') || '{"conversions":0,"bytes":0,"formats":[]}');
+  document.getElementById('accConversions').textContent = stats.conversions || 0;
+  document.getElementById('accFormats').textContent = [...new Set(stats.formats || [])].length;
+  const mb = ((stats.bytes || 0) / 1048576).toFixed(1);
+  document.getElementById('accData').textContent = mb;
+
+  // History
+  const history = JSON.parse(localStorage.getItem('cf_history') || '[]');
+  const histEl = document.getElementById('accHistory');
+  if (!history.length) {
+    histEl.innerHTML = '<div style="color:var(--muted);font-size:0.75rem;padding:0.5rem 0">No conversions yet.</div>';
+  } else {
+    histEl.innerHTML = history.slice(0,4).map(h => `
+      <div style="display:flex;align-items:center;gap:0.5rem;padding:0.45rem 0;border-bottom:1px solid var(--border);font-size:0.75rem">
+        <span style="background:${h.color||'#7c3aed'};color:white;padding:0.15rem 0.4rem;border-radius:3px;font-size:0.6rem;font-weight:700">${h.from}</span>
+        <span style="color:var(--muted);font-size:0.65rem">→</span>
+        <span style="background:var(--accent2);color:white;padding:0.15rem 0.4rem;border-radius:3px;font-size:0.6rem;font-weight:700">${h.to}</span>
+        <span style="flex:1;color:var(--muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${h.name}</span>
+        <span style="color:var(--border);font-size:0.62rem">${h.time}</span>
+      </div>`).join('');
+  }
+
+  // Pre-fill edit fields
+  document.getElementById('accEditName').value = user.name;
+  document.getElementById('accEditEmail').value = user.email;
+
+  // Reset sub-tabs
+  switchAccTab('profile');
+}
+
+function switchAccTab(tab) {
+  const isProfile = tab === 'profile';
+  document.getElementById('accTabProfile').style.background  = isProfile ? 'var(--accent)' : 'transparent';
+  document.getElementById('accTabProfile').style.color       = isProfile ? '#000' : 'var(--muted)';
+  document.getElementById('accTabSecurity').style.background = !isProfile ? 'var(--accent)' : 'transparent';
+  document.getElementById('accTabSecurity').style.color      = !isProfile ? '#000' : 'var(--muted)';
+  document.getElementById('accProfilePanel').style.display  = isProfile ? 'block' : 'none';
+  document.getElementById('accSecurityPanel').style.display = !isProfile ? 'block' : 'none';
+}
+
+function saveAccProfile() {
+  const name = document.getElementById('accEditName').value.trim();
+  const email = document.getElementById('accEditEmail').value.trim();
+  if (!name || !email) return;
+  const stored = localStorage.getItem('cf_user');
+  if (!stored) return;
+  const user = JSON.parse(stored);
+  user.name = name; user.email = email;
+  localStorage.setItem('cf_user', JSON.stringify(user));
+  updateNavForUser(user);
+  document.getElementById('accName').textContent = name;
+  document.getElementById('accEmail').textContent = email;
+  const initials = name.split(' ').map(n => n[0]).join('').toUpperCase().slice(0,2);
+  document.getElementById('accAvatar').textContent = initials;
+  const msg = document.getElementById('accProfileMsg');
+  msg.style.display = 'block';
+  setTimeout(() => msg.style.display = 'none', 2500);
+}
+
+function saveAccPassword() {
+  const cur  = document.getElementById('accCurPw').value;
+  const nw   = document.getElementById('accNewPw').value;
+  const con  = document.getElementById('accConPw').value;
+  const msg  = document.getElementById('accPwMsg');
+  const stored = localStorage.getItem('cf_user');
+  if (!stored) return;
+  const user = JSON.parse(stored);
+  if (atob(user.password) !== cur) { msg.style.color='var(--danger)'; msg.textContent='❌ Current password incorrect.'; msg.style.display='block'; return; }
+  if (nw.length < 6) { msg.style.color='var(--danger)'; msg.textContent='❌ Password must be 6+ characters.'; msg.style.display='block'; return; }
+  if (nw !== con) { msg.style.color='var(--danger)'; msg.textContent='❌ Passwords do not match.'; msg.style.display='block'; return; }
+  user.password = btoa(nw);
+  localStorage.setItem('cf_user', JSON.stringify(user));
+  document.getElementById('accCurPw').value = '';
+  document.getElementById('accNewPw').value = '';
+  document.getElementById('accConPw').value = '';
+  msg.style.color = 'var(--success)'; msg.textContent = '✅ Password updated!'; msg.style.display = 'block';
+  setTimeout(() => msg.style.display = 'none', 2500);
+}
+
+function deleteAccount() {
+  if (!confirm('Delete your account? This cannot be undone.')) return;
+  localStorage.removeItem('cf_user');
+  localStorage.removeItem('cf_stats');
+  localStorage.removeItem('cf_history');
+  signOut();
+  closeAuthModal();
+  // Reset modal back to login for next time
+  document.getElementById('authLoginPanel').style.display = 'block';
+  document.getElementById('authAccountPanel').style.display = 'none';
+  showStatus('Your account has been deleted.', 'success');
 }
 
 function updateNavForUser(user) {
@@ -1216,7 +1835,9 @@ function signOut() {
   showStatus('You have been signed out.', 'success');
 }
 
-// Auto-restore session on load
+// Hide API key notice — key is secured server-side on Netlify
+const _n = document.getElementById('apiKeyNotice');
+if (_n) _n.style.display = 'none';
 (function restoreSession() {
   const stored = localStorage.getItem('cf_user');
   if (stored) {
@@ -1227,7 +1848,204 @@ function signOut() {
     } catch(e) {}
   }
 })();
-
 </script>
+
+<!-- ── FULL PAGE DASHBOARD ──────────────────────────────── -->
+<div class="db-page" id="dbPage">
+
+  <!-- Sidebar -->
+  <aside class="db-sidebar">
+    <a href="#" class="db-logo" onclick="closeDashboardPage();return false;">
+      <svg width="28" height="28" viewBox="0 0 40 40" fill="none"><defs><linearGradient id="dg" x1="0" y1="0" x2="40" y2="40" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="#00e5ff"/><stop offset="100%" stop-color="#7c3aed"/></linearGradient></defs><rect width="40" height="40" rx="10" fill="url(#dg)" opacity="0.15"/><path d="M8 14h10l4 12 4-20 4 8h2" stroke="url(#dg)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <span class="db-logo-text">Convert<span>Flow</span></span>
+    </a>
+    <ul class="db-nav">
+      <li><button class="db-nav-btn active" onclick="dbShowPanel('overview',this)"><span class="db-nav-icon">🏠</span> Overview</button></li>
+      <li><button class="db-nav-btn" onclick="dbShowPanel('conversions',this)"><span class="db-nav-icon">⚡</span> Conversions</button></li>
+      <li><button class="db-nav-btn" onclick="dbShowPanel('profile',this)"><span class="db-nav-icon">👤</span> Profile</button></li>
+      <li><button class="db-nav-btn" onclick="dbShowPanel('security',this)"><span class="db-nav-icon">🔒</span> Security</button></li>
+      <li><button class="db-nav-btn" onclick="dbShowPanel('billing',this)"><span class="db-nav-icon">💳</span> Billing</button></li>
+    </ul>
+    <div class="db-sidebar-footer">
+      <div class="db-user-chip">
+        <div class="db-mini-avatar" id="dbMiniAvatar"></div>
+        <div class="db-user-info">
+          <div class="db-user-name" id="dbSidebarName"></div>
+          <div class="db-user-plan" id="dbSidebarPlan"></div>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Main -->
+  <main class="db-main">
+    <div class="db-topbar">
+      <div class="db-page-title" id="dbPageTitle">Overview</div>
+      <div class="db-topbar-actions">
+        <button class="db-btn" onclick="closeDashboardPage()">← Back to Converter</button>
+        <button class="db-btn danger" onclick="dbSignOut()">Sign Out</button>
+      </div>
+    </div>
+
+    <div class="db-content">
+
+      <!-- OVERVIEW PANEL -->
+      <div class="db-panel active" id="dbPanel-overview">
+        <div class="db-welcome">
+          <div>
+            <div class="db-welcome-title" id="dbWelcomeTitle">Welcome back 👋</div>
+            <div class="db-welcome-sub" id="dbWelcomeSub">Here's what's happening with your account.</div>
+          </div>
+          <button class="db-btn primary" onclick="closeDashboardPage()">Start Converting →</button>
+        </div>
+
+        <div class="db-stats-row">
+          <div class="db-stat-card"><div class="db-stat-icon">⚡</div><div class="db-stat-val" id="dbStatConv">0</div><div class="db-stat-label">Total Conversions</div></div>
+          <div class="db-stat-card"><div class="db-stat-icon">📁</div><div class="db-stat-val" id="dbStatFiles">0</div><div class="db-stat-label">Files Processed</div></div>
+          <div class="db-stat-card"><div class="db-stat-icon">🌐</div><div class="db-stat-val" id="dbStatFormats">0</div><div class="db-stat-label">Formats Used</div></div>
+          <div class="db-stat-card"><div class="db-stat-icon">💾</div><div class="db-stat-val" id="dbStatData">0 MB</div><div class="db-stat-label">Data Processed</div></div>
+        </div>
+
+        <div class="db-grid-2">
+          <div class="db-card">
+            <div class="db-card-title">Recent Conversions</div>
+            <div id="dbRecentHistory"><div style="color:var(--muted);font-size:0.78rem;padding:1rem 0;text-align:center">No conversions yet — drop a file to get started!</div></div>
+          </div>
+          <div class="db-card">
+            <div class="db-card-title">Activity <span style="font-size:0.62rem;color:var(--border);font-weight:400;text-transform:none">last 7 days</span></div>
+            <div class="db-activity-bar" id="dbActivityBar"></div>
+            <div style="display:flex;justify-content:space-between;margin-top:0.5rem">
+              <span id="dbActivityLabels" style="display:contents"></span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- CONVERSIONS PANEL -->
+      <div class="db-panel" id="dbPanel-conversions">
+        <div class="db-card" style="margin-bottom:1.5rem">
+          <div class="db-card-title">
+            Conversion History
+            <button onclick="dbClearHistory()" class="db-btn" style="font-size:0.65rem;padding:0.25rem 0.65rem">Clear All</button>
+          </div>
+          <div id="dbFullHistory"><div style="color:var(--muted);font-size:0.78rem;padding:1rem 0;text-align:center">No conversions yet.</div></div>
+        </div>
+      </div>
+
+      <!-- PROFILE PANEL -->
+      <div class="db-panel" id="dbPanel-profile">
+        <div class="db-grid-2">
+          <div class="db-card">
+            <div class="db-card-title">Personal Info</div>
+            <div style="display:flex;align-items:center;gap:1rem;margin-bottom:1.75rem">
+              <div id="dbBigAvatar" style="width:64px;height:64px;border-radius:50%;background:linear-gradient(135deg,var(--accent2),var(--accent));display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-size:1.4rem;font-weight:800;color:white;flex-shrink:0"></div>
+              <div>
+                <div id="dbProfileName" style="font-family:'Syne',sans-serif;font-size:1.1rem;font-weight:800;margin-bottom:0.2rem"></div>
+                <div id="dbProfileEmail" style="font-size:0.75rem;color:var(--muted)"></div>
+              </div>
+            </div>
+            <div class="db-form-row">
+              <div class="db-field"><label>Full Name</label><input class="db-input" type="text" id="dbEditName" placeholder="Your name"></div>
+              <div class="db-field"><label>Email</label><input class="db-input" type="email" id="dbEditEmail" placeholder="your@email.com"></div>
+            </div>
+            <button class="db-btn primary" onclick="dbSaveProfile()">Save Changes</button>
+            <div class="db-msg ok" id="dbProfileMsg">✅ Profile updated!</div>
+          </div>
+          <div class="db-card">
+            <div class="db-card-title">Account Details</div>
+            <div style="display:flex;flex-direction:column;gap:1rem">
+              <div style="background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:1rem;display:flex;justify-content:space-between;align-items:center">
+                <span style="font-size:0.75rem;color:var(--muted)">Member Since</span>
+                <span id="dbMemberSince" style="font-size:0.78rem"></span>
+              </div>
+              <div style="background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:1rem;display:flex;justify-content:space-between;align-items:center">
+                <span style="font-size:0.75rem;color:var(--muted)">Current Plan</span>
+                <span id="dbCurrentPlanLabel" style="font-size:0.78rem;color:var(--accent)"></span>
+              </div>
+              <div style="background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:1rem;display:flex;justify-content:space-between;align-items:center">
+                <span style="font-size:0.75rem;color:var(--muted)">Daily Limit</span>
+                <span id="dbDailyLimit" style="font-size:0.78rem"></span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SECURITY PANEL -->
+      <div class="db-panel" id="dbPanel-security">
+        <div class="db-grid-2">
+          <div class="db-card">
+            <div class="db-card-title">Change Password</div>
+            <div class="db-field" style="margin-bottom:1rem"><label>Current Password</label><input class="db-input" type="password" id="dbCurPw" placeholder="••••••••"></div>
+            <div class="db-field" style="margin-bottom:1rem"><label>New Password</label><input class="db-input" type="password" id="dbNewPw" placeholder="••••••••"></div>
+            <div class="db-field" style="margin-bottom:1.25rem"><label>Confirm New Password</label><input class="db-input" type="password" id="dbConPw" placeholder="••••••••"></div>
+            <button class="db-btn primary" onclick="dbSavePassword()">Update Password</button>
+            <div class="db-msg ok" id="dbPwOkMsg">✅ Password updated!</div>
+            <div class="db-msg err" id="dbPwErrMsg"></div>
+          </div>
+          <div class="db-card">
+            <div class="db-card-title">Danger Zone</div>
+            <div style="background:rgba(239,68,68,0.05);border:1px solid rgba(239,68,68,0.2);border-radius:10px;padding:1.25rem;margin-bottom:1rem">
+              <div style="font-family:'Syne',sans-serif;font-size:0.9rem;font-weight:700;margin-bottom:0.4rem">Delete Account</div>
+              <div style="font-size:0.75rem;color:var(--muted);margin-bottom:1rem;line-height:1.5">Permanently delete your account and all data. This cannot be undone.</div>
+              <button class="db-btn danger" onclick="dbDeleteAccount()">Delete My Account</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- BILLING PANEL -->
+      <div class="db-panel" id="dbPanel-billing">
+        <div id="dbPlanCard" class="db-plan-card">
+          <div>
+            <div style="font-size:0.7rem;color:var(--muted);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:0.4rem">Current Plan</div>
+            <div class="db-plan-name" id="dbBillingPlanName">Free</div>
+            <div class="db-plan-desc" id="dbBillingPlanDesc">10 conversions/day · Up to 500 MB per file</div>
+          </div>
+          <span class="db-plan-badge" id="dbBillingBadge"></span>
+        </div>
+        <div class="db-grid-3">
+          <div class="db-card" style="border-color:var(--border)">
+            <div style="font-family:'Syne',sans-serif;font-size:0.8rem;font-weight:700;text-transform:uppercase;color:var(--muted);margin-bottom:1rem">Free</div>
+            <div style="font-family:'Syne',sans-serif;font-size:2.5rem;font-weight:800;margin-bottom:0.25rem">$0</div>
+            <div style="font-size:0.72rem;color:var(--muted);margin-bottom:1.5rem">forever</div>
+            <ul style="list-style:none;display:flex;flex-direction:column;gap:0.5rem;font-size:0.75rem;color:var(--muted);margin-bottom:1.5rem">
+              <li><span style="color:var(--success)">✓</span> 10 conversions/day</li>
+              <li><span style="color:var(--success)">✓</span> 500 MB per file</li>
+              <li><span style="color:var(--success)">✓</span> 200+ formats</li>
+            </ul>
+          </div>
+          <div class="db-card" style="border-color:rgba(0,229,255,0.35);background:linear-gradient(135deg,rgba(0,229,255,0.04),rgba(124,58,237,0.04));position:relative">
+            <div style="position:absolute;top:-11px;left:50%;transform:translateX(-50%);background:var(--accent);color:#000;font-size:0.6rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;padding:0.25rem 0.85rem;border-radius:100px">Most Popular</div>
+            <div style="font-family:'Syne',sans-serif;font-size:0.8rem;font-weight:700;text-transform:uppercase;color:var(--accent);margin-bottom:1rem">Pro</div>
+            <div style="font-family:'Syne',sans-serif;font-size:2.5rem;font-weight:800;margin-bottom:0.25rem">$9.99</div>
+            <div style="font-size:0.72rem;color:var(--muted);margin-bottom:1.5rem">/ month</div>
+            <ul style="list-style:none;display:flex;flex-direction:column;gap:0.5rem;font-size:0.75rem;color:var(--muted);margin-bottom:1.5rem">
+              <li><span style="color:var(--success)">✓</span> Unlimited conversions</li>
+              <li><span style="color:var(--success)">✓</span> Up to 2 GB per file</li>
+              <li><span style="color:var(--success)">✓</span> All 400+ formats</li>
+              <li><span style="color:var(--success)">✓</span> Priority processing</li>
+            </ul>
+            <button class="db-btn primary" style="width:100%" onclick="closeDashboardPage();openModal('Pro')">Upgrade to Pro</button>
+          </div>
+          <div class="db-card">
+            <div style="font-family:'Syne',sans-serif;font-size:0.8rem;font-weight:700;text-transform:uppercase;color:#a78bfa;margin-bottom:1rem">Business</div>
+            <div style="font-family:'Syne',sans-serif;font-size:2.5rem;font-weight:800;margin-bottom:0.25rem">$24.99</div>
+            <div style="font-size:0.72rem;color:var(--muted);margin-bottom:1.5rem">/ month</div>
+            <ul style="list-style:none;display:flex;flex-direction:column;gap:0.5rem;font-size:0.75rem;color:var(--muted);margin-bottom:1.5rem">
+              <li><span style="color:var(--success)">✓</span> Everything in Pro</li>
+              <li><span style="color:var(--success)">✓</span> REST API access</li>
+              <li><span style="color:var(--success)">✓</span> 5 team seats</li>
+              <li><span style="color:var(--success)">✓</span> Usage analytics</li>
+            </ul>
+            <button class="db-btn" style="width:100%;border-color:rgba(167,139,250,0.4);color:#a78bfa" onclick="closeDashboardPage();openModal('Business')">Get Business</button>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /db-content -->
+  </main>
+</div>
+
 </body>
 </html>
