@@ -28,6 +28,10 @@ exports.handler = async (event) => {
   if (event.httpMethod === 'OPTIONS') return { statusCode: 200, headers, body: '' };
   if (event.httpMethod !== 'POST')    return { statusCode: 405, headers, body: 'Method Not Allowed' };
 
+  if (!API_KEY) {
+    return { statusCode: 500, headers, body: JSON.stringify({ error: 'API key not configured' }) };
+  }
+
   try {
     const { action, jobId, body: reqBody } = JSON.parse(event.body);
     const authHeaders = {
@@ -41,7 +45,10 @@ exports.handler = async (event) => {
         hostname: BASE_HOST, path: '/v2/jobs', method: 'POST',
         headers: { ...authHeaders, 'Content-Length': Buffer.byteLength(bodyStr) }
       }, bodyStr);
-      return { statusCode: res.status, headers, body: JSON.stringify(res.body) };
+      if (res.status !== 201 && res.status !== 200) {
+        return { statusCode: 500, headers, body: JSON.stringify({ error: `CloudConvert ${res.status}: ${JSON.stringify(res.body)}` }) };
+      }
+      return { statusCode: 200, headers, body: JSON.stringify(res.body) };
     }
 
     if (action === 'poll_job') {
@@ -49,7 +56,7 @@ exports.handler = async (event) => {
         hostname: BASE_HOST, path: `/v2/jobs/${jobId}`, method: 'GET',
         headers: authHeaders
       });
-      return { statusCode: res.status, headers, body: JSON.stringify(res.body) };
+      return { statusCode: 200, headers, body: JSON.stringify(res.body) };
     }
 
     return { statusCode: 400, headers, body: JSON.stringify({ error: 'Unknown action' }) };
