@@ -1120,57 +1120,64 @@ async function convertFile(file, targetFmt, setProgress) {
   return cloudConvert(file, targetFmt, filename, setProgress);
 }
 
-// ── CloudConvert ─────────────────────────────────────────────
+// ── CloudConvert via Netlify proxy ───────────────────────────
 async function cloudConvert(file, targetFmt, filename, setProgress) {
-  const base = 'https://api.cloudconvert.com/v2';
-  const headers = { 'Authorization': `Bearer ${CLOUDCONVERT_API_KEY}`, 'Content-Type': 'application/json' };
+  const proxy = '/.netlify/functions/convert';
 
-  // 1. Create job
+  // 1. Create job via proxy
   setProgress(15);
-  const jobRes = await fetch(`${base}/jobs`, {
-    method: 'POST', headers,
+  const jobRes = await fetch(proxy, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
-      tasks: {
-        'import-file': { operation: 'import/upload' },
-        'convert':     { operation: 'convert', input: 'import-file', output_format: targetFmt },
-        'export-file': { operation: 'export/url', input: 'convert' }
+      action: 'create_job',
+      body: {
+        tasks: {
+          'import-file': { operation: 'import/upload' },
+          'convert':     { operation: 'convert', input: 'import-file', output_format: targetFmt },
+          'export-file': { operation: 'export/url', input: 'convert' }
+        }
       }
     })
   });
-  if (!jobRes.ok) throw new Error('CloudConvert: failed to create job');
-  const job = await jobRes.json();
-  const uploadTask = job.data.tasks.find(t => t.name === 'import-file');
+  const jobData = await jobRes.json();
+  if (jobData.error) throw new Error(jobData.error);
+  const uploadTask = jobData.data.tasks.find(t => t.name === 'import-file');
 
-  // 2. Upload file
+  // 2. Upload file directly to CloudConvert's S3 (no CORS issue)
   setProgress(30);
   const form = new FormData();
   Object.entries(uploadTask.result.form.parameters).forEach(([k,v]) => form.append(k,v));
   form.append('file', file);
   const upRes = await fetch(uploadTask.result.form.url, { method: 'POST', body: form });
-  if (!upRes.ok) throw new Error('CloudConvert: upload failed');
+  if (!upRes.ok) throw new Error('Upload failed');
 
-  // 3. Poll until done
+  // 3. Poll via proxy
   setProgress(50);
   let exportTask;
   for (let attempt = 0; attempt < 60; attempt++) {
     await new Promise(r => setTimeout(r, 2000));
-    const pollRes = await fetch(`${base}/jobs/${job.data.id}`, { headers });
+    const pollRes = await fetch(proxy, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ action: 'poll_job', jobId: jobData.data.id })
+    });
     const pollData = await pollRes.json();
+    if (pollData.error) throw new Error(pollData.error);
     const status = pollData.data.status;
-    if (status === 'error') throw new Error('CloudConvert: conversion failed');
+    if (status === 'error') throw new Error('Conversion failed — format may not be supported');
     if (status === 'finished') {
       exportTask = pollData.data.tasks.find(t => t.name === 'export-file');
       break;
     }
     setProgress(Math.min(85, 50 + attempt * 1.5));
   }
-  if (!exportTask) throw new Error('CloudConvert: timed out');
+  if (!exportTask) throw new Error('Conversion timed out');
 
   // 4. Download result
   setProgress(90);
-  const dlUrl = exportTask.result.files[0].url;
-  const dlRes = await fetch(dlUrl);
-  if (!dlRes.ok) throw new Error('CloudConvert: download failed');
+  const dlRes = await fetch(exportTask.result.files[0].url);
+  if (!dlRes.ok) throw new Error('Download failed');
   const blob = await dlRes.blob();
   setProgress(98);
   return { blob, filename };
