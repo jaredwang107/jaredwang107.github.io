@@ -1,5 +1,5 @@
 const https = require('https');
-const API_KEY = process.env.CLOUDCONVERT_API_KEY;
+const API_KEY = process.env.CLOUDCONVERT_API_KEY || 'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiMmY4MDJhODk4MGU4YzMyZDBiNjRjYmU1MDFjMDUyNWM0MDFlZDdlOWI5YjYwZjQ5MGM5ZWM1ZGRlMzU4NWUxMWJhZDFlMWQyZTMwNjNkYjAiLCJpYXQiOjE3NzMwMTcyNzUuMjM2NTU5LCJuYmYiOjE3NzMwMTcyNzUuMjM2NTYxLCJleHAiOjQ5Mjg2OTA4NzUuMjMxMDczLCJzdWIiOiI3NDU3MDAxMSIsInNjb3BlcyI6WyJ1c2VyLnJlYWQiLCJ1c2VyLndyaXRlIiwidGFzay5yZWFkIiwidGFzay53cml0ZSIsIndlYmhvb2sucmVhZCIsIndlYmhvb2sud3JpdGUiLCJwcmVzZXQucmVhZCIsInByZXNldC53cml0ZSJdfQ.hdgT39othjisQwR-FiwVkYm-6i--LSxCTjCUnBoq1ff2ZXvppzhofP9tm2MCBS2RXHbStWDPpfmWnJXgU9PgPFuoD5IF0ijpHlS5AATYkqzJqqVkEzXTtXJG2pWZkE7-och71GA9PFiji7KujJIGlwdOhBygr6h_HbE3Y_ORTNVfZJZAMM265BJ3DWp4OsBdi9qUFzNjXU_aaYr-e9fZVAbgQwGtLM2ZpjlVM-3jmkxMWamaxWngBQP590gbZrExBGUDsrK4hnbkQGuCG-HHYINaq8ZyR7EqPndHBH4Mn-2BKfZGjH8gUW88a8dhfnz1duk00c9yYjUnSeIayANETxxXi7xrJ32BW89aqYVLGkdpLfYu9MTUBABhxrBiUBe7pDkbePo_7LdADxbe-k8koYEY05EUURuraE4MQ_myrZRPveXH6eZb4z2ePOsvIwF-vU2d0NxYZCSpQcqzYoQJG-UbxbDKpZpx9jwIOtoxKxESoVMmEAhpNJwujyUBz3i1Ig7LJ3BXKaAXWXArXEVLoUnpK0wEmBFIIoXRwVVx0yrnKdrJnENa89w4Uh8HYXv3enbq';
 const BASE_HOST = 'api.cloudconvert.com';
 
 function httpsRequest(options, body) {
@@ -27,10 +27,6 @@ exports.handler = async (event) => {
 
   if (event.httpMethod === 'OPTIONS') return { statusCode: 200, headers, body: '' };
   if (event.httpMethod !== 'POST')    return { statusCode: 405, headers, body: 'Method Not Allowed' };
-
-  if (!API_KEY) {
-    return { statusCode: 500, headers, body: JSON.stringify({ error: 'API key not configured' }) };
-  }
 
   try {
     const { action, jobId, body: reqBody } = JSON.parse(event.body);
