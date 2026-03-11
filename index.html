@@ -1122,7 +1122,7 @@ async function convertFile(file, targetFmt, setProgress) {
 
 // ── CloudConvert via Netlify proxy ───────────────────────────
 async function cloudConvert(file, targetFmt, filename, setProgress) {
-  const proxy = '/.netlify/functions/convert';
+  const proxy = 'https://convertflow-api.jaredwang107.workers.dev';
 
   // 1. Create job via proxy
   setProgress(15);
@@ -2054,4 +2054,3 @@ if (CLOUDCONVERT_API_KEY !== 'YOUR_API_KEY_HERE') {
 
 </body>
 </html>
-       
