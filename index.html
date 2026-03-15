@@ -1123,28 +1123,28 @@ async function convertFile(file, targetFmt, setProgress) {
 // ── CloudConvert via Netlify proxy ───────────────────────────
 async function cloudConvert(file, targetFmt, filename, setProgress) {
   const proxy = 'https://convertflow-api.jaredwang107.workers.dev';
+  const DIRECT_KEY = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiMDkwMGJmYTYyZTQxNjM5OWEyZjMzYTYwYmE1MmE2NDAzNzVhNGJjMTU2MTVjNWJlMTNiZjRmOTFjN2EyYWE1YjNkZTI0OTY1NmEzZWY0ZTQiLCJpYXQiOjE3NzM1MDQ5MTAuNjE5ODE4LCJuYmYiOjE3NzM1MDQ5MTAuNjE5ODE5LCJleHAiOjQ5MjkxNzg1MTAuNjEzNTEyLCJzdWIiOiI3NDU3MDAxMSIsInNjb3BlcyI6WyJ1c2VyLnJlYWQiLCJ1c2VyLndyaXRlIiwidGFzay5yZWFkIiwidGFzay53cml0ZSIsIndlYmhvb2sucmVhZCIsIndlYmhvb2sud3JpdGUiLCJwcmVzZXQucmVhZCIsInByZXNldC53cml0ZSJdfQ.hZJdfeFWVkVy8r8i2dmjzkxdRwIeQm4btj0TvcMCjRXGcwJ7ZxvcSzWsFfTO5mT6GU0_hY63xQCVpPFLy907YQzKYYFuVWH6jxg_a1aYNDIdsBpzlqNKWOQbKtD-L-unRrOMRZS0ovaTFRwjFlW0CPZJ16x2Oefr8C_apmi-f93oN5nHXYzIYjm1E-736aRB5looRGs7y7ddTyu2AnEor0ae733ne5Uw30KnmbmFPtAoN2Cf4FHwnJo5d-v-sB7DcHLsxQ0TPnQZqpOF8j1UhuIPq8XnMQ7Rt4s29QHIvaCobNEhqLxG2T2VuukSZCTPnf9E48tSKZDYxeHLUSeSYQJRUsvsM-mxrflYiU8caWAHhPA1QbT3qKKsBjUgPcuvjcoxeWPelhKECiZw0Bd39-hdLpYtHvfg5xhOvbFnYfWxEVeD6H1MoQzlHsQJygF-1r1NDa6VwETWcddlY9_eiNlCDbpEL18CNLKnEo1I_e-gKlzVaqgfbVn2HsSixZnF7C8oAraGxQFhQxuBruoqce_Q_X0PC1425IRpP3uLrs7lwBjWrGV74NMly7NuDys3nzuHHCldt7M9N0TWgrewMlQtktLZSwvxbRAKig2fpYLRvvGMOZ0NyjJjhJgnCIHdNi3MvlORrzliFMqXWir5iNUCmkFer_JeLSkRzVAiLXc';
 
-  // 1. Create job via proxy
+  // 1. Create job directly
   setProgress(15);
-  const jobRes = await fetch(proxy, {
+  const ccHeaders = { 'Authorization': `Bearer ${DIRECT_KEY}`, 'Content-Type': 'application/json' };
+  const jobRes = await fetch('https://api.cloudconvert.com/v2/jobs', {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
+    headers: ccHeaders,
     body: JSON.stringify({
-      action: 'create_job',
-      body: {
-        tasks: {
-          'import-file': { operation: 'import/upload' },
-          'convert':     { operation: 'convert', input: 'import-file', output_format: targetFmt },
-          'export-file': { operation: 'export/url', input: 'convert' }
-        }
+      tasks: {
+        'import-file': { operation: 'import/upload' },
+        'convert':     { operation: 'convert', input: 'import-file', output_format: targetFmt },
+        'export-file': { operation: 'export/url', input: 'convert' }
       }
     })
   });
   const jobData = await jobRes.json();
-  if (jobData.error) throw new Error(jobData.error);
+  if (!jobRes.ok) throw new Error(jobData.message || 'Failed to create job');
+  if (!jobData.data || !jobData.data.tasks) throw new Error('Invalid response from conversion service');
   const uploadTask = jobData.data.tasks.find(t => t.name === 'import-file');
 
-  // 2. Upload file directly to CloudConvert's S3 (no CORS issue)
+  // 2. Upload file directly to CloudConvert's S3
   setProgress(30);
   const form = new FormData();
   Object.entries(uploadTask.result.form.parameters).forEach(([k,v]) => form.append(k,v));
@@ -1152,18 +1152,14 @@ async function cloudConvert(file, targetFmt, filename, setProgress) {
   const upRes = await fetch(uploadTask.result.form.url, { method: 'POST', body: form });
   if (!upRes.ok) throw new Error('Upload failed');
 
-  // 3. Poll via proxy
+  // 3. Poll directly
   setProgress(50);
   let exportTask;
   for (let attempt = 0; attempt < 60; attempt++) {
     await new Promise(r => setTimeout(r, 2000));
-    const pollRes = await fetch(proxy, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ action: 'poll_job', jobId: jobData.data.id })
-    });
+    const pollRes = await fetch(`https://api.cloudconvert.com/v2/jobs/${jobData.data.id}`, { headers: ccHeaders });
     const pollData = await pollRes.json();
-    if (pollData.error) throw new Error(pollData.error);
+    if (!pollData.data) throw new Error('Poll error');
     const status = pollData.data.status;
     if (status === 'error') throw new Error('Conversion failed — format may not be supported');
     if (status === 'finished') {
