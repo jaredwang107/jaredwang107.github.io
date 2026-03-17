@@ -953,9 +953,34 @@ CATEGORIES.forEach(cat => {
 });
 
 function getOutputFormats(ext) {
-  const exts = EXT_MAP[ext.toLowerCase()];
-  if (exts) return exts.filter(e => e !== ext.toLowerCase()).slice(0, 12).map(e => e.toUpperCase());
-  return ['PDF','DOCX','TXT','HTML','PNG','JPEG','MP4','MP3'];
+  const e = ext.toLowerCase();
+  // Override for common formats to show most useful conversions first
+  const overrides = {
+    'pdf': ['DOCX','PNG','JPG','TXT','HTML','XLSX','PPTX','SVG'],
+    'docx': ['PDF','TXT','HTML','ODT','RTF','PNG','JPG'],
+    'doc': ['PDF','DOCX','TXT','HTML','ODT','RTF'],
+    'xlsx': ['PDF','CSV','ODS','HTML','DOCX'],
+    'xls': ['PDF','XLSX','CSV','ODS'],
+    'pptx': ['PDF','PNG','JPG','ODP'],
+    'ppt': ['PDF','PPTX','PNG','JPG'],
+    'png': ['JPG','WEBP','PDF','GIF','BMP','TIFF','SVG','AVIF','ICO'],
+    'jpg': ['PNG','WEBP','PDF','GIF','BMP','TIFF','SVG','AVIF','ICO'],
+    'jpeg': ['PNG','WEBP','PDF','GIF','BMP','TIFF','SVG','AVIF','ICO'],
+    'webp': ['PNG','JPG','PDF','GIF','BMP','TIFF','AVIF'],
+    'gif': ['PNG','JPG','WEBP','MP4','APNG'],
+    'mp4': ['MP3','AVI','MOV','MKV','WEBM','GIF','M4V'],
+    'mov': ['MP4','MP3','AVI','MKV','WEBM'],
+    'avi': ['MP4','MP3','MOV','MKV','WEBM'],
+    'mkv': ['MP4','MP3','AVI','MOV','WEBM'],
+    'mp3': ['WAV','OGG','FLAC','AAC','M4A'],
+    'wav': ['MP3','OGG','FLAC','AAC','M4A'],
+    'heic': ['JPG','PNG','WEBP'],
+    'svg': ['PNG','JPG','PDF','WEBP'],
+  };
+  if (overrides[e]) return overrides[e];
+  const exts = EXT_MAP[e];
+  if (exts) return exts.filter(x => x !== e).slice(0, 10).map(x => x.toUpperCase());
+  return ['PDF','DOCX','TXT','PNG','JPG','MP4','MP3'];
 }
 
 const CAT_COLORS = {
