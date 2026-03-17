@@ -968,12 +968,22 @@ function getOutputFormats(ext) {
     'jpeg': ['PNG','WEBP','PDF','GIF','BMP','TIFF','SVG','AVIF','ICO'],
     'webp': ['PNG','JPG','PDF','GIF','BMP','TIFF','AVIF'],
     'gif': ['PNG','JPG','WEBP','MP4','APNG'],
-    'mp4': ['MP3','AVI','MOV','MKV','WEBM','GIF','M4V'],
-    'mov': ['MP4','MP3','AVI','MKV','WEBM'],
-    'avi': ['MP4','MP3','MOV','MKV','WEBM'],
-    'mkv': ['MP4','MP3','AVI','MOV','WEBM'],
-    'mp3': ['WAV','OGG','FLAC','AAC','M4A'],
-    'wav': ['MP3','OGG','FLAC','AAC','M4A'],
+    'mp4': ['MP3','AVI','MOV','MKV','WEBM','GIF','M4V','WAV','AAC','OGG'],
+    'mov': ['MP4','MP3','AVI','MKV','WEBM','WAV','AAC'],
+    'avi': ['MP4','MP3','MOV','MKV','WEBM','WAV'],
+    'mkv': ['MP4','MP3','AVI','MOV','WEBM','WAV'],
+    'webm': ['MP4','MP3','OGG','WAV'],
+    'ts': ['MP4','MP3','MOV','MKV'],
+    'mts': ['MP4','MP3','MOV','MKV'],
+    'm2ts': ['MP4','MP3','MOV','MKV'],
+    'flv': ['MP4','MP3','AVI','MOV'],
+    'wmv': ['MP4','MP3','AVI','MOV'],
+    'mp3': ['WAV','OGG','FLAC','AAC','M4A','OPUS'],
+    'wav': ['MP3','OGG','FLAC','AAC','M4A','OPUS'],
+    'ogg': ['MP3','WAV','FLAC','AAC'],
+    'flac': ['MP3','WAV','OGG','AAC','M4A'],
+    'aac': ['MP3','WAV','OGG','FLAC','M4A'],
+    'm4a': ['MP3','WAV','OGG','FLAC','AAC'],
     'heic': ['JPG','PNG','WEBP'],
     'svg': ['PNG','JPG','PDF','WEBP'],
   };
@@ -1138,11 +1148,68 @@ async function convertFile(file, targetFmt, setProgress) {
     return textToPdf(file, filename, setProgress);
   }
 
+  // ── FFmpeg.wasm: video & audio in-browser ───────────────────
+  const videoFmts = ['mp4','webm','avi','mov','mkv','flv','wmv','m4v','3gp','ogv','ts','mts','m2ts','vob','mpg','mpeg','f4v','rm','rmvb'];
+  const audioFmts = ['mp3','wav','ogg','flac','aac','m4a','wma','opus','aiff','au'];
+  const allMediaFmts = [...videoFmts, ...audioFmts];
+  if (allMediaFmts.includes(srcExt) && allMediaFmts.includes(targetFmt)) {
+    return ffmpegConvert(file, srcExt, targetFmt, filename, setProgress);
+  }
+
   // ── CloudConvert API for everything else ─────────────────────
   if (CLOUDCONVERT_API_KEY === 'YOUR_API_KEY_HERE') {
     throw new Error('Add your CloudConvert API key to convert ' + srcExt.toUpperCase() + ' → ' + targetFmt.toUpperCase() + '. Get one free at cloudconvert.com');
   }
   return cloudConvert(file, targetFmt, filename, setProgress);
+}
+
+// ── FFmpeg.wasm in-browser video/audio conversion ───────────
+let _ffmpeg = null;
+async function getFFmpeg() {
+  if (_ffmpeg) return _ffmpeg;
+  const { FFmpeg } = await import('https://unpkg.com/@ffmpeg/ffmpeg@0.12.10/dist/esm/index.js');
+  const { fetchFile, toBlobURL } = await import('https://unpkg.com/@ffmpeg/util@0.12.1/dist/esm/index.js');
+  const ff = new FFmpeg();
+  const baseURL = 'https://unpkg.com/@ffmpeg/core@0.12.6/dist/esm';
+  await ff.load({
+    coreURL: await toBlobURL(`${baseURL}/ffmpeg-core.js`, 'text/javascript'),
+    wasmURL: await toBlobURL(`${baseURL}/ffmpeg-core.wasm`, 'application/wasm'),
+  });
+  _ffmpeg = { ff, fetchFile };
+  return _ffmpeg;
+}
+
+async function ffmpegConvert(file, srcExt, targetFmt, filename, setProgress) {
+  setProgress(5);
+  const { ff, fetchFile } = await getFFmpeg();
+  setProgress(20);
+  ff.on('progress', ({ progress }) => setProgress(20 + Math.round(progress * 70)));
+  const inName = `input.${srcExt}`;
+  const outName = `output.${targetFmt}`;
+  await ff.writeFile(inName, await fetchFile(file));
+  setProgress(30);
+
+  // Build ffmpeg args based on output format
+  const args = ['-i', inName];
+  if (['mp3','aac','ogg','flac','wav','m4a','opus','wma','aiff'].includes(targetFmt)) {
+    args.push('-vn'); // audio only
+  }
+  if (targetFmt === 'gif') {
+    args.push('-vf', 'fps=10,scale=320:-1:flags=lanczos', '-loop', '0');
+  }
+  args.push(outName);
+
+  await ff.exec(args);
+  const data = await ff.readFile(outName);
+  const mimeMap = {
+    mp4:'video/mp4', webm:'video/webm', avi:'video/x-msvideo', mov:'video/quicktime',
+    mkv:'video/x-matroska', mp3:'audio/mpeg', wav:'audio/wav', ogg:'audio/ogg',
+    flac:'audio/flac', aac:'audio/aac', m4a:'audio/m4a', gif:'image/gif',
+    opus:'audio/opus', ts:'video/mp2t'
+  };
+  const mime = mimeMap[targetFmt] || 'application/octet-stream';
+  setProgress(98);
+  return { blob: new Blob([data.buffer], { type: mime }), filename };
 }
 
 // ── CloudConvert via Netlify proxy ───────────────────────────
