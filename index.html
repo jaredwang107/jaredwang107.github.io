@@ -937,7 +937,14 @@ const CATEGORIES = [
       card.className = 'fmt-card';
       card.innerHTML = `<div class="fmt-ext">.${f.ext}</div><div class="fmt-name">${f.name}</div>`;
       card.title = `Click to convert ${f.ext} files`;
-      card.addEventListener('click', () => document.getElementById('fileInput').click());
+      card.addEventListener('click', () => {
+        // Scroll to converter section
+        document.getElementById('converter').scrollIntoView({behavior:'smooth'});
+        // Set file input to accept this format
+        const fi = document.getElementById('fileInput');
+        fi.accept = `.${f.ext}`;
+        setTimeout(() => { fi.click(); fi.accept = ''; }, 400);
+      });
       grid.appendChild(card);
     });
     panel.appendChild(grid);
@@ -1212,17 +1219,19 @@ async function ffmpegConvert(file, srcExt, targetFmt, filename, setProgress) {
   ff.FS('writeFile', inName, await fetchFile(file));
   setProgress(30);
 
-  const args = ['-i', inName];
+  const args = ['-i', inName, '-threads', '0'];
   if (['mp3','aac','ogg','flac','wav','m4a','opus'].includes(targetFmt)) {
     args.push('-vn'); // audio only - much faster
-    if (targetFmt === 'mp3') args.push('-q:a', '2');
+    if (targetFmt === 'mp3') args.push('-q:a', '4', '-ar', '44100');
+    if (targetFmt === 'aac') args.push('-b:a', '128k');
+    if (targetFmt === 'wav') args.push('-ar', '44100');
   }
   if (targetFmt === 'gif') {
     args.push('-vf', 'fps=10,scale=480:-1:flags=lanczos', '-loop', '0');
   }
   // Speed up video conversions
   if (['mp4','webm','mkv','mov','avi'].includes(targetFmt)) {
-    args.push('-preset', 'ultrafast', '-crf', '23');
+    args.push('-preset', 'ultrafast', '-crf', '28', '-movflags', '+faststart');
   }
   args.push(outName);
 
@@ -1431,7 +1440,7 @@ function clearStatus() { document.getElementById('statusMsg').className = 'statu
 const PLANS = {
   Free:     { price:'Free',       label:'Create Free Account', sub:'Start converting up to 500 MB files, 10 per day.', payment:false },
   Pro:      { price:'$9.99 / month', label:'Start Pro — $9.99/mo',   sub:'Unlimited conversions up to 2 GB. All 400+ formats. Cancel anytime.', payment:true },
-  Business: { price:'$24.99 / month',label:'Get Business — $24.99/mo',sub:'Everything in Pro plus API access, team seats, and priority support.', payment:true },
+  Business: { price:'$29.99 / month',label:'Get Business — $29.99/mo',sub:'Everything in Pro plus API access, team seats, and priority support.', payment:true },
 };
 
 function openModal(plan) {
@@ -2150,7 +2159,7 @@ if (CLOUDCONVERT_API_KEY !== 'YOUR_API_KEY_HERE') {
           </div>
           <div class="db-card">
             <div style="font-family:'Syne',sans-serif;font-size:0.8rem;font-weight:700;text-transform:uppercase;color:#a78bfa;margin-bottom:1rem">Business</div>
-            <div style="font-family:'Syne',sans-serif;font-size:2.5rem;font-weight:800;margin-bottom:0.25rem">$24.99</div>
+            <div style="font-family:'Syne',sans-serif;font-size:2.5rem;font-weight:800;margin-bottom:0.25rem">$29.99</div>
             <div style="font-size:0.72rem;color:var(--muted);margin-bottom:1.5rem">/ month</div>
             <ul style="list-style:none;display:flex;flex-direction:column;gap:0.5rem;font-size:0.75rem;color:var(--muted);margin-bottom:1.5rem">
               <li><span style="color:var(--success)">✓</span> Everything in Pro</li>
