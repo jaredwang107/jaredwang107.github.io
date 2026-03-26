@@ -87,8 +87,10 @@
   .formats-panel { display: none; }
   .formats-panel.active { display: block; }
   .formats-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(110px, 1fr)); gap: 0.6rem; }
-  .fmt-card { background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 0.75rem; text-align: center; transition: all 0.2s; cursor: pointer; }
-  .fmt-card:hover { border-color: var(--accent); transform: translateY(-2px); background: var(--surface); }
+  .fmt-card { background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 0.75rem; text-align: center; transition: all 0.2s; cursor: pointer; position: relative; }
+  .fmt-card:hover { border-color: var(--accent); transform: translateY(-2px); background: var(--surface); box-shadow: 0 4px 20px rgba(0,229,255,0.12); }
+  .fmt-card:hover::after { content: 'Convert to →'; position: absolute; bottom: -22px; left: 50%; transform: translateX(-50%); font-size: 0.6rem; color: var(--accent); white-space: nowrap; letter-spacing: 0.05em; }
+  .fmt-card.pending-target { border-color: var(--accent); background: rgba(0,229,255,0.07); box-shadow: 0 0 0 2px rgba(0,229,255,0.3); }
   .fmt-ext { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 0.85rem; color: var(--accent); margin-bottom: 0.25rem; }
   .fmt-name { font-size: 0.58rem; color: var(--muted); line-height: 1.3; }
   .cat-header { display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem; flex-wrap: wrap; }
@@ -938,12 +940,24 @@ const CATEGORIES = [
       card.innerHTML = `<div class="fmt-ext">.${f.ext}</div><div class="fmt-name">${f.name}</div>`;
       card.title = `Click to convert ${f.ext} files`;
       card.addEventListener('click', () => {
+        // Highlight this card as the pending target
+        document.querySelectorAll('.fmt-card').forEach(c => c.classList.remove('pending-target'));
+        card.classList.add('pending-target');
         // Scroll to converter section
-        document.getElementById('converter').scrollIntoView({behavior:'smooth'});
-        // Set file input to accept this format
+        document.getElementById('dropZone').scrollIntoView({behavior:'smooth', block:'center'});
+        // Store pending output format
+        window._pendingOutputFmt = f.ext.toLowerCase();
+        // Show hint on drop zone
+        const hint = document.querySelector('#dropZone .drop-sub');
+        if (hint) {
+          if (!hint._origHTML) hint._origHTML = hint.innerHTML;
+          hint.innerHTML = `Drop your file here — output will be <span>.${f.ext.toUpperCase()}</span>`;
+          clearTimeout(hint._hintTimer);
+          hint._hintTimer = setTimeout(() => { hint.innerHTML = hint._origHTML; }, 6000);
+        }
         const fi = document.getElementById('fileInput');
-        fi.accept = `.${f.ext}`;
-        setTimeout(() => { fi.click(); fi.accept = ''; }, 400);
+        fi.accept = '';
+        setTimeout(() => fi.click(), 400);
       });
       grid.appendChild(card);
     });
@@ -1073,13 +1087,15 @@ function renderFileList() {
         <div class="file-size">${formatBytes(f.size)}${tooBig ? ' · <span style="color:var(--danger)">Exceeds free limit</span>' : ''}</div>
         <div class="progress-bar-wrap" id="pw-${i}"><div class="progress-bar-fill" id="pf-${i}"></div></div>
       </div>
-      <select class="format-select">${fmts.map(fmt=>`<option>${fmt}</option>`).join('')}</select>
+      <select class="format-select">${fmts.map(fmt=>`<option${window._pendingOutputFmt && fmt.toLowerCase()===window._pendingOutputFmt ? ' selected' : ''}>${fmt}</option>`).join('')}</select>
       <button class="remove-btn" onclick="removeFile(${i})">×</button>`;
     list.appendChild(item);
   });
   btn.classList.toggle('visible', files.length > 0);
   lim.style.display = showLimit ? 'flex' : 'none';
   clearStatus();
+  // Clear pending format after applying it
+  window._pendingOutputFmt = null;
 }
 
 function removeFile(i) { files.splice(i, 1); renderFileList(); }
@@ -1165,18 +1181,7 @@ async function convertFile(file, targetFmt, setProgress) {
     return textToPdf(file, filename, setProgress);
   }
 
-  // ── FFmpeg.wasm: video & audio in-browser ───────────────────
-  const videoFmts = ['mp4','webm','avi','mov','mkv','flv','wmv','m4v','3gp','ogv','ts','mts','m2ts','vob','mpg','mpeg','f4v','rm','rmvb'];
-  const audioFmts = ['mp3','wav','ogg','flac','aac','m4a','wma','opus','aiff','au'];
-  const allMediaFmts = [...videoFmts, ...audioFmts];
-  if (allMediaFmts.includes(srcExt) && allMediaFmts.includes(targetFmt)) {
-    return ffmpegConvert(file, srcExt, targetFmt, filename, setProgress);
-  }
-
-  // ── CloudConvert API for everything else ─────────────────────
-  if (CLOUDCONVERT_API_KEY === 'YOUR_API_KEY_HERE') {
-    throw new Error('Add your CloudConvert API key to convert ' + srcExt.toUpperCase() + ' → ' + targetFmt.toUpperCase() + '. Get one free at cloudconvert.com');
-  }
+  // ── CloudConvert API for video, audio, and everything else ──
   return cloudConvert(file, targetFmt, filename, setProgress);
 }
 
