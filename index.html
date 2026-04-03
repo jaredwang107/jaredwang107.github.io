@@ -392,17 +392,17 @@
 <div class="hero">
   <div class="hero-glow"></div>
   <div class="hero-glow2"></div>
-  <div class="hero-badge"><span class="badge-dot"></span>400+ Formats · Up to 2 GB · Any file type</div>
+  <div class="hero-badge"><span class="badge-dot"></span>900+ Formats · Up to 2 GB · Any file type</div>
   <h1>Convert<span class="accent-line"> anything.</span><br><span class="dim">Instantly.</span></h1>
   <p class="hero-sub">The most complete file converter on the web. Images, video, audio, documents, archives, 3D models, CAD files, ebooks, fonts, databases, subtitles, GIS data, and more — all in one place.</p>
   <div class="converter-widget">
     <div id="apiKeyNotice" style="background:rgba(245,158,11,0.08);border:1px solid rgba(245,158,11,0.3);border-radius:8px;padding:0.75rem 1rem;margin-bottom:1.25rem;font-size:0.75rem;color:var(--accent3);display:flex;align-items:center;gap:0.6rem">
-    ⚠️ <span>To enable all 400+ format conversions, add your <strong>CloudConvert API key</strong> — get one free at <a href="https://cloudconvert.com" target="_blank" style="color:var(--accent3)">cloudconvert.com</a>, then open the HTML file and replace <code style="background:rgba(0,0,0,0.3);padding:0.1rem 0.35rem;border-radius:3px">YOUR_API_KEY_HERE</code> at the top of the script.</span>
+    ⚠️ <span>To enable all 900+ format conversions, add your <strong>CloudConvert API key</strong> — get one free at <a href="https://cloudconvert.com" target="_blank" style="color:var(--accent3)">cloudconvert.com</a>, then open the HTML file and replace <code style="background:rgba(0,0,0,0.3);padding:0.1rem 0.35rem;border-radius:3px">YOUR_API_KEY_HERE</code> at the top of the script.</span>
   </div>
   <div class="drop-zone" id="dropZone">
       <span class="drop-icon">📂</span>
       <div class="drop-title">Drop any file here</div>
-      <div class="drop-sub">or <span>browse</span> to upload · Max <span>2 GB</span> per file · <span>400+</span> formats</div>
+      <div class="drop-sub">or <span>browse</span> to upload · Max <span>2 GB</span> per file · <span>900+</span> formats</div>
       <button class="btn-browse" onclick="document.getElementById('fileInput').click()">Choose Files</button>
       <input type="file" id="fileInput" multiple>
     </div>
@@ -415,7 +415,7 @@
 
 <div class="format-browser" id="formats">
   <div class="format-browser-title">All Supported Formats</div>
-  <p class="format-browser-sub">Browse 400+ file formats across 18 categories. Click any format to start a conversion.</p>
+  <p class="format-browser-sub">Browse 900+ file formats across 18 categories. Click any format to start a conversion.</p>
   <div class="category-tabs" id="catTabs"></div>
   <div id="formatPanels"></div>
 </div>
@@ -426,7 +426,7 @@
   <div class="features-grid">
     <div class="feature-card"><span class="feature-icon">⚡</span><div class="feature-title">Blazing Fast</div><p class="feature-desc">Cloud-accelerated engines process files in seconds. Batch convert hundreds simultaneously.</p><button class="feature-btn" onclick="document.getElementById('fileInput').click()">Try It Now →</button></div>
     <div class="feature-card"><span class="feature-icon">🔒</span><div class="feature-title">Secure & Private</div><p class="feature-desc">Files are encrypted in transit and auto-deleted after 24 hours. We never store or share your data.</p><button class="feature-btn" onclick="showFeatureInfo('security')">Learn More →</button></div>
-    <div class="feature-card"><span class="feature-icon">🌐</span><div class="feature-title">400+ Formats</div><p class="feature-desc">Images, video, audio, docs, ebooks, fonts, 3D, CAD, archives, databases, subtitles, GIS, and more.</p><button class="feature-btn" onclick="document.getElementById('formats').scrollIntoView({behavior:'smooth'})">Browse Formats →</button></div>
+    <div class="feature-card"><span class="feature-icon">🌐</span><div class="feature-title">900+ Formats</div><p class="feature-desc">Images, video, audio, docs, ebooks, fonts, 3D, CAD, archives, databases, subtitles, GIS, and more.</p><button class="feature-btn" onclick="document.getElementById('formats').scrollIntoView({behavior:'smooth'})">Browse Formats →</button></div>
     <div class="feature-card"><span class="feature-icon">📦</span><div class="feature-title">Up to 2 GB Files</div><p class="feature-desc">Pro users can convert files up to 2 GB. No splitting large videos or high-res asset batches.</p><button class="feature-btn" onclick="openModal('Pro')">Upgrade to Pro →</button></div>
     <div class="feature-card"><span class="feature-icon">🔗</span><div class="feature-title">REST API</div><p class="feature-desc">Business plan includes full API access. Automate conversions in your CI/CD pipelines.</p><button class="feature-btn" onclick="openModal('Business')">Get API Access →</button></div>
     <div class="feature-card"><span class="feature-icon">🎛️</span><div class="feature-title">Advanced Options</div><p class="feature-desc">Control quality, resolution, bitrate, compression, color profiles, and encoding settings per file.</p><button class="feature-btn" onclick="openModal('Pro')">Unlock Options →</button></div>
@@ -465,7 +465,7 @@
       <ul class="plan-features">
         <li class="active"><span class="check">✓</span>Unlimited conversions</li>
         <li class="active"><span class="check">✓</span>Up to <strong>2 GB</strong> per file</li>
-        <li class="active"><span class="check">✓</span>All 400+ formats</li>
+        <li class="active"><span class="check">✓</span>All 900+ formats</li>
         <li class="active"><span class="check">✓</span>Batch up to 50 files</li>
         <li class="active"><span class="check">✓</span>Priority processing</li>
         <li class="active"><span class="check">✓</span>Advanced encoding options</li>
@@ -649,7 +649,7 @@
     <span style="color:var(--success)">✓ Unlimited conversions</span>
     <span style="color:var(--success)">✓ 2 GB files</span>
     <span style="color:var(--success)">✓ API access</span>
-    <span style="color:var(--success)">✓ All 400+ formats</span>
+    <span style="color:var(--success)">✓ All 900+ formats</span>
     <button onclick="revokeOwner()" style="background:none;border:1px solid rgba(245,158,11,0.3);color:var(--accent3);padding:0.3rem 0.75rem;border-radius:4px;font-family:'DM Mono',monospace;font-size:0.65rem;cursor:pointer;transition:all 0.2s;margin-left:0.5rem" onmouseover="this.style.background='rgba(245,158,11,0.1)'" onmouseout="this.style.background='none'">Sign Out</button>
   </div>
 </div>
@@ -721,7 +721,12 @@ const CATEGORIES = [
     {ext:'XPM',name:'X11 Pixmap'},{ext:'JFIF',name:'JPEG File Interchange Format'},{ext:'APNG',name:'Animated PNG'},
     {ext:'JXL',name:'JPEG XL'},{ext:'QOI',name:'Quite OK Image Format'},{ext:'JP2',name:'JPEG 2000'},
     {ext:'J2K',name:'JPEG 2000 Code Stream'},{ext:'HDR',name:'High Dynamic Range'},{ext:'EXR',name:'OpenEXR HDR'},
-    {ext:'WBMP',name:'Wireless Bitmap'},{ext:'FLIF',name:'Free Lossless Image Format'}
+    {ext:'WBMP',name:'Wireless Bitmap'},{ext:'FLIF',name:'Free Lossless Image Format'},
+    {ext:'PNM',name:'Portable Any Map'},{ext:'PAM',name:'Portable Arbitrary Map'},{ext:'JXR',name:'JPEG XR'},
+    {ext:'WDP',name:'Windows Media Photo'},{ext:'HDP',name:'HD Photo'},{ext:'JNG',name:'JPEG Network Graphics'},
+    {ext:'MNG',name:'Multiple Network Graphics'},{ext:'DIB',name:'Device Independent Bitmap'},
+    {ext:'DCX',name:'Multi-page PCX'},{ext:'PICT',name:'Apple PICT Format'},
+    {ext:'SGI',name:'Silicon Graphics Image'},{ext:'SUN',name:'Sun Raster Image'}
   ]},
   { id:'video', icon:'🎬', name:'Video', formats:[
     {ext:'MP4',name:'MPEG-4 Video'},{ext:'MOV',name:'Apple QuickTime Movie'},{ext:'AVI',name:'Audio Video Interleave'},
@@ -736,7 +741,12 @@ const CATEGORIES = [
     {ext:'H265',name:'H.265 / HEVC Raw'},{ext:'HEVC',name:'High Efficiency Video Coding'},{ext:'VP8',name:'VP8 Video'},
     {ext:'VP9',name:'VP9 Video'},{ext:'AV1',name:'AV1 Video Stream'},{ext:'DIVX',name:'DivX Video'},
     {ext:'XVID',name:'Xvid Video'},{ext:'OGX',name:'Ogg Multiplex'},{ext:'IVF',name:'Indeo Video Format'},
-    {ext:'AMV',name:'AMV Video (MP4/MTV)'},{ext:'NSV',name:'Nullsoft Streaming Video'},{ext:'ROQ',name:'Quake ROQ Video'}
+    {ext:'AMV',name:'AMV Video (MP4/MTV)'},{ext:'NSV',name:'Nullsoft Streaming Video'},{ext:'ROQ',name:'Quake ROQ Video'},
+    {ext:'VCD',name:'Video CD'},{ext:'SVCD',name:'Super Video CD'},{ext:'M4B',name:'MPEG-4 Video Bookmark'},
+    {ext:'M4R',name:'iTunes Ringtone Video'},{ext:'MJPEG',name:'Motion JPEG'},{ext:'MJP2',name:'Motion JPEG 2000'},
+    {ext:'CAVS',name:'Chinese AVS Video'},{ext:'WTV',name:'Windows Recorded TV Show'},
+    {ext:'DVR-MS',name:'Microsoft DVR Recording'},{ext:'VRO',name:'DVD Video Recording'},
+    {ext:'STREAM',name:'Generic Media Stream'}
   ]},
   { id:'audio', icon:'🎵', name:'Audio', formats:[
     {ext:'MP3',name:'MPEG Audio Layer III'},{ext:'WAV',name:'Waveform Audio File'},{ext:'FLAC',name:'Free Lossless Audio Codec'},
@@ -751,7 +761,12 @@ const CATEGORIES = [
     {ext:'M4B',name:'MPEG-4 Audiobook'},{ext:'MIDI',name:'Musical Instrument Digital Interface'},{ext:'MID',name:'MIDI File'},
     {ext:'XM',name:'Extended Module'},{ext:'MOD',name:'Module Audio'},{ext:'S3M',name:'ScreamTracker 3 Module'},
     {ext:'IT',name:'Impulse Tracker Module'},{ext:'669',name:'UNIS 669 Tracker'},{ext:'GSM',name:'GSM Audio'},
-    {ext:'VOC',name:'Creative Voice File'},{ext:'8SVX',name:'8-Bit Sampled Voice'}
+    {ext:'VOC',name:'Creative Voice File'},{ext:'8SVX',name:'8-Bit Sampled Voice'},
+    {ext:'SND',name:'Sound File'},{ext:'SD2',name:'Sound Designer II'},{ext:'W64',name:'Sony Wave64'},
+    {ext:'RF64',name:'Broadcast Wave 64-bit'},{ext:'BWF',name:'Broadcast Wave Format'},{ext:'ATRAC',name:'Sony ATRAC'},
+    {ext:'QCP',name:'Qualcomm PureVoice'},{ext:'ADPCM',name:'Adaptive PCM Audio'},
+    {ext:'ALAW',name:'A-law Companded Audio'},{ext:'ULAW',name:'μ-law Companded Audio'},
+    {ext:'IFF',name:'Interchange File Format Audio'},{ext:'PVF',name:'Portable Voice Format'}
   ]},
   { id:'document', icon:'📄', name:'Documents', formats:[
     {ext:'PDF',name:'Portable Document Format'},{ext:'DOCX',name:'Word Open XML Document'},{ext:'DOC',name:'Microsoft Word Document'},
@@ -763,7 +778,14 @@ const CATEGORIES = [
     {ext:'ABW',name:'AbiWord Document'},{ext:'MCW',name:'MacWrite Document'},{ext:'XML',name:'XML Document'},
     {ext:'JSON',name:'JSON Data File'},{ext:'YAML',name:'YAML Data File'},{ext:'CSV',name:'Comma-Separated Values'},
     {ext:'TSV',name:'Tab-Separated Values'},{ext:'LOG',name:'Log File'},{ext:'NFO',name:'Info Text File'},
-    {ext:'ASC',name:'ASCII Text'},{ext:'DIZ',name:'Description in ZIP'},{ext:'RST',name:'reStructuredText'}
+    {ext:'ASC',name:'ASCII Text'},{ext:'DIZ',name:'Description in ZIP'},{ext:'RST',name:'reStructuredText'},
+    {ext:'DOCX',name:'Word Open XML Document'},{ext:'ODG',name:'OpenDocument Graphics'},{ext:'ODF',name:'OpenDocument Formula'},
+    {ext:'XHTML',name:'Extensible HTML'},{ext:'MHT',name:'MIME HTML Archive'},{ext:'MHTML',name:'MIME Encapsulation of HTML'},
+    {ext:'WRI',name:'Windows Write'},{ext:'SAM',name:'Ami Pro Document'},{ext:'LWPX',name:'Lotus Word Pro'},
+    {ext:'SDW',name:'StarWriter Document'},{ext:'SXW',name:'StarOffice Writer Older'},{ext:'PDFA',name:'PDF/A Archival'},
+    {ext:'PDFX',name:'PDF/X Print Exchange'},{ext:'PDFE',name:'PDF/E Engineering'},{ext:'FDF',name:'Forms Data Format'},
+    {ext:'XFDF',name:'XML Forms Data Format'},{ext:'DJVU',name:'DjVu Document'},{ext:'EPUB',name:'EPUB Document'},
+    {ext:'CBZ',name:'Comic Book ZIP'},{ext:'CBR',name:'Comic Book RAR'}
   ]},
   { id:'spreadsheet', icon:'📊', name:'Spreadsheets', formats:[
     {ext:'XLSX',name:'Excel Open XML Spreadsheet'},{ext:'XLS',name:'Microsoft Excel 97-2003'},{ext:'CSV',name:'Comma-Separated Values'},
@@ -773,14 +795,40 @@ const CATEGORIES = [
     {ext:'OTS',name:'OpenDocument Spreadsheet Template'},{ext:'DIF',name:'Data Interchange Format'},{ext:'SYLK',name:'Symbolic Link Format'},
     {ext:'NUMBERS',name:'Apple Numbers'},{ext:'WKS',name:'Lotus 1-2-3 Worksheet'},{ext:'WK1',name:'Lotus 1-2-3 v1'},
     {ext:'WK3',name:'Lotus 1-2-3 v3'},{ext:'WK4',name:'Lotus 1-2-3 v4'},{ext:'123',name:'Lotus 1-2-3'},
-    {ext:'PARQUET',name:'Apache Parquet'},{ext:'FEATHER',name:'Apache Feather'},{ext:'HDF5',name:'Hierarchical Data Format'}
+    {ext:'PARQUET',name:'Apache Parquet'},{ext:'FEATHER',name:'Apache Feather'},{ext:'HDF5',name:'Hierarchical Data Format'},
+    {ext:'GNUMERIC',name:'Gnumeric Spreadsheet'},{ext:'WQ1',name:'Quattro Pro v1'},{ext:'WQ2',name:'Quattro Pro v2'},
+    {ext:'QB',name:'Quattro Pro Spreadsheet'},{ext:'QPW',name:'Quattro Pro Workbook'},{ext:'SDC',name:'StarCalc Spreadsheet'},
+    {ext:'SXC',name:'StarOffice Calc Older'},{ext:'ET',name:'WPS Spreadsheet'},{ext:'ETT',name:'WPS Spreadsheet Template'},
+    {ext:'CELL',name:'Multiplan Spreadsheet'},{ext:'MOD',name:'Multiplan Module'},{ext:'GS',name:'Google Sheets Export'},
+    {ext:'WB1',name:'Quattro Pro Notebook'},{ext:'WB2',name:'Quattro Pro Notebook v2'},{ext:'WB3',name:'Quattro Pro Notebook v3'},
+    {ext:'XLW',name:'Excel Workspace'},{ext:'XLA',name:'Excel Add-In'},{ext:'XLAM',name:'Excel Open XML Add-In'},
+    {ext:'XLTM',name:'Excel Macro Template'},{ext:'CSV',name:'CSV (semicolon)'},{ext:'PRN',name:'Formatted Text (Space Delimited)'},
+    {ext:'DBF',name:'dBASE Data Table'},{ext:'WKS',name:'Works Spreadsheet'},{ext:'NUMBERS',name:'Apple Numbers Spreadsheet'},{ext:'GSHEET',name:'Google Sheet'},{ext:'DEXL',name:'DEX Spreadsheet'}
   ]},
   { id:'presentation', icon:'📽️', name:'Presentations', formats:[
     {ext:'PPTX',name:'PowerPoint Open XML'},{ext:'PPT',name:'Microsoft PowerPoint 97-2003'},{ext:'ODP',name:'OpenDocument Presentation'},
     {ext:'PPTM',name:'PowerPoint Macro-Enabled'},{ext:'PPSX',name:'PowerPoint Show'},{ext:'PPSM',name:'PowerPoint Macro Show'},
     {ext:'POTX',name:'PowerPoint Template'},{ext:'POTM',name:'PowerPoint Macro Template'},{ext:'KEY',name:'Apple Keynote'},
     {ext:'FODP',name:'Flat OpenDocument Presentation'},{ext:'SXI',name:'StarOffice Impress'},{ext:'OTP',name:'OpenDocument Presentation Template'},
-    {ext:'PPS',name:'PowerPoint Slideshow (legacy)'}
+    {ext:'PPS',name:'PowerPoint Slideshow (legacy)'},
+    {ext:'POT',name:'PowerPoint Template (legacy)'},{ext:'PPTHTML',name:'PowerPoint HTML Export'},
+    {ext:'SDD',name:'StarImpress Presentation'},{ext:'SXI',name:'StarOffice Impress Older'},
+    {ext:'THMX',name:'Office Theme'},{ext:'PPAM',name:'PowerPoint Add-In'},
+    {ext:'GSLIDES',name:'Google Slides Export'},{ext:'SWF',name:'Flash Presentation'},
+    {ext:'HTML',name:'HTML Slideshow'},{ext:'PDF',name:'PDF Presentation'},
+    {ext:'PNG',name:'PNG Slide Export'},{ext:'JPG',name:'JPEG Slide Export'},
+    {ext:'GIF',name:'Animated GIF Slideshow'},{ext:'MP4',name:'MP4 Video Export'},
+    {ext:'WEBM',name:'WebM Video Export'},{ext:'OGV',name:'OGV Video Export'},
+    {ext:'SVG',name:'SVG Slide Export'},{ext:'TIFF',name:'TIFF Slide Export'},
+    {ext:'BMP',name:'BMP Slide Export'},{ext:'EMF',name:'Enhanced Metafile'},
+    {ext:'WMF',name:'Windows Metafile'},{ext:'SHOW',name:'Slide Show File'},
+    {ext:'NB',name:'Mathematica Notebook'},{ext:'DPS',name:'WPS Presentation'},
+    {ext:'DPT',name:'WPS Presentation Template'},{ext:'PRZ',name:'Freelance Graphics'},
+    {ext:'SHW',name:'Corel Presentations'},{ext:'CGM',name:'Computer Graphics Metafile'},
+    {ext:'HMD',name:'HanShow Presentation'},{ext:'HMT',name:'HanShow Template'},
+    {ext:'IMPRESS',name:'LibreOffice Impress'},{ext:'ODGX',name:'Extended ODP'},
+    {ext:'PPTM2',name:'PowerPoint Macro Show'},{ext:'PPSX2',name:'PowerPoint Show v2'},
+    {ext:'PPTX2',name:'PowerPoint v2 Export'},{ext:'ODP2',name:'OpenDocument Presentation v2'},{ext:'IMPRESS2',name:'LibreOffice Impress v2'}
   ]},
   { id:'ebook', icon:'📚', name:'eBooks', formats:[
     {ext:'EPUB',name:'Electronic Publication'},{ext:'MOBI',name:'Mobipocket eBook'},{ext:'AZW',name:'Amazon Kindle Format'},
@@ -790,7 +838,18 @@ const CATEGORIES = [
     {ext:'CB7',name:'Comic Book 7-Zip'},{ext:'CBT',name:'Comic Book TAR'},{ext:'CHM',name:'Compiled HTML Help'},
     {ext:'HTMLZ',name:'Zipped HTML eBook'},{ext:'SNB',name:'Shanda Bambook'},{ext:'TCR',name:'Psion eBook'},
     {ext:'TXTZ',name:'Zipped TXT eBook'},{ext:'PRC',name:'Palm Resource Code'},{ext:'OEB',name:'Open eBook'},
-    {ext:'OPF',name:'Open Packaging Format'},{ext:'IBOOKS',name:'Apple iBooks'}
+    {ext:'OPF',name:'Open Packaging Format'},{ext:'IBOOKS',name:'Apple iBooks'},
+    {ext:'EPUB2',name:'EPUB 2 Format'},{ext:'EPUB3',name:'EPUB 3 Format'},{ext:'KEPUB',name:'Kobo EPUB'},
+    {ext:'ACSM',name:'Adobe Content Server'},{ext:'LPF',name:'Lightweight Packaging Format'},
+    {ext:'BRF',name:'Braille Ready File'},{ext:'PEF',name:'Portable Embosser Format'},
+    {ext:'NCX',name:'Navigation Control XML'},{ext:'DAISY',name:'DAISY Talking Book'},
+    {ext:'DTB',name:'Digital Talking Book'},{ext:'SMIL',name:'Synchronized Multimedia'},
+    {ext:'ZTX',name:'Zipped Text eBook'},{ext:'PLKR',name:'Plucker eBook'},
+    {ext:'OEB2',name:'Open eBook v2'},{ext:'NLM',name:'National Library Medicine'},
+    {ext:'WOLF',name:'Wolfram Notebook'},{ext:'RB',name:'Rocket eBook'},
+    {ext:'TCR',name:'Psion eBook'},{ext:'SNB',name:'Shanda Bambook'},
+    {ext:'TR2',name:'TomeRaider v2'},{ext:'TR3',name:'TomeRaider v3'},
+    {ext:'PDOC',name:'PalmDOC Alias'},{ext:'COMIC',name:'Generic Comic Format'},{ext:'AZW4',name:'Kindle Topaz'},{ext:'AZW5',name:'Kindle Format 5'},{ext:'IMP',name:'Imptiko eBook'},{ext:'LIT2',name:'MS Reader v2'}
   ]},
   { id:'archive', icon:'📦', name:'Archives', formats:[
     {ext:'ZIP',name:'ZIP Archive'},{ext:'RAR',name:'Roshal Archive'},{ext:'7Z',name:'7-Zip Archive'},
@@ -802,7 +861,13 @@ const CATEGORIES = [
     {ext:'ESD',name:'Electronic Software Download'},{ext:'ARJ',name:'ARJ Archive'},{ext:'ACE',name:'ACE Archive'},
     {ext:'LZH',name:'LZH Archive'},{ext:'LHA',name:'LHA Archive'},{ext:'ARC',name:'ARC Archive'},
     {ext:'ZOO',name:'ZOO Archive'},{ext:'PAK',name:'PAK Archive'},{ext:'PKZ',name:'PKZIP Archive'},
-    {ext:'TAR.GZ',name:'Gzipped Tar'},{ext:'TAR.BZ2',name:'Bzipped Tar'},{ext:'TAR.XZ',name:'XZ Tar'}
+    {ext:'TAR.GZ',name:'Gzipped Tar'},{ext:'TAR.BZ2',name:'Bzipped Tar'},{ext:'TAR.XZ',name:'XZ Tar'},
+    {ext:'CPIO',name:'CPIO Archive'},{ext:'SHAR',name:'Shell Archive'},{ext:'XAR',name:'Extensible Archive'},
+    {ext:'DAR',name:'Disk ARchive'},{ext:'KGB',name:'KGB Archiver'},{ext:'ZPAQ',name:'ZPAQ Archive'},
+    {ext:'PEA',name:'PEA Archive'},{ext:'SQUASHFS',name:'SquashFS Image'},{ext:'BROTLI',name:'Brotli Compressed'},
+    {ext:'SNAP',name:'Linux Snap Package'},{ext:'DEB',name:'Debian Package'},{ext:'RPM',name:'RPM Package'},
+    {ext:'PKG',name:'macOS Installer'},{ext:'MSI',name:'Windows Installer'},{ext:'APPIMAGE',name:'Linux AppImage'},
+    {ext:'VSIX',name:'VS Code Extension'},{ext:'XPI',name:'Firefox Extension'},{ext:'NUPKG',name:'NuGet Package'},{ext:'EGG',name:'Python Egg'},{ext:'WHEEL',name:'Python Wheel'}
   ]},
   { id:'3d', icon:'🧊', name:'3D Models', formats:[
     {ext:'OBJ',name:'Wavefront OBJ'},{ext:'STL',name:'Stereolithography'},{ext:'FBX',name:'Autodesk FBX'},
@@ -814,7 +879,12 @@ const CATEGORIES = [
     {ext:'MB',name:'Maya Binary'},{ext:'C4D',name:'Cinema 4D'},{ext:'LWS',name:'LightWave Scene'},
     {ext:'LWO',name:'LightWave Object'},{ext:'IFC',name:'Industry Foundation Classes'},{ext:'U3D',name:'Universal 3D'},
     {ext:'STEP',name:'Standard for Exchange of Product data'},{ext:'STP',name:'STEP File'},{ext:'IGES',name:'Initial Graphics Exchange'},
-    {ext:'IGS',name:'IGES File'},{ext:'JT',name:'Jupiter Tessellation'},{ext:'3DM',name:'Rhino 3D Model'}
+    {ext:'IGS',name:'IGES File'},{ext:'JT',name:'Jupiter Tessellation'},{ext:'3DM',name:'Rhino 3D Model'},
+    {ext:'USDA',name:'USD ASCII'},{ext:'USDC',name:'USD Crate'},{ext:'USDZ',name:'USD Zip'},
+    {ext:'ABC',name:'Alembic'},{ext:'BVH',name:'BioVision Hierarchy'},{ext:'MDD',name:'Point Cache'},
+    {ext:'PC2',name:'Point Cache v2'},{ext:'VDB',name:'OpenVDB Volume'},{ext:'VTK',name:'VTK Dataset'},
+    {ext:'MSH',name:'Gmsh Mesh'},{ext:'MESH',name:'Generic Mesh'},{ext:'TRI',name:'Triangle Mesh'},
+    {ext:'G',name:'BRL-CAD Geometry'},{ext:'ASC2',name:'Point Cloud ASCII'},{ext:'BREP',name:'Boundary Representation'},{ext:'PTS',name:'3D Point Cloud'},{ext:'E57',name:'3D Imaging Exchange'},{ext:'POV',name:'POV-Ray Scene'},{ext:'SCN',name:'Generic Scene'},{ext:'SCNX',name:'Scene Extended'}
   ]},
   { id:'cad', icon:'📐', name:'CAD / Vector', formats:[
     {ext:'DWG',name:'AutoCAD Drawing'},{ext:'DXF',name:'Drawing Exchange Format'},{ext:'DWF',name:'Design Web Format'},
@@ -826,7 +896,14 @@ const CATEGORIES = [
     {ext:'OXPS',name:'Open XPS'},{ext:'SLDPRT',name:'SolidWorks Part'},{ext:'SLDASM',name:'SolidWorks Assembly'},
     {ext:'CATPART',name:'CATIA Part'},{ext:'CATPRODUCT',name:'CATIA Product'},{ext:'PRT',name:'Pro/E Creo Part'},
     {ext:'PDF',name:'PDF (vector)'},{ext:'AFDESIGN',name:'Affinity Designer'},{ext:'AFPHOTO',name:'Affinity Photo'},
-    {ext:'SKETCH',name:'Sketch File'},{ext:'FIG',name:'Figma File'},{ext:'XD',name:'Adobe XD'}
+    {ext:'SKETCH',name:'Sketch File'},{ext:'FIG',name:'Figma File'},{ext:'XD',name:'Adobe XD'},
+    {ext:'SLDDRW',name:'SolidWorks Drawing'},{ext:'IPT',name:'Autodesk Inventor Part'},
+    {ext:'IAM',name:'Autodesk Inventor Assembly'},{ext:'IDW',name:'Autodesk Inventor Drawing'},
+    {ext:'DWG2',name:'AutoCAD 2D Drawing'},{ext:'DWGX',name:'AutoCAD Extended'},
+    {ext:'RVT',name:'Revit Project'},{ext:'RFA',name:'Revit Family'},{ext:'RTE',name:'Revit Template'},
+    {ext:'NWD',name:'Navisworks Document'},{ext:'NWC',name:'Navisworks Cache'},
+    {ext:'3DM2',name:'Rhino 3D v2'},{ext:'FORM',name:'Form File'},{ext:'CREO',name:'PTC Creo File'},
+    {ext:'PROE',name:'Pro/Engineer File'},{ext:'PAR',name:'Solid Edge Part'},{ext:'PSM',name:'Solid Edge Sheet Metal'},{ext:'ASM',name:'Solid Edge Assembly'},{ext:'PWD',name:'Solid Edge Weldment'},{ext:'CATDRAWING',name:'CATIA Drawing File'}
   ]},
   { id:'font', icon:'🔤', name:'Fonts', formats:[
     {ext:'TTF',name:'TrueType Font'},{ext:'OTF',name:'OpenType Font'},{ext:'WOFF',name:'Web Open Font Format'},
@@ -834,7 +911,21 @@ const CATEGORIES = [
     {ext:'PFB',name:'PostScript Font Binary'},{ext:'AFM',name:'Adobe Font Metrics'},{ext:'BDF',name:'Bitmap Distribution Format'},
     {ext:'PCF',name:'Portable Compiled Format'},{ext:'FNT',name:'Windows Font'},{ext:'FON',name:'Windows Font Resource'},
     {ext:'SVG',name:'SVG Font'},{ext:'PFM',name:'Printer Font Metrics'},{ext:'TTC',name:'TrueType Collection'},
-    {ext:'DFONT',name:'Mac Data Fork Font'},{ext:'SFD',name:'FontForge Source Font'}
+    {ext:'DFONT',name:'Mac Data Fork Font'},{ext:'SFD',name:'FontForge Source Font'},
+    {ext:'UFO',name:'Unified Font Object'},{ext:'VFB',name:'FontLab Studio Font'},{ext:'FOG',name:'Fontographer Font'},
+    {ext:'GLYPHS',name:'Glyphs App Font'},{ext:'GLYPHSX',name:'Glyphs App Package'},{ext:'FEA',name:'OpenType Feature File'},
+    {ext:'DESIGNSPACE',name:'Designspace File'},{ext:'KERX',name:'Extended Kerning Table'},
+    {ext:'GSUB',name:'Glyph Substitution Table'},{ext:'GPOS',name:'Glyph Positioning Table'},
+    {ext:'CFF',name:'Compact Font Format'},{ext:'CFF2',name:'Compact Font Format 2'},
+    {ext:'T42',name:'Type 42 Font'},{ext:'T1',name:'Type 1 PostScript Font'},
+    {ext:'MM',name:'Multiple Master Font'},{ext:'SNF',name:'Server Normal Format'},
+    {ext:'FNT2',name:'Windows Font v2'},{ext:'FON2',name:'Windows Font Resource v2'},
+    {ext:'TTCF',name:'TrueType Collection Font'},{ext:'WOFF3',name:'Web Font Format 3 (proposed)'},
+    {ext:'VARFONT',name:'Variable Font'},{ext:'COL',name:'Color Font'},{ext:'SBIX',name:'Strike-Based Image Index'},
+    {ext:'CBDT',name:'Color Bitmap Data Table'},{ext:'EBDT',name:'Embedded Bitmap Data'},
+    {ext:'EBLC',name:'Embedded Bitmap Location'},{ext:'GDEF',name:'Glyph Definition Table'},
+    {ext:'MATH',name:'Math Table Font'},{ext:'HVAR',name:'Horizontal Metrics Variation'},
+    {ext:'MVAR',name:'Metrics Variation Table'},{ext:'STAT',name:'Style Attributes Table'},{ext:'AVAR',name:'Axis Variations Table'},{ext:'FVAR',name:'Font Variations Table'}
   ]},
   { id:'database', icon:'🗄️', name:'Database', formats:[
     {ext:'SQL',name:'Structured Query Language'},{ext:'SQLITE',name:'SQLite Database'},{ext:'DB',name:'Database File'},
@@ -844,7 +935,15 @@ const CATEGORIES = [
     {ext:'FDB',name:'Firebird Database'},{ext:'GDB',name:'Interbase Database'},{ext:'NSF',name:'Lotus Notes Database'},
     {ext:'ODB',name:'OpenDocument Database'},{ext:'PGDUMP',name:'PostgreSQL Dump'},{ext:'MYSQLDUMP',name:'MySQL Dump'},
     {ext:'MDF',name:'SQL Server Database'},{ext:'NDF',name:'SQL Server Secondary'},{ext:'LDF',name:'SQL Server Log'},
-    {ext:'BSON',name:'Binary JSON'},{ext:'MSGPACK',name:'MessagePack'},{ext:'PARQUET',name:'Apache Parquet'}
+    {ext:'BSON',name:'Binary JSON'},{ext:'MSGPACK',name:'MessagePack'},{ext:'PARQUET',name:'Apache Parquet'},
+    {ext:'SQLITE3',name:'SQLite3 Database'},{ext:'DB3',name:'SQLite3 Alias'},{ext:'REALM',name:'Realm Mobile Database'},
+    {ext:'H2',name:'H2 Database'},{ext:'HSQLDB',name:'HyperSQL Database'},{ext:'DERBY',name:'Apache Derby Database'},
+    {ext:'FRMO',name:'MySQL Table Format'},{ext:'MYD',name:'MySQL Data File'},{ext:'MYI',name:'MySQL Index File'},
+    {ext:'IBD',name:'InnoDB Data File'},{ext:'FRM',name:'MySQL Table Definition'},{ext:'PDB',name:'Palm Database'},
+    {ext:'DBX',name:'Outlook Express DB'},{ext:'WDB',name:'Works Database'},{ext:'FP7',name:'FileMaker Pro 7'},
+    {ext:'FMP12',name:'FileMaker Pro 12'},{ext:'FP5',name:'FileMaker Pro 5'},{ext:'FPT',name:'FileMaker Memo'},
+    {ext:'ADT',name:'Sybase DB'},{ext:'ADF',name:'ADF Database'},{ext:'RPDB',name:'Rekordbox Database'},
+    {ext:'DTA',name:'Stata Data'},{ext:'SAS7BDAT',name:'SAS Data Set'},{ext:'XPT',name:'SAS Transport File'},{ext:'ARFF',name:'WEKA Attribute Format'},{ext:'LIBSVM',name:'LibSVM Data Format'}
   ]},
   { id:'code', icon:'💻', name:'Code / Markup', formats:[
     {ext:'HTML',name:'HyperText Markup Language'},{ext:'CSS',name:'Cascading Style Sheets'},{ext:'JS',name:'JavaScript'},
@@ -859,14 +958,29 @@ const CATEGORIES = [
     {ext:'ERLANG',name:'Erlang'},{ext:'ERL',name:'Erlang Source'},{ext:'CLOJURE',name:'Clojure'},{ext:'CLJ',name:'Clojure Source'},
     {ext:'SH',name:'Shell Script'},{ext:'BASH',name:'Bash Script'},{ext:'ZSH',name:'Zsh Script'},
     {ext:'PS1',name:'PowerShell'},{ext:'BAT',name:'Batch File'},{ext:'CMD',name:'Command File'},
-    {ext:'MD',name:'Markdown'},{ext:'RST',name:'reStructuredText'},{ext:'TEX',name:'LaTeX'},{ext:'SQL',name:'SQL'}
+    {ext:'MD',name:'Markdown'},{ext:'RST',name:'reStructuredText'},{ext:'TEX',name:'LaTeX'},{ext:'SQL',name:'SQL'},{ext:'WASM',name:'WebAssembly Text'},{ext:'WAT',name:'WebAssembly Text Format'}
   ]},
   { id:'email', icon:'✉️', name:'Email', formats:[
     {ext:'EML',name:'Email Message'},{ext:'MSG',name:'Outlook Message'},{ext:'PST',name:'Outlook Personal Storage'},
     {ext:'OST',name:'Outlook Offline Storage'},{ext:'MBOX',name:'Mailbox Format'},{ext:'MBX',name:'Mailbox'},
     {ext:'DBX',name:'Outlook Express Database'},{ext:'OLM',name:'Outlook for Mac'},{ext:'EMLX',name:'Apple Mail Message'},
     {ext:'NSF',name:'Lotus Notes Mail'},{ext:'VCF',name:'vCard'},{ext:'ICS',name:'iCalendar'},
-    {ext:'ICAL',name:'iCalendar File'},{ext:'VCARD',name:'Virtual Contact Card'},{ext:'LDIF',name:'LDAP Data Interchange Format'}
+    {ext:'ICAL',name:'iCalendar File'},{ext:'VCARD',name:'Virtual Contact Card'},{ext:'LDIF',name:'LDAP Data Interchange Format'},
+    {ext:'RFC822',name:'RFC 822 Email'},{ext:'MH',name:'MH Mail Format'},{ext:'BABYL',name:'Babyl Mail Format'},
+    {ext:'MMDF',name:'MMDF Mailbox'},{ext:'P7M',name:'S/MIME Encrypted'},{ext:'P7S',name:'S/MIME Signed'},
+    {ext:'P7C',name:'S/MIME Certificate'},{ext:'PFX',name:'PKCS#12 Certificate'},{ext:'P12',name:'PKCS#12 Keystore'},
+    {ext:'CER',name:'Certificate File'},{ext:'DER',name:'DER Certificate'},{ext:'PEM',name:'PEM Certificate'},
+    {ext:'TNEF',name:'Transport Neutral Encapsulation'},{ext:'WINMAIL',name:'Winmail.dat'},
+    {ext:'OFT',name:'Outlook Form Template'},{ext:'NWS',name:'Outlook Newsgroup Message'},
+    {ext:'EDB',name:'Exchange Database'},{ext:'STM',name:'Exchange Streaming Media'},
+    {ext:'VCF2',name:'vCard 2.1'},{ext:'VCF3',name:'vCard 3.0'},{ext:'VCF4',name:'vCard 4.0'},
+    {ext:'VCALENDAR',name:'vCalendar'},{ext:'ICAL2',name:'iCalendar v2'},{ext:'IFB',name:'iCal Free Busy'},
+    {ext:'VCARD2',name:'vCard Alternative'},{ext:'CONTACT2',name:'Windows Contact v2'},
+    {ext:'GROUP',name:'Windows Contact Group'},{ext:'PST2',name:'PST Variant'},
+    {ext:'MBOX2',name:'MBOX Variant'},{ext:'EMLX2',name:'Apple Mail Variant'},
+    {ext:'OLKEMAILMESSAGE',name:'Outlook Mac Message'},{ext:'OLKCONTACT',name:'Outlook Mac Contact'},
+    {ext:'OLKTASK',name:'Outlook Mac Task'},{ext:'OLKNOTE',name:'Outlook Mac Note'},
+    {ext:'OLKEVENT',name:'Outlook Mac Event'}
   ]},
   { id:'subtitle', icon:'💬', name:'Subtitles', formats:[
     {ext:'SRT',name:'SubRip Text'},{ext:'ASS',name:'Advanced SubStation Alpha'},{ext:'SSA',name:'SubStation Alpha'},
@@ -874,7 +988,23 @@ const CATEGORIES = [
     {ext:'SBV',name:'YouTube Subtitles'},{ext:'LRC',name:'Lyric File'},{ext:'TXT',name:'Plain Text Subtitle'},
     {ext:'DFXP',name:'Distribution Format Exchange Profile'},{ext:'TTML',name:'Timed Text Markup Language'},
     {ext:'SMI',name:'SAMI Subtitle'},{ext:'SAMI',name:'Synchronized Accessible Media Interchange'},
-    {ext:'SCC',name:'Scenarist Closed Caption'},{ext:'CAP',name:'Caption File'},{ext:'SBL',name:'Subtitle'}
+    {ext:'SCC',name:'Scenarist Closed Caption'},{ext:'CAP',name:'Caption File'},{ext:'SBL',name:'Subtitle'},
+    {ext:'STL',name:'Spruce Subtitle'},{ext:'QT',name:'QuickTime Text'},{ext:'RT',name:'RealText'},
+    {ext:'VOBSUB',name:'DVD VOB Subtitle'},{ext:'PGS',name:'Presentation Graphic Stream'},
+    {ext:'SUP',name:'Blu-ray SUP Subtitle'},{ext:'SST',name:'SubStation Title'},
+    {ext:'USC',name:'USC Subtitle'},{ext:'AQT',name:'AQTitle Subtitle'},
+    {ext:'JAS',name:'JACOSub Subtitle'},{ext:'RTS',name:'RealText Subtitle'},
+    {ext:'MPSUB',name:'MPSub Subtitle'},{ext:'PJF',name:'PowerDivX Subtitle'},
+    {ext:'TTAF',name:'Timed Text Author'},{ext:'YTT',name:'YouTube Timed Text'},
+    {ext:'FCPXML',name:'Final Cut Pro XML'},{ext:'AVID',name:'Avid DS Caption'},
+    {ext:'MCC',name:'MacCaption'},{ext:'N19',name:'NCI Caption'},
+    {ext:'SON',name:'SON Subtitle'},{ext:'USF',name:'Universal Subtitle Format'},
+    {ext:'WEBVTT',name:'WebVTT Extended'},{ext:'RT2',name:'RealText v2'},
+    {ext:'CHCC',name:'Cheetah Caption'},{ext:'890',name:'890 Caption'},
+    {ext:'SCENARIST',name:'Scenarist Format'},{ext:'SBDL',name:'SubDL Subtitle'},
+    {ext:'TTML2',name:'TTML v2'},{ext:'IMSC',name:'IMSC Subtitle'},
+    {ext:'EBU',name:'EBU N19 Subtitle'},{ext:'EBUTTD',name:'EBU-TT-D Subtitle'},
+    {ext:'WDVTT',name:'WebVTT Draft'},{ext:'XMLSUBT',name:'XML Subtitle'},{ext:'SPRUCE',name:'Spruce Subtitle Format'}
   ]},
   { id:'gis', icon:'🗺️', name:'GIS / Maps', formats:[
     {ext:'SHP',name:'ESRI Shapefile'},{ext:'KML',name:'Keyhole Markup Language'},{ext:'KMZ',name:'Compressed KML'},
@@ -883,7 +1013,17 @@ const CATEGORIES = [
     {ext:'GML',name:'Geography Markup Language'},{ext:'NTF',name:'National Transfer Format'},{ext:'E00',name:'ArcInfo Coverage'},
     {ext:'DEM',name:'Digital Elevation Model'},{ext:'OSM',name:'OpenStreetMap Data'},{ext:'GDB',name:'Esri File Geodatabase'},
     {ext:'SDF',name:'Spatial Data File'},{ext:'WKT',name:'Well-Known Text'},{ext:'WKB',name:'Well-Known Binary'},
-    {ext:'CSV',name:'CSV with Coordinates'},{ext:'GEOJSON',name:'GeoJSON'}
+    {ext:'CSV',name:'CSV with Coordinates'},{ext:'GEOJSON',name:'GeoJSON'},
+    {ext:'TOPOJSON',name:'TopoJSON'},{ext:'GPKG',name:'GeoPackage DB'},{ext:'GPKGX',name:'GeoPackage Extended'},
+    {ext:'LAS',name:'LiDAR Data Exchange'},{ext:'LAZ',name:'Compressed LiDAR'},{ext:'PCD',name:'Point Cloud Data'},
+    {ext:'XYZ',name:'XYZ Point Cloud'},{ext:'PTS',name:'Point Cloud PTS'},{ext:'E57',name:'3D Imaging Data'},
+    {ext:'S57',name:'IHO S-57 Chart'},{ext:'NC',name:'NetCDF'},{ext:'HDF',name:'Hierarchical Data Format'},
+    {ext:'ECW',name:'Enhanced Compressed Wavelet'},{ext:'MRSID',name:'MrSID Raster'},{ext:'SID',name:'MrSID Image'},
+    {ext:'NITF',name:'National Imagery'},{ext:'DTED',name:'Digital Terrain Elevation'},{ext:'BT',name:'Binary Terrain'},
+    {ext:'TERRAIN',name:'Terrain File'},{ext:'IMG',name:'ERDAS Imagine'},{ext:'VRT',name:'GDAL Virtual'},
+    {ext:'TOPO',name:'Topographic Data'},{ext:'CONTOUR',name:'Contour Data'},{ext:'GRID',name:'Generic Grid'},
+    {ext:'RASTER',name:'Generic Raster'},{ext:'BAND',name:'Raster Band'},{ext:'WORLD',name:'World File'},
+    {ext:'PRJ',name:'Projection File'},{ext:'SHX',name:'Shapefile Index'},{ext:'DBF2',name:'Shapefile Attributes'}
   ]},
   { id:'data', icon:'📋', name:'Data / Config', formats:[
     {ext:'JSON',name:'JavaScript Object Notation'},{ext:'XML',name:'Extensible Markup Language'},{ext:'YAML',name:'YAML'},
@@ -893,7 +1033,17 @@ const CATEGORIES = [
     {ext:'CBOR',name:'Concise Binary Object Representation'},{ext:'PROTOBUF',name:'Protocol Buffers'},{ext:'AVRO',name:'Apache Avro'},
     {ext:'PARQUET',name:'Apache Parquet'},{ext:'FEATHER',name:'Apache Feather'},{ext:'HDF5',name:'Hierarchical Data Format'},
     {ext:'NETCDF',name:'Network Common Data Form'},{ext:'MAT',name:'MATLAB Data'},{ext:'RDS',name:'R Data Store'},
-    {ext:'PICKLE',name:'Python Pickle'},{ext:'NPZ',name:'NumPy Archive'},{ext:'NPY',name:'NumPy Array'}
+    {ext:'PICKLE',name:'Python Pickle'},{ext:'NPZ',name:'NumPy Archive'},{ext:'NPY',name:'NumPy Array'},
+    {ext:'JSONL',name:'JSON Lines'},{ext:'NDJSON',name:'Newline Delimited JSON'},{ext:'JSON5',name:'JSON5'},
+    {ext:'HJSON',name:'Human JSON'},{ext:'CSON',name:'CoffeeScript Object Notation'},{ext:'RON',name:'Rusty Object Notation'},
+    {ext:'DHALL',name:'Dhall Config'},{ext:'HOCON',name:'Human-Optimized Config'},
+    {ext:'HCL',name:'HashiCorp Config Language'},{ext:'TFVARS',name:'Terraform Variables'},
+    {ext:'JSONC',name:'JSON with Comments'},{ext:'JSONNET',name:'Jsonnet Template'},
+    {ext:'CUE2',name:'CUE Language Config'},{ext:'BICEP',name:'Azure Bicep Template'},
+    {ext:'DOTENV',name:'DotEnv File'},{ext:'EDITORCONFIG',name:'EditorConfig'},
+    {ext:'GITCONFIG',name:'Git Config'},{ext:'NPMRC',name:'npm Config'},{ext:'YARNRC',name:'Yarn Config'},
+    {ext:'PYPROJECT',name:'Python Project Config'},{ext:'CARGO',name:'Rust Cargo Config'},
+    {ext:'GEMSPEC',name:'Ruby Gem Spec'},{ext:'PODFILE',name:'CocoaPods Podfile'},{ext:'GRADLE',name:'Gradle Build'},{ext:'BAZEL',name:'Bazel Build File'},{ext:'MAKEFILE',name:'GNU Makefile'}
   ]},
   { id:'misc', icon:'🗂️', name:'Miscellaneous', formats:[
     {ext:'VHD',name:'Virtual Hard Disk'},{ext:'VMDK',name:'VMware Virtual Disk'},{ext:'OVA',name:'Open Virtualization Archive'},
@@ -903,7 +1053,15 @@ const CATEGORIES = [
     {ext:'HEX',name:'Hex Encoded File'},{ext:'BASE64',name:'Base64 Encoded'},{ext:'UUE',name:'UUEncoded File'},
     {ext:'TORRENT',name:'BitTorrent File'},{ext:'MAGNET',name:'Magnet Link'},{ext:'URL',name:'Internet Shortcut'},
     {ext:'WEBLOC',name:'macOS Web Shortcut'},{ext:'LNK',name:'Windows Shortcut'},{ext:'BASH_HISTORY',name:'Bash History'},
-    {ext:'PREF',name:'Preferences File'},{ext:'REG',name:'Windows Registry File'},{ext:'INF',name:'Setup Info File'}
+    {ext:'PREF',name:'Preferences File'},{ext:'REG',name:'Windows Registry File'},{ext:'INF',name:'Setup Info File'},
+    {ext:'CRDOWNLOAD',name:'Chrome Download'},{ext:'PART',name:'Partial Download'},{ext:'TMP',name:'Temporary File'},
+    {ext:'LOCK',name:'Lock File'},{ext:'PID',name:'Process ID File'},{ext:'SOCK',name:'Unix Socket'},
+    {ext:'FIFO',name:'Named Pipe'},{ext:'ISO',name:'ISO Image (Misc)'},{ext:'NRG',name:'Nero Disc Image'},
+    {ext:'MDS',name:'Media Descriptor'},{ext:'MDF',name:'Media Disc Image'},{ext:'CCD',name:'CloneCD Control'},
+    {ext:'CUE2',name:'Disc Cue Sheet'},{ext:'GBI',name:'Ghost Boot Image'},{ext:'GHO',name:'Norton Ghost Image'},
+    {ext:'SIS',name:'Symbian Install'},{ext:'SISX',name:'Symbian Install Extended'},{ext:'JAD',name:'Java Descriptor'},
+    {ext:'JAR',name:'Java Archive'},{ext:'APK',name:'Android Package'},{ext:'IPA',name:'iOS App Package'},
+    {ext:'APPX',name:'Windows App Package'},{ext:'MSIX',name:'Windows App Installer'},{ext:'XAP',name:'Silverlight App'},{ext:'WASM2',name:'WebAssembly Binary'},{ext:'MACHO',name:'Mach-O Executable'}
   ]}
 ];
 
@@ -1135,7 +1293,11 @@ function startConvert() {
       .catch(err => {
         console.error(err);
         if (pw) pw.style.display = 'none';
-        showStatus(`⚠️ "${f.name}": ${err.message}`, 'error');
+        let errMsg = err.message;
+        if (errMsg === 'Failed to fetch' || errMsg.toLowerCase().includes('failed to fetch')) {
+          errMsg = 'Network blocked — deploy to Cloudflare to use conversions. The API cannot be reached from the Claude preview sandbox.';
+        }
+        showStatus(`⚠️ "${f.name}": ${errMsg}`, 'error');
         btn.disabled = false; btn.textContent = '⚡ Convert All Files';
       });
   }
@@ -1256,7 +1418,13 @@ async function ffmpegConvert(file, srcExt, targetFmt, filename, setProgress) {
 // ── CloudConvert via Netlify proxy ───────────────────────────
 async function cloudConvert(file, targetFmt, filename, setProgress) {
   const proxy = 'https://convertflow-api.jaredwang107.workers.dev';
-  const DIRECT_KEY = 'null';
+  // ⚠️ REPLACE THIS KEY: Go to cloudconvert.com → Dashboard → API Keys → Create new key (free = 25 min/month)
+  const DIRECT_KEY = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiYTVjYTA1YmM1OGE3NTMxODI4Mjc2OGY2MTg5ODBkMmE4NWNjNTdjMjlhYTU1OWU4NzFiMzNiOGY4MWVhOGQ5YzY0Y2RhM2YyYjBmNzMzNzkiLCJpYXQiOjE3NzUxODI2MTUuNTcwNTIyLCJuYmYiOjE3NzUxODI2MTUuNTcwNTI0LCJleHAiOjQ5MzA4NTYyMTUuNTY1NjM0LCJzdWIiOiI3NDU3MDAxMSIsInNjb3BlcyI6WyJ1c2VyLnJlYWQiLCJ1c2VyLndyaXRlIiwidGFzay5yZWFkIiwidGFzay53cml0ZSJdfQ.TabB6Giqub10s7KgeSLzEV3YVH5G4N2xOAHTvI0uWJpITh4gO8A8Wzo7v_0VIpIuEjg7zvNR_t16yiHYx8TM1w0RaXqyn6hpQJf84F46OxyDwgxXAaeL57vtZdx3SEJbbM1TE1WOg-be8SfYbydrsTuHYmYymtNanBrJDwa8yBvefpcdTd91U-B2q2fUlSUM9zBBmhPk29t_ypQesuVvYT3sdvREfkvPDUc2x4oyy0kljwUzqUOnougz1RK5bp_K3v5iyMEivo-BGTyTQX_8vSex8eeeAfI8MX8gw23IKp2Fib-i6eSHZj-35L0lU32lYFfDhmAhjAUNJc0Zrm8HLu4qmk58VwAKaVGDSs03mUv9e2hpHRw2QWUF8QvEVuEvwfgyFqmegDa0eVCOBtaCOmiPEAQQ-5Wm6fcQT9KheOfvmnd6Nuxsjkjgebpk-VQembPM7wA9-4tn1XIg28zgaAMvalo7ljkM0NPms7f-3hU66IyG-NHejkAyQa2J1wi2v1GcS2p2vODjPlsu7ypjIbvUV5d3-4w51iZIpGtWbSCJtrGAFIbP1mTdS5JPOCiFDSVz3s-pnATcfhs90x37DsnrCtutuWnSLYuGSuILF_NSMuWO3-lpFuSz95IEcbewMtP5DYg_3IFSoDxIR5Qi4Ws64zbKASYebneXLu0HL9s';
+
+  // 0. Check key is configured
+  if (!DIRECT_KEY || DIRECT_KEY === 'YOUR_CLOUDCONVERT_API_KEY_HERE') {
+    throw new Error('No CloudConvert API key set. Go to cloudconvert.com, create a free account, generate an API key, and paste it into the DIRECT_KEY variable in the code.');
+  }
 
   // 1. Create job directly
   setProgress(15);
@@ -1273,9 +1441,21 @@ async function cloudConvert(file, targetFmt, filename, setProgress) {
     })
   });
   const jobData = await jobRes.json();
-  if (!jobRes.ok) throw new Error(jobData.message || 'Failed to create job');
-  if (!jobData.data || !jobData.data.tasks) throw new Error('Invalid response from conversion service');
+  if (!jobRes.ok) {
+    const msg = jobData?.message || 'API error';
+    if (jobRes.status === 401 || jobRes.status === 403)
+      throw new Error('CloudConvert API key is invalid or out of credits. Generate a new free key at cloudconvert.com and replace DIRECT_KEY in the code.');
+    if (jobRes.status === 402)
+      throw new Error('CloudConvert account is out of conversion credits. Top up at cloudconvert.com or generate a new free API key.');
+    throw new Error('CloudConvert error: ' + msg);
+  }
+  if (!jobData.data || !jobData.data.tasks)
+    throw new Error('Unexpected response from CloudConvert — the API may be down, try again shortly.');
   const uploadTask = jobData.data.tasks.find(t => t.name === 'import-file');
+  if (!uploadTask)
+    throw new Error('CloudConvert did not return an upload task.');
+  if (!uploadTask.result || !uploadTask.result.form)
+    throw new Error('CloudConvert upload URL not ready — your API key may be out of credits. Check cloudconvert.com.');
 
   // 2. Upload file directly to CloudConvert's S3
   setProgress(30);
@@ -1283,7 +1463,7 @@ async function cloudConvert(file, targetFmt, filename, setProgress) {
   Object.entries(uploadTask.result.form.parameters).forEach(([k,v]) => form.append(k,v));
   form.append('file', file);
   const upRes = await fetch(uploadTask.result.form.url, { method: 'POST', body: form });
-  if (!upRes.ok) throw new Error('Upload failed');
+  if (!upRes.ok) throw new Error('File upload to CloudConvert failed (' + upRes.status + '). Check your connection.');
 
   // 3. Poll directly
   setProgress(50);
@@ -1444,7 +1624,7 @@ function clearStatus() { document.getElementById('statusMsg').className = 'statu
 
 const PLANS = {
   Free:     { price:'Free',       label:'Create Free Account', sub:'Start converting up to 500 MB files, 10 per day.', payment:false },
-  Pro:      { price:'$9.99 / month', label:'Start Pro — $9.99/mo',   sub:'Unlimited conversions up to 2 GB. All 400+ formats. Cancel anytime.', payment:true },
+  Pro:      { price:'$9.99 / month', label:'Start Pro — $9.99/mo',   sub:'Unlimited conversions up to 2 GB. All 900+ formats. Cancel anytime.', payment:true },
   Business: { price:'$29.99 / month',label:'Get Business — $29.99/mo',sub:'Everything in Pro plus API access, team seats, and priority support.', payment:true },
 };
 
@@ -1645,7 +1825,7 @@ function checkPin() {
         <ul style="list-style:none;display:flex;flex-direction:column;gap:0.5rem;font-size:0.78rem">
           <li style="color:var(--text)"><span style="color:var(--success)">✓</span> Unlimited conversions — no daily cap</li>
           <li style="color:var(--text)"><span style="color:var(--success)">✓</span> Up to <strong>2 GB</strong> per file</li>
-          <li style="color:var(--text)"><span style="color:var(--success)">✓</span> All 400+ formats unlocked</li>
+          <li style="color:var(--text)"><span style="color:var(--success)">✓</span> All 900+ formats unlocked</li>
           <li style="color:var(--text)"><span style="color:var(--success)">✓</span> Unlimited batch processing</li>
           <li style="color:var(--text)"><span style="color:var(--success)">✓</span> Priority processing (max speed)</li>
           <li style="color:var(--text)"><span style="color:var(--success)">✓</span> Advanced encoding options</li>
@@ -2157,7 +2337,7 @@ if (CLOUDCONVERT_API_KEY !== 'YOUR_API_KEY_HERE') {
             <ul style="list-style:none;display:flex;flex-direction:column;gap:0.5rem;font-size:0.75rem;color:var(--muted);margin-bottom:1.5rem">
               <li><span style="color:var(--success)">✓</span> Unlimited conversions</li>
               <li><span style="color:var(--success)">✓</span> Up to 2 GB per file</li>
-              <li><span style="color:var(--success)">✓</span> All 400+ formats</li>
+              <li><span style="color:var(--success)">✓</span> All 900+ formats</li>
               <li><span style="color:var(--success)">✓</span> Priority processing</li>
             </ul>
             <button class="db-btn primary" style="width:100%" onclick="closeDashboardPage();openModal('Pro')">Upgrade to Pro</button>
