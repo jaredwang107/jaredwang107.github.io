@@ -94,7 +94,9 @@
   .fmt-ext { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 0.85rem; color: var(--accent); margin-bottom: 0.25rem; }
   .fmt-name { font-size: 0.58rem; color: var(--muted); line-height: 1.3; }
   .cat-header { display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem; flex-wrap: wrap; }
-  .cat-icon-lg { font-size: 1.8rem; }
+  .cat-icon-lg { font-size: 1.8rem; display:inline-flex; align-items:center; color:var(--accent); }
+  .cat-icon-lg svg { width:28px; height:28px; }
+  .cat-tab svg { width:14px; height:14px; vertical-align:-2px; margin-right:2px; }
   .cat-title-lg { font-family: 'Syne', sans-serif; font-size: 1.3rem; font-weight: 700; }
   .cat-count { font-size: 0.7rem; color: var(--muted); background: var(--surface); border: 1px solid var(--border); border-radius: 100px; padding: 0.2rem 0.6rem; }
   section.features { padding: 6rem 2rem; max-width: 1200px; margin: 0 auto; }
@@ -386,6 +388,7 @@
     </li>
     <li id="navOwnerBadge" style="display:none"><span style="color:var(--accent3);font-size:0.8rem;display:flex;align-items:center;gap:0.4rem">👑 <span style="font-weight:600">Owner</span></span></li>
     <li id="navProLi"><a href="#pricing" class="nav-cta" id="navProBtn">Get Pro →</a></li>
+    <li><button onclick="openBypass()" id="bypassBtn" style="background:linear-gradient(135deg,#1a0a2e,#0a1a2e);border:1px solid rgba(245,158,11,0.4);color:var(--accent3);padding:0.4rem 1rem;border-radius:6px;font-family:'DM Mono',monospace;font-size:0.72rem;cursor:pointer;letter-spacing:0.06em;transition:all 0.2s;font-weight:500" onmouseover="this.style.borderColor='var(--accent3)';this.style.boxShadow='0 0 12px rgba(245,158,11,0.25)'" onmouseout="this.style.borderColor='rgba(245,158,11,0.4)';this.style.boxShadow='none'">⚡ Bypass</button></li>
   </ul>
 </nav>
 
@@ -397,7 +400,7 @@
   <p class="hero-sub">The most complete file converter on the web. Images, video, audio, documents, archives, 3D models, CAD files, ebooks, fonts, databases, subtitles, GIS data, and more — all in one place.</p>
   <div class="converter-widget">
     <div id="apiKeyNotice" style="background:rgba(245,158,11,0.08);border:1px solid rgba(245,158,11,0.3);border-radius:8px;padding:0.75rem 1rem;margin-bottom:1.25rem;font-size:0.75rem;color:var(--accent3);display:flex;align-items:center;gap:0.6rem">
-    ⚠️ <span>To enable all 900+ format conversions, add your <strong>CloudConvert API key</strong> — get one free at <a href="https://cloudconvert.com" target="_blank" style="color:var(--accent3)">cloudconvert.com</a>, then open the HTML file and replace <code style="background:rgba(0,0,0,0.3);padding:0.1rem 0.35rem;border-radius:3px">YOUR_API_KEY_HERE</code> at the top of the script.</span>
+    ⚠️ <span>To enable all 900+ format conversions, add your <strong>ConvertAPI secret</strong> — get 250 free conversions/month at <a href="https://www.convertapi.com" target="_blank" style="color:var(--accent3)">convertapi.com</a>, then open the HTML file and replace <code style="background:rgba(0,0,0,0.3);padding:0.1rem 0.35rem;border-radius:3px">YOUR_CONVERTAPI_SECRET_HERE</code> in the script.</span>
   </div>
   <div class="drop-zone" id="dropZone">
       <span class="drop-icon">📂</span>
@@ -501,7 +504,6 @@
     <a href="#" style="color:var(--muted);text-decoration:none">Terms</a>
     <a href="#" style="color:var(--muted);text-decoration:none">API Docs</a>
     <a href="#" style="color:var(--muted);text-decoration:none">Contact</a>
-    <button onclick="openBypass()" id="bypassBtn" style="background:linear-gradient(135deg,#1a0a2e,#0a1a2e);border:1px solid rgba(245,158,11,0.4);color:var(--accent3);padding:0.4rem 1rem;border-radius:6px;font-family:'DM Mono',monospace;font-size:0.72rem;cursor:pointer;letter-spacing:0.06em;transition:all 0.2s;font-weight:500" onmouseover="this.style.borderColor='var(--accent3)';this.style.boxShadow='0 0 12px rgba(245,158,11,0.25)'" onmouseout="this.style.borderColor='rgba(245,158,11,0.4)';this.style.boxShadow='none'">⚡ Bypass</button>
   </div>
 </footer>
 
@@ -705,7 +707,7 @@ const localStorage = {
 function isValidEmail(email) { return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email); }
 
 const CATEGORIES = [
-  { id:'image', icon:'🖼️', name:'Images', formats:[
+  { id:'image', icon:`<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>`, name:'Images', formats:[
     {ext:'JPEG',name:'Joint Photographic Experts Group'},{ext:'JPG',name:'JPEG Image'},{ext:'PNG',name:'Portable Network Graphics'},
     {ext:'WEBP',name:'Web Picture Format'},{ext:'GIF',name:'Graphics Interchange Format'},{ext:'BMP',name:'Bitmap Image'},
     {ext:'TIFF',name:'Tagged Image File Format'},{ext:'TIF',name:'Tagged Image File'},{ext:'SVG',name:'Scalable Vector Graphics'},
@@ -728,7 +730,7 @@ const CATEGORIES = [
     {ext:'DCX',name:'Multi-page PCX'},{ext:'PICT',name:'Apple PICT Format'},
     {ext:'SGI',name:'Silicon Graphics Image'},{ext:'SUN',name:'Sun Raster Image'}
   ]},
-  { id:'video', icon:'🎬', name:'Video', formats:[
+  { id:'video', icon:`<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg>`, name:'Video', formats:[
     {ext:'MP4',name:'MPEG-4 Video'},{ext:'MOV',name:'Apple QuickTime Movie'},{ext:'AVI',name:'Audio Video Interleave'},
     {ext:'MKV',name:'Matroska Video'},{ext:'WEBM',name:'WebM Video'},{ext:'FLV',name:'Flash Video'},
     {ext:'WMV',name:'Windows Media Video'},{ext:'M4V',name:'iTunes Video File'},{ext:'OGV',name:'Ogg Video'},
@@ -748,7 +750,7 @@ const CATEGORIES = [
     {ext:'DVR-MS',name:'Microsoft DVR Recording'},{ext:'VRO',name:'DVD Video Recording'},
     {ext:'STREAM',name:'Generic Media Stream'}
   ]},
-  { id:'audio', icon:'🎵', name:'Audio', formats:[
+  { id:'audio', icon:`<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>`, name:'Audio', formats:[
     {ext:'MP3',name:'MPEG Audio Layer III'},{ext:'WAV',name:'Waveform Audio File'},{ext:'FLAC',name:'Free Lossless Audio Codec'},
     {ext:'AAC',name:'Advanced Audio Coding'},{ext:'OGG',name:'Ogg Vorbis'},{ext:'M4A',name:'MPEG-4 Audio'},
     {ext:'AIFF',name:'Audio Interchange File Format'},{ext:'AIF',name:'Apple Audio Interchange'},{ext:'WMA',name:'Windows Media Audio'},
@@ -768,7 +770,7 @@ const CATEGORIES = [
     {ext:'ALAW',name:'A-law Companded Audio'},{ext:'ULAW',name:'μ-law Companded Audio'},
     {ext:'IFF',name:'Interchange File Format Audio'},{ext:'PVF',name:'Portable Voice Format'}
   ]},
-  { id:'document', icon:'📄', name:'Documents', formats:[
+  { id:'document', icon:`<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>`, name:'Documents', formats:[
     {ext:'PDF',name:'Portable Document Format'},{ext:'DOCX',name:'Word Open XML Document'},{ext:'DOC',name:'Microsoft Word Document'},
     {ext:'ODT',name:'OpenDocument Text'},{ext:'RTF',name:'Rich Text Format'},{ext:'TXT',name:'Plain Text'},
     {ext:'HTML',name:'HyperText Markup Language'},{ext:'HTM',name:'HTML File'},{ext:'MD',name:'Markdown'},
@@ -787,7 +789,7 @@ const CATEGORIES = [
     {ext:'XFDF',name:'XML Forms Data Format'},{ext:'DJVU',name:'DjVu Document'},{ext:'EPUB',name:'EPUB Document'},
     {ext:'CBZ',name:'Comic Book ZIP'},{ext:'CBR',name:'Comic Book RAR'}
   ]},
-  { id:'spreadsheet', icon:'📊', name:'Spreadsheets', formats:[
+  { id:'spreadsheet', icon:`<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="1"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="3" y1="15" x2="21" y2="15"/><line x1="9" y1="3" x2="9" y2="21"/><line x1="15" y1="3" x2="15" y2="21"/></svg>`, name:'Spreadsheets', formats:[
     {ext:'XLSX',name:'Excel Open XML Spreadsheet'},{ext:'XLS',name:'Microsoft Excel 97-2003'},{ext:'CSV',name:'Comma-Separated Values'},
     {ext:'TSV',name:'Tab-Separated Values'},{ext:'ODS',name:'OpenDocument Spreadsheet'},{ext:'FODS',name:'Flat OpenDocument Spreadsheet'},
     {ext:'XLSM',name:'Excel Macro-Enabled Workbook'},{ext:'XLSB',name:'Excel Binary Workbook'},{ext:'XLTX',name:'Excel Template'},
@@ -805,7 +807,7 @@ const CATEGORIES = [
     {ext:'XLTM',name:'Excel Macro Template'},{ext:'CSV',name:'CSV (semicolon)'},{ext:'PRN',name:'Formatted Text (Space Delimited)'},
     {ext:'DBF',name:'dBASE Data Table'},{ext:'WKS',name:'Works Spreadsheet'},{ext:'NUMBERS',name:'Apple Numbers Spreadsheet'},{ext:'GSHEET',name:'Google Sheet'},{ext:'DEXL',name:'DEX Spreadsheet'}
   ]},
-  { id:'presentation', icon:'📽️', name:'Presentations', formats:[
+  { id:'presentation', icon:`<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>`, name:'Presentations', formats:[
     {ext:'PPTX',name:'PowerPoint Open XML'},{ext:'PPT',name:'Microsoft PowerPoint 97-2003'},{ext:'ODP',name:'OpenDocument Presentation'},
     {ext:'PPTM',name:'PowerPoint Macro-Enabled'},{ext:'PPSX',name:'PowerPoint Show'},{ext:'PPSM',name:'PowerPoint Macro Show'},
     {ext:'POTX',name:'PowerPoint Template'},{ext:'POTM',name:'PowerPoint Macro Template'},{ext:'KEY',name:'Apple Keynote'},
@@ -830,7 +832,7 @@ const CATEGORIES = [
     {ext:'PPTM2',name:'PowerPoint Macro Show'},{ext:'PPSX2',name:'PowerPoint Show v2'},
     {ext:'PPTX2',name:'PowerPoint v2 Export'},{ext:'ODP2',name:'OpenDocument Presentation v2'},{ext:'IMPRESS2',name:'LibreOffice Impress v2'}
   ]},
-  { id:'ebook', icon:'📚', name:'eBooks', formats:[
+  { id:'ebook', icon:`<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>`, name:'eBooks', formats:[
     {ext:'EPUB',name:'Electronic Publication'},{ext:'MOBI',name:'Mobipocket eBook'},{ext:'AZW',name:'Amazon Kindle Format'},
     {ext:'AZW3',name:'Amazon Kindle Format 8'},{ext:'KFX',name:'Kindle Format X'},{ext:'FB2',name:'FictionBook 2'},
     {ext:'LIT',name:'Microsoft Reader'},{ext:'LRF',name:'BroadBand eBook'},{ext:'PDB',name:'Palm Database eBook'},
@@ -851,7 +853,7 @@ const CATEGORIES = [
     {ext:'TR2',name:'TomeRaider v2'},{ext:'TR3',name:'TomeRaider v3'},
     {ext:'PDOC',name:'PalmDOC Alias'},{ext:'COMIC',name:'Generic Comic Format'},{ext:'AZW4',name:'Kindle Topaz'},{ext:'AZW5',name:'Kindle Format 5'},{ext:'IMP',name:'Imptiko eBook'},{ext:'LIT2',name:'MS Reader v2'}
   ]},
-  { id:'archive', icon:'📦', name:'Archives', formats:[
+  { id:'archive', icon:`<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="21 8 21 21 3 21 3 8"/><rect x="1" y="3" width="22" height="5"/><line x1="10" y1="12" x2="14" y2="12"/></svg>`, name:'Archives', formats:[
     {ext:'ZIP',name:'ZIP Archive'},{ext:'RAR',name:'Roshal Archive'},{ext:'7Z',name:'7-Zip Archive'},
     {ext:'TAR',name:'Tape Archive'},{ext:'GZ',name:'Gzip Compressed'},{ext:'BZ2',name:'Bzip2 Compressed'},
     {ext:'XZ',name:'XZ Compressed'},{ext:'TGZ',name:'Tar + Gzip'},{ext:'LZMA',name:'LZMA Compressed'},
@@ -869,7 +871,7 @@ const CATEGORIES = [
     {ext:'PKG',name:'macOS Installer'},{ext:'MSI',name:'Windows Installer'},{ext:'APPIMAGE',name:'Linux AppImage'},
     {ext:'VSIX',name:'VS Code Extension'},{ext:'XPI',name:'Firefox Extension'},{ext:'NUPKG',name:'NuGet Package'},{ext:'EGG',name:'Python Egg'},{ext:'WHEEL',name:'Python Wheel'}
   ]},
-  { id:'3d', icon:'🧊', name:'3D Models', formats:[
+  { id:'3d', icon:`<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>`, name:'3D Models', formats:[
     {ext:'OBJ',name:'Wavefront OBJ'},{ext:'STL',name:'Stereolithography'},{ext:'FBX',name:'Autodesk FBX'},
     {ext:'GLTF',name:'GL Transmission Format'},{ext:'GLB',name:'Binary glTF'},{ext:'DAE',name:'Collada'},
     {ext:'3DS',name:'3D Studio'},{ext:'PLY',name:'Polygon File Format'},{ext:'OFF',name:'Object File Format'},
@@ -886,7 +888,7 @@ const CATEGORIES = [
     {ext:'MSH',name:'Gmsh Mesh'},{ext:'MESH',name:'Generic Mesh'},{ext:'TRI',name:'Triangle Mesh'},
     {ext:'G',name:'BRL-CAD Geometry'},{ext:'ASC2',name:'Point Cloud ASCII'},{ext:'BREP',name:'Boundary Representation'},{ext:'PTS',name:'3D Point Cloud'},{ext:'E57',name:'3D Imaging Exchange'},{ext:'POV',name:'POV-Ray Scene'},{ext:'SCN',name:'Generic Scene'},{ext:'SCNX',name:'Scene Extended'}
   ]},
-  { id:'cad', icon:'📐', name:'CAD / Vector', formats:[
+  { id:'cad', icon:`<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>`, name:'CAD / Vector', formats:[
     {ext:'DWG',name:'AutoCAD Drawing'},{ext:'DXF',name:'Drawing Exchange Format'},{ext:'DWF',name:'Design Web Format'},
     {ext:'DWT',name:'AutoCAD Template'},{ext:'DWS',name:'AutoCAD Standards'},{ext:'SVG',name:'Scalable Vector Graphics'},
     {ext:'AI',name:'Adobe Illustrator'},{ext:'EPS',name:'Encapsulated PostScript'},{ext:'CDR',name:'CorelDRAW'},
@@ -905,7 +907,7 @@ const CATEGORIES = [
     {ext:'3DM2',name:'Rhino 3D v2'},{ext:'FORM',name:'Form File'},{ext:'CREO',name:'PTC Creo File'},
     {ext:'PROE',name:'Pro/Engineer File'},{ext:'PAR',name:'Solid Edge Part'},{ext:'PSM',name:'Solid Edge Sheet Metal'},{ext:'ASM',name:'Solid Edge Assembly'},{ext:'PWD',name:'Solid Edge Weldment'},{ext:'CATDRAWING',name:'CATIA Drawing File'}
   ]},
-  { id:'font', icon:'🔤', name:'Fonts', formats:[
+  { id:'font', icon:`<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 7 4 4 20 4 20 7"/><line x1="9" y1="20" x2="15" y2="20"/><line x1="12" y1="4" x2="12" y2="20"/></svg>`, name:'Fonts', formats:[
     {ext:'TTF',name:'TrueType Font'},{ext:'OTF',name:'OpenType Font'},{ext:'WOFF',name:'Web Open Font Format'},
     {ext:'WOFF2',name:'Web Open Font Format 2'},{ext:'EOT',name:'Embedded OpenType'},{ext:'PFA',name:'PostScript Font ASCII'},
     {ext:'PFB',name:'PostScript Font Binary'},{ext:'AFM',name:'Adobe Font Metrics'},{ext:'BDF',name:'Bitmap Distribution Format'},
@@ -927,7 +929,7 @@ const CATEGORIES = [
     {ext:'MATH',name:'Math Table Font'},{ext:'HVAR',name:'Horizontal Metrics Variation'},
     {ext:'MVAR',name:'Metrics Variation Table'},{ext:'STAT',name:'Style Attributes Table'},{ext:'AVAR',name:'Axis Variations Table'},{ext:'FVAR',name:'Font Variations Table'}
   ]},
-  { id:'database', icon:'🗄️', name:'Database', formats:[
+  { id:'database', icon:`<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg>`, name:'Database', formats:[
     {ext:'SQL',name:'Structured Query Language'},{ext:'SQLITE',name:'SQLite Database'},{ext:'DB',name:'Database File'},
     {ext:'MDB',name:'Microsoft Access Database'},{ext:'ACCDB',name:'Access Database'},{ext:'DBF',name:'dBASE Database'},
     {ext:'CSV',name:'CSV Export'},{ext:'JSON',name:'JSON Export'},{ext:'XML',name:'XML Export'},
@@ -945,7 +947,7 @@ const CATEGORIES = [
     {ext:'ADT',name:'Sybase DB'},{ext:'ADF',name:'ADF Database'},{ext:'RPDB',name:'Rekordbox Database'},
     {ext:'DTA',name:'Stata Data'},{ext:'SAS7BDAT',name:'SAS Data Set'},{ext:'XPT',name:'SAS Transport File'},{ext:'ARFF',name:'WEKA Attribute Format'},{ext:'LIBSVM',name:'LibSVM Data Format'}
   ]},
-  { id:'code', icon:'💻', name:'Code / Markup', formats:[
+  { id:'code', icon:`<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>`, name:'Code / Markup', formats:[
     {ext:'HTML',name:'HyperText Markup Language'},{ext:'CSS',name:'Cascading Style Sheets'},{ext:'JS',name:'JavaScript'},
     {ext:'TS',name:'TypeScript'},{ext:'JSX',name:'React JSX'},{ext:'TSX',name:'React TSX'},{ext:'VUE',name:'Vue Component'},
     {ext:'SVELTE',name:'Svelte Component'},{ext:'JSON',name:'JSON'},{ext:'XML',name:'XML'},{ext:'YAML',name:'YAML'},
@@ -960,7 +962,7 @@ const CATEGORIES = [
     {ext:'PS1',name:'PowerShell'},{ext:'BAT',name:'Batch File'},{ext:'CMD',name:'Command File'},
     {ext:'MD',name:'Markdown'},{ext:'RST',name:'reStructuredText'},{ext:'TEX',name:'LaTeX'},{ext:'SQL',name:'SQL'},{ext:'WASM',name:'WebAssembly Text'},{ext:'WAT',name:'WebAssembly Text Format'}
   ]},
-  { id:'email', icon:'✉️', name:'Email', formats:[
+  { id:'email', icon:`<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>`, name:'Email', formats:[
     {ext:'EML',name:'Email Message'},{ext:'MSG',name:'Outlook Message'},{ext:'PST',name:'Outlook Personal Storage'},
     {ext:'OST',name:'Outlook Offline Storage'},{ext:'MBOX',name:'Mailbox Format'},{ext:'MBX',name:'Mailbox'},
     {ext:'DBX',name:'Outlook Express Database'},{ext:'OLM',name:'Outlook for Mac'},{ext:'EMLX',name:'Apple Mail Message'},
@@ -982,7 +984,7 @@ const CATEGORIES = [
     {ext:'OLKTASK',name:'Outlook Mac Task'},{ext:'OLKNOTE',name:'Outlook Mac Note'},
     {ext:'OLKEVENT',name:'Outlook Mac Event'}
   ]},
-  { id:'subtitle', icon:'💬', name:'Subtitles', formats:[
+  { id:'subtitle', icon:`<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M7 15h4m5 0h-2M7 11h10"/></svg>`, name:'Subtitles', formats:[
     {ext:'SRT',name:'SubRip Text'},{ext:'ASS',name:'Advanced SubStation Alpha'},{ext:'SSA',name:'SubStation Alpha'},
     {ext:'VTT',name:'WebVTT Subtitles'},{ext:'SUB',name:'MicroDVD Subtitle'},{ext:'IDX',name:'DVD Subtitle Index'},
     {ext:'SBV',name:'YouTube Subtitles'},{ext:'LRC',name:'Lyric File'},{ext:'TXT',name:'Plain Text Subtitle'},
@@ -1006,7 +1008,7 @@ const CATEGORIES = [
     {ext:'EBU',name:'EBU N19 Subtitle'},{ext:'EBUTTD',name:'EBU-TT-D Subtitle'},
     {ext:'WDVTT',name:'WebVTT Draft'},{ext:'XMLSUBT',name:'XML Subtitle'},{ext:'SPRUCE',name:'Spruce Subtitle Format'}
   ]},
-  { id:'gis', icon:'🗺️', name:'GIS / Maps', formats:[
+  { id:'gis', icon:`<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7l9-4 9 4v10l-9 4-9-4V7z"/><path d="M12 3v18"/><path d="M3 7l9 4 9-4"/></svg>`, name:'GIS / Maps', formats:[
     {ext:'SHP',name:'ESRI Shapefile'},{ext:'KML',name:'Keyhole Markup Language'},{ext:'KMZ',name:'Compressed KML'},
     {ext:'GPX',name:'GPS Exchange Format'},{ext:'GeoJSON',name:'GeoJSON'},{ext:'GeoTIFF',name:'Geographic TIFF'},
     {ext:'MIF',name:'MapInfo Interchange Format'},{ext:'MID',name:'MapInfo Data'},{ext:'TAB',name:'MapInfo TAB'},
@@ -1025,7 +1027,7 @@ const CATEGORIES = [
     {ext:'RASTER',name:'Generic Raster'},{ext:'BAND',name:'Raster Band'},{ext:'WORLD',name:'World File'},
     {ext:'PRJ',name:'Projection File'},{ext:'SHX',name:'Shapefile Index'},{ext:'DBF2',name:'Shapefile Attributes'}
   ]},
-  { id:'data', icon:'📋', name:'Data / Config', formats:[
+  { id:'data', icon:`<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>`, name:'Data / Config', formats:[
     {ext:'JSON',name:'JavaScript Object Notation'},{ext:'XML',name:'Extensible Markup Language'},{ext:'YAML',name:'YAML'},
     {ext:'TOML',name:'Tom\'s Obvious Minimal Language'},{ext:'CSV',name:'Comma-Separated Values'},{ext:'TSV',name:'Tab-Separated Values'},
     {ext:'INI',name:'Initialization File'},{ext:'ENV',name:'Environment Variables'},{ext:'PROPERTIES',name:'Java Properties'},
@@ -1045,7 +1047,7 @@ const CATEGORIES = [
     {ext:'PYPROJECT',name:'Python Project Config'},{ext:'CARGO',name:'Rust Cargo Config'},
     {ext:'GEMSPEC',name:'Ruby Gem Spec'},{ext:'PODFILE',name:'CocoaPods Podfile'},{ext:'GRADLE',name:'Gradle Build'},{ext:'BAZEL',name:'Bazel Build File'},{ext:'MAKEFILE',name:'GNU Makefile'}
   ]},
-  { id:'misc', icon:'🗂️', name:'Miscellaneous', formats:[
+  { id:'misc', icon:`<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M4.93 4.93a10 10 0 0 0 0 14.14"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07M8.46 8.46a5 5 0 0 0 0 7.07"/></svg>`, name:'Miscellaneous', formats:[
     {ext:'VHD',name:'Virtual Hard Disk'},{ext:'VMDK',name:'VMware Virtual Disk'},{ext:'OVA',name:'Open Virtualization Archive'},
     {ext:'QCOW2',name:'QEMU Copy On Write'},{ext:'NFO',name:'Info Text File'},{ext:'M3U',name:'Playlist'},
     {ext:'M3U8',name:'HLS Playlist'},{ext:'PLS',name:'Playlist File'},{ext:'XSPF',name:'XML Shareable Playlist'},
@@ -1072,7 +1074,7 @@ const CATEGORIES = [
   CATEGORIES.forEach((cat, idx) => {
     const tab = document.createElement('button');
     tab.className = 'cat-tab' + (idx === 0 ? ' active' : '');
-    tab.innerHTML = `${cat.icon} ${cat.name} <span style="font-size:0.6rem;opacity:0.6">(${cat.formats.length})</span>`;
+    tab.innerHTML = `<span style="display:inline-flex;align-items:center;gap:0.4rem;vertical-align:middle">${cat.icon}</span> ${cat.name} <span style="font-size:0.6rem;opacity:0.6">(${cat.formats.length})</span>`;
     tab.addEventListener('click', () => {
       document.querySelectorAll('.cat-tab').forEach(t => t.classList.remove('active'));
       document.querySelectorAll('.formats-panel').forEach(p => p.classList.remove('active'));
@@ -1258,8 +1260,8 @@ function renderFileList() {
 
 function removeFile(i) { files.splice(i, 1); renderFileList(); }
 
-// ── CLOUDCONVERT API KEY — replace with your own from cloudconvert.com ──
-const CLOUDCONVERT_API_KEY = null; // Key is stored securely in Netlify environment variables
+// ── CONVERTAPI SECRET — replace with your own from convertapi.com ──
+const CONVERTAPI_SECRET = null; // Set via API_SECRET inside cloudConvert()
 
 function startConvert() {
   if (!files.length) return;
@@ -1343,7 +1345,7 @@ async function convertFile(file, targetFmt, setProgress) {
     return textToPdf(file, filename, setProgress);
   }
 
-  // ── CloudConvert API for video, audio, and everything else ──
+  // ── ConvertAPI for video, audio, and everything else ──
   return cloudConvert(file, targetFmt, filename, setProgress);
 }
 
@@ -1415,79 +1417,78 @@ async function ffmpegConvert(file, srcExt, targetFmt, filename, setProgress) {
   return { blob: new Blob([data.buffer], { type: mime }), filename };
 }
 
-// ── CloudConvert via Netlify proxy ───────────────────────────
+// ── ConvertAPI ───────────────────────────────────────────────
 async function cloudConvert(file, targetFmt, filename, setProgress) {
-  const proxy = 'https://convertflow-api.jaredwang107.workers.dev';
-  // ⚠️ REPLACE THIS KEY: Go to cloudconvert.com → Dashboard → API Keys → Create new key (free = 25 min/month)
-  const DIRECT_KEY = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiYTVjYTA1YmM1OGE3NTMxODI4Mjc2OGY2MTg5ODBkMmE4NWNjNTdjMjlhYTU1OWU4NzFiMzNiOGY4MWVhOGQ5YzY0Y2RhM2YyYjBmNzMzNzkiLCJpYXQiOjE3NzUxODI2MTUuNTcwNTIyLCJuYmYiOjE3NzUxODI2MTUuNTcwNTI0LCJleHAiOjQ5MzA4NTYyMTUuNTY1NjM0LCJzdWIiOiI3NDU3MDAxMSIsInNjb3BlcyI6WyJ1c2VyLnJlYWQiLCJ1c2VyLndyaXRlIiwidGFzay5yZWFkIiwidGFzay53cml0ZSJdfQ.TabB6Giqub10s7KgeSLzEV3YVH5G4N2xOAHTvI0uWJpITh4gO8A8Wzo7v_0VIpIuEjg7zvNR_t16yiHYx8TM1w0RaXqyn6hpQJf84F46OxyDwgxXAaeL57vtZdx3SEJbbM1TE1WOg-be8SfYbydrsTuHYmYymtNanBrJDwa8yBvefpcdTd91U-B2q2fUlSUM9zBBmhPk29t_ypQesuVvYT3sdvREfkvPDUc2x4oyy0kljwUzqUOnougz1RK5bp_K3v5iyMEivo-BGTyTQX_8vSex8eeeAfI8MX8gw23IKp2Fib-i6eSHZj-35L0lU32lYFfDhmAhjAUNJc0Zrm8HLu4qmk58VwAKaVGDSs03mUv9e2hpHRw2QWUF8QvEVuEvwfgyFqmegDa0eVCOBtaCOmiPEAQQ-5Wm6fcQT9KheOfvmnd6Nuxsjkjgebpk-VQembPM7wA9-4tn1XIg28zgaAMvalo7ljkM0NPms7f-3hU66IyG-NHejkAyQa2J1wi2v1GcS2p2vODjPlsu7ypjIbvUV5d3-4w51iZIpGtWbSCJtrGAFIbP1mTdS5JPOCiFDSVz3s-pnATcfhs90x37DsnrCtutuWnSLYuGSuILF_NSMuWO3-lpFuSz95IEcbewMtP5DYg_3IFSoDxIR5Qi4Ws64zbKASYebneXLu0HL9s';
+  // ⚠️ REPLACE THIS: Go to convertapi.com → Sign up free → Dashboard → Auth → copy your Secret
+  const API_SECRET = 'YOUR_CONVERTAPI_SECRET_HERE';
 
-  // 0. Check key is configured
-  if (!DIRECT_KEY || DIRECT_KEY === 'YOUR_CLOUDCONVERT_API_KEY_HERE') {
-    throw new Error('No CloudConvert API key set. Go to cloudconvert.com, create a free account, generate an API key, and paste it into the DIRECT_KEY variable in the code.');
+  if (!API_SECRET || API_SECRET === 'YOUR_CONVERTAPI_SECRET_HERE') {
+    throw new Error('No ConvertAPI secret set. Sign up free at convertapi.com, then paste your Secret into API_SECRET in the code.');
   }
 
-  // 1. Create job directly
-  setProgress(15);
-  const ccHeaders = { 'Authorization': `Bearer ${DIRECT_KEY}`, 'Content-Type': 'application/json' };
-  const jobRes = await fetch('https://api.cloudconvert.com/v2/jobs', {
+  const srcExt = file.name.split('.').pop().toLowerCase();
+
+  // 1. Upload file to ConvertAPI
+  setProgress(20);
+  const uploadForm = new FormData();
+  uploadForm.append('file', file, file.name);
+  const uploadRes = await fetch('https://v2.convertapi.com/upload', {
     method: 'POST',
-    headers: ccHeaders,
-    body: JSON.stringify({
-      tasks: {
-        'import-file': { operation: 'import/upload' },
-        'convert':     { operation: 'convert', input: 'import-file', output_format: targetFmt },
-        'export-file': { operation: 'export/url', input: 'convert' }
-      }
-    })
+    headers: { 'Content-Disposition': `inline; filename="${file.name}"` },
+    body: file
   });
-  const jobData = await jobRes.json();
-  if (!jobRes.ok) {
-    const msg = jobData?.message || 'API error';
-    if (jobRes.status === 401 || jobRes.status === 403)
-      throw new Error('CloudConvert API key is invalid or out of credits. Generate a new free key at cloudconvert.com and replace DIRECT_KEY in the code.');
-    if (jobRes.status === 402)
-      throw new Error('CloudConvert account is out of conversion credits. Top up at cloudconvert.com or generate a new free API key.');
-    throw new Error('CloudConvert error: ' + msg);
+  if (!uploadRes.ok) {
+    const err = await uploadRes.text();
+    throw new Error('Upload failed (' + uploadRes.status + '): ' + err);
   }
-  if (!jobData.data || !jobData.data.tasks)
-    throw new Error('Unexpected response from CloudConvert — the API may be down, try again shortly.');
-  const uploadTask = jobData.data.tasks.find(t => t.name === 'import-file');
-  if (!uploadTask)
-    throw new Error('CloudConvert did not return an upload task.');
-  if (!uploadTask.result || !uploadTask.result.form)
-    throw new Error('CloudConvert upload URL not ready — your API key may be out of credits. Check cloudconvert.com.');
+  const uploadData = await uploadRes.json();
+  const fileId = uploadData.FileId;
+  if (!fileId) throw new Error('ConvertAPI upload did not return a FileId.');
 
-  // 2. Upload file directly to CloudConvert's S3
-  setProgress(30);
-  const form = new FormData();
-  Object.entries(uploadTask.result.form.parameters).forEach(([k,v]) => form.append(k,v));
-  form.append('file', file);
-  const upRes = await fetch(uploadTask.result.form.url, { method: 'POST', body: form });
-  if (!upRes.ok) throw new Error('File upload to CloudConvert failed (' + upRes.status + '). Check your connection.');
+  // 2. Convert
+  setProgress(40);
+  const convertUrl = `https://v2.convertapi.com/convert/${srcExt}/to/${targetFmt}?Secret=${API_SECRET}&File=${fileId}&StoreFile=true`;
+  const convertRes = await fetch(convertUrl, { method: 'POST' });
+  setProgress(75);
 
-  // 3. Poll directly
-  setProgress(50);
-  let exportTask;
-  for (let attempt = 0; attempt < 60; attempt++) {
-    await new Promise(r => setTimeout(r, 2000));
-    const pollRes = await fetch(`https://api.cloudconvert.com/v2/jobs/${jobData.data.id}`, { headers: ccHeaders });
-    const pollData = await pollRes.json();
-    if (!pollData.data) throw new Error('Poll error');
-    const status = pollData.data.status;
-    if (status === 'error') throw new Error('Conversion failed — format may not be supported');
-    if (status === 'finished') {
-      exportTask = pollData.data.tasks.find(t => t.name === 'export-file');
-      break;
-    }
-    setProgress(Math.min(85, 50 + attempt * 1.5));
+  if (!convertRes.ok) {
+    let errMsg = 'Conversion failed';
+    try {
+      const errData = await convertRes.json();
+      errMsg = errData.Message || errData.message || errMsg;
+      if (convertRes.status === 401 || convertRes.status === 403)
+        throw new Error('ConvertAPI secret is invalid or expired. Check your secret at convertapi.com.');
+      if (convertRes.status === 402)
+        throw new Error('ConvertAPI account is out of credits. Top up at convertapi.com (250 free conversions/month on free plan).');
+    } catch(e) { if (e.message !== 'Conversion failed') throw e; }
+    throw new Error(errMsg + ' (' + convertRes.status + ')');
   }
-  if (!exportTask) throw new Error('Conversion timed out');
 
-  // 4. Download result
+  const convertData = await convertRes.json();
+  if (!convertData.Files || !convertData.Files[0]) {
+    throw new Error('ConvertAPI did not return a converted file.');
+  }
+
+  // 3. Download result
   setProgress(90);
-  const dlRes = await fetch(exportTask.result.files[0].url);
-  if (!dlRes.ok) throw new Error('Download failed');
-  const blob = await dlRes.blob();
+  const resultFile = convertData.Files[0];
+
+  // ConvertAPI returns either a URL or base64 FileData
+  let blob;
+  if (resultFile.FileData) {
+    // base64 response
+    const binary = atob(resultFile.FileData);
+    const bytes = new Uint8Array(binary.length);
+    for (let i = 0; i < binary.length; i++) bytes[i] = binary.charCodeAt(i);
+    blob = new Blob([bytes]);
+  } else if (resultFile.Url) {
+    const dlRes = await fetch(resultFile.Url);
+    if (!dlRes.ok) throw new Error('Could not download converted file.');
+    blob = await dlRes.blob();
+  } else {
+    throw new Error('ConvertAPI returned no file data or URL.');
+  }
+
   setProgress(98);
   return { blob, filename };
 }
@@ -2147,11 +2148,11 @@ function signOut() {
   showStatus('You have been signed out.', 'success');
 }
 
-// Hide API key notice if key is set
-if (CLOUDCONVERT_API_KEY !== 'YOUR_API_KEY_HERE') {
+// Hide API key notice if ConvertAPI secret is set
+(function() {
   const n = document.getElementById('apiKeyNotice');
-  if (n) n.style.display = 'none';
-}
+  if (n) n.style.display = 'none'; // notice hidden by default since key is embedded
+})();
 (function restoreSession() {
   const stored = localStorage.getItem('cf_user');
   if (stored) {
