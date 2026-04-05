@@ -376,10 +376,10 @@
     <span class="logo-text">Convert<span>Flow</span><sup class="copyright-badge">©</sup></span>
   </a>
   <ul>
-    <li><a href="#" onclick="navigate('home');return false;" id="nav-home" class="nav-page-link">Home</a></li>
-    <li><a href="#" onclick="navigate('formats');return false;" id="nav-formats" class="nav-page-link">Formats</a></li>
-    <li><a href="#" onclick="navigate('features');return false;" id="nav-features" class="nav-page-link">Features</a></li>
-    <li><a href="#" onclick="navigate('pricing');return false;" id="nav-pricing" class="nav-page-link">Pricing</a></li>
+    <li><a href="index.html" id="nav-home" class="nav-page-link active">Home</a></li>
+    <li><a href="formats.html" id="nav-formats" class="nav-page-link">Formats</a></li>
+    <li><a href="features.html" id="nav-features" class="nav-page-link">Features</a></li>
+    <li><a href="pricing.html" id="nav-pricing" class="nav-page-link">Pricing</a></li>
     <li id="navSignIn"><a href="#" onclick="openAuthModal('signin')">Sign In</a></li>
     <li id="navUserLi" style="display:none">
       <span style="display:flex;align-items:center;gap:0.75rem">
@@ -388,13 +388,13 @@
       </span>
     </li>
     <li id="navOwnerBadge" style="display:none"><span style="color:var(--accent3);font-size:0.8rem;display:flex;align-items:center;gap:0.4rem">👑 <span style="font-weight:600">Owner</span></span></li>
-    <li id="navProLi"><a href="#" onclick="navigate('pricing');return false;" class="nav-cta" id="navProBtn">Get Pro →</a></li>
+    <li id="navProLi"><a href="pricing.html" class="nav-cta" id="navProBtn">Get Pro →</a></li>
     <li><button onclick="openBypass()" id="bypassBtn" style="background:linear-gradient(135deg,#1a0a2e,#0a1a2e);border:1px solid rgba(245,158,11,0.4);color:var(--accent3);padding:0.4rem 1rem;border-radius:6px;font-family:'DM Mono',monospace;font-size:0.72rem;cursor:pointer;letter-spacing:0.06em;transition:all 0.2s;font-weight:500" onmouseover="this.style.borderColor='var(--accent3)';this.style.boxShadow='0 0 12px rgba(245,158,11,0.25)'" onmouseout="this.style.borderColor='rgba(245,158,11,0.4)';this.style.boxShadow='none'">⚡ Bypass</button></li>
   </ul>
   <button class="hamburger" id="hamburgerBtn" onclick="toggleMobileNav()" aria-label="Menu"><span></span><span></span><span></span></button>
 </nav>
 
-<div id="page-home" class="page-section"><div class="hero">
+<div class="hero">
   <div class="hero-glow"></div>
   <div class="hero-glow2"></div>
   <div class="hero-badge"><span class="badge-dot"></span>900+ Formats · Up to 2 GB · Any file type</div>
@@ -417,88 +417,6 @@
     <div class="limit-note" id="limitNote" style="display:none">⚠️ Free plan: 500 MB max. <span class="upgrade-link" onclick="openModal('Pro')">Upgrade to Pro</span> for 2 GB.</div>
   </div>
 </div>
-</div><!-- /page-home -->
-
-<div id="page-formats" class="page-section"><div class="format-browser" id="formats">
-  <div class="format-browser-title">All Supported Formats</div>
-  <p class="format-browser-sub">Browse 900+ file formats across 18 categories. Click any format to start a conversion.</p>
-  <div class="category-tabs" id="catTabs"></div>
-  <div id="formatPanels"></div>
-</div>
-</div><!-- /page-formats -->
-
-<div id="page-features" class="page-section"><section class="features" id="features">
-  <p class="section-label">Why ConvertFlow</p>
-  <h2 class="section-title">Built different.<br>Converts everything.</h2>
-  <div class="features-grid">
-    <div class="feature-card"><span class="feature-icon">⚡</span><div class="feature-title">Blazing Fast</div><p class="feature-desc">Cloud-accelerated engines process files in seconds. Batch convert hundreds simultaneously.</p><button class="feature-btn" onclick="document.getElementById('fileInput').click()">Try It Now →</button></div>
-    <div class="feature-card"><span class="feature-icon">🔒</span><div class="feature-title">Secure & Private</div><p class="feature-desc">Files are encrypted in transit and auto-deleted after 24 hours. We never store or share your data.</p><button class="feature-btn" onclick="showFeatureInfo('security')">Learn More →</button></div>
-    <div class="feature-card"><span class="feature-icon">🌐</span><div class="feature-title">900+ Formats</div><p class="feature-desc">Images, video, audio, docs, ebooks, fonts, 3D, CAD, archives, databases, subtitles, GIS, and more.</p><button class="feature-btn" onclick="navigate('formats')">Browse Formats →</button></div>
-    <div class="feature-card"><span class="feature-icon">📦</span><div class="feature-title">Up to 2 GB Files</div><p class="feature-desc">Pro users can convert files up to 2 GB. No splitting large videos or high-res asset batches.</p><button class="feature-btn" onclick="openModal('Pro')">Upgrade to Pro →</button></div>
-    <div class="feature-card"><span class="feature-icon">🔗</span><div class="feature-title">REST API</div><p class="feature-desc">Business plan includes full API access. Automate conversions in your CI/CD pipelines.</p><button class="feature-btn" onclick="openModal('Business')">Get API Access →</button></div>
-    <div class="feature-card"><span class="feature-icon">🎛️</span><div class="feature-title">Advanced Options</div><p class="feature-desc">Control quality, resolution, bitrate, compression, color profiles, and encoding settings per file.</p><button class="feature-btn" onclick="openModal('Pro')">Unlock Options →</button></div>
-    <div class="feature-card"><span class="feature-icon">📊</span><div class="feature-title">Batch Processing</div><p class="feature-desc">Upload and convert up to 50 files at once with Pro, unlimited with Business.</p><button class="feature-btn" onclick="openModal('Pro')">Start Batch →</button></div>
-    <div class="feature-card"><span class="feature-icon">🖥️</span><div class="feature-title">No Install Needed</div><p class="feature-desc">100% browser-based. Works on Mac, Windows, Linux, iOS, and Android seamlessly.</p><button class="feature-btn" onclick="window.scrollTo({top:0,behavior:'smooth'})">Start Converting →</button></div>
-  </div>
-</section>
-</div><!-- /page-features -->
-
-<div id="page-pricing" class="page-section"><div id="pricing">
-  <div class="pricing-header">
-    <p class="section-label">Pricing</p>
-    <h2 class="section-title">Simple, transparent plans.</h2>
-    <p style="font-size:0.85rem;color:var(--muted);margin-top:0.75rem">Start free. Upgrade when you need more power.</p>
-  </div>
-  <div class="pricing-grid">
-    <div class="pricing-card">
-      <div class="plan-name">Free</div>
-      <div class="plan-price"><sup>$</sup>0</div>
-      <div class="plan-period">forever</div>
-      <ul class="plan-features">
-        <li class="active"><span class="check">✓</span>10 conversions / day</li>
-        <li class="active"><span class="check">✓</span>Up to 500 MB per file</li>
-        <li class="active"><span class="check">✓</span>200+ formats</li>
-        <li><span class="cross">✗</span>Batch convert</li>
-        <li><span class="cross">✗</span>Priority processing</li>
-        <li><span class="cross">✗</span>Advanced encoding options</li>
-        <li><span class="cross">✗</span>API access</li>
-      </ul>
-      <button class="btn-plan" onclick="openModal('Free')">Get Started Free</button>
-    </div>
-    <div class="pricing-card featured">
-      <div class="featured-badge">MOST POPULAR</div>
-      <div class="plan-name">Pro</div>
-      <div class="plan-price"><sup>$</sup>9<span style="font-size:1.4rem;vertical-align:-0.15em;opacity:0.7">.</span>99</div>
-      <div class="plan-period">/ month</div>
-      <ul class="plan-features">
-        <li class="active"><span class="check">✓</span>Unlimited conversions</li>
-        <li class="active"><span class="check">✓</span>Up to <strong>2 GB</strong> per file</li>
-        <li class="active"><span class="check">✓</span>All 900+ formats</li>
-        <li class="active"><span class="check">✓</span>Batch up to 50 files</li>
-        <li class="active"><span class="check">✓</span>Priority processing</li>
-        <li class="active"><span class="check">✓</span>Advanced encoding options</li>
-        <li><span class="cross">✗</span>API access</li>
-      </ul>
-      <button class="btn-plan primary" onclick="openModal('Pro')">Start Pro — $9.99/mo</button>
-    </div>
-    <div class="pricing-card">
-      <div class="plan-name">Business</div>
-      <div class="plan-price"><sup>$</sup>29<span style="font-size:1.4rem;vertical-align:-0.15em;opacity:0.7">.</span>99</div>
-      <div class="plan-period">/ month</div>
-      <ul class="plan-features">
-        <li class="active"><span class="check">✓</span>Everything in Pro</li>
-        <li class="active"><span class="check">✓</span>REST API access</li>
-        <li class="active"><span class="check">✓</span>Unlimited batch size</li>
-        <li class="active"><span class="check">✓</span>5 team seats</li>
-        <li class="active"><span class="check">✓</span>Priority support</li>
-        <li class="active"><span class="check">✓</span>Custom integrations</li>
-        <li class="active"><span class="check">✓</span>Usage analytics dashboard</li>
-      </ul>
-      <button class="btn-plan" onclick="openModal('Business')">Get Business</button>
-    </div>
-  </div>
-</div>
-</div><!-- /page-pricing -->
 
 <footer>
   <div style="display:flex;align-items:center;gap:0.75rem">
@@ -1077,6 +995,7 @@ const CATEGORIES = [
 (function() {
   const tabs = document.getElementById('catTabs');
   const panels = document.getElementById('formatPanels');
+  if (!tabs || !panels) return; // not on this page
   CATEGORIES.forEach((cat, idx) => {
     const tab = document.createElement('button');
     tab.className = 'cat-tab' + (idx === 0 ? ' active' : '');
@@ -1134,7 +1053,7 @@ const CATEGORIES = [
 
 // Build EXT lookup
 const EXT_MAP = {};
-CATEGORIES.forEach(cat => {
+if (typeof CATEGORIES !== 'undefined') CATEGORIES.forEach(cat => {
   const exts = cat.formats.map(f => f.ext.toLowerCase());
   exts.forEach(e => { EXT_MAP[e] = exts; });
 });
@@ -1216,10 +1135,12 @@ let files = [], isPro = false;
 
 const dropZone = document.getElementById('dropZone');
 const fileInput = document.getElementById('fileInput');
-dropZone.addEventListener('dragover', e => { e.preventDefault(); dropZone.classList.add('dragover'); });
-dropZone.addEventListener('dragleave', () => dropZone.classList.remove('dragover'));
-dropZone.addEventListener('drop', e => { e.preventDefault(); dropZone.classList.remove('dragover'); handleFiles(e.dataTransfer.files); });
-fileInput.addEventListener('change', () => handleFiles(fileInput.files));
+if (dropZone && fileInput) {
+  dropZone.addEventListener('dragover', e => { e.preventDefault(); dropZone.classList.add('dragover'); });
+  dropZone.addEventListener('dragleave', () => dropZone.classList.remove('dragover'));
+  dropZone.addEventListener('drop', e => { e.preventDefault(); dropZone.classList.remove('dragover'); handleFiles(e.dataTransfer.files); });
+  fileInput.addEventListener('change', () => handleFiles(fileInput.files));
+}
 
 const MAX_BYTES = 2 * 1024 * 1024 * 1024;
 const MAX_FREE  = 500 * 1024 * 1024;
@@ -2182,52 +2103,6 @@ function closeMobileNav() {
   ul.classList.remove('mobile-open');
   btn.classList.remove('open');
 }
-
-// ── Client-side Page Router ──────────────────────────────────
-const PAGES = ['home', 'formats', 'features', 'pricing'];
-
-function navigate(page) {
-  if (!PAGES.includes(page)) page = 'home';
-  // Hide all pages
-  PAGES.forEach(p => {
-    const el = document.getElementById('page-' + p);
-    if (el) el.classList.remove('active');
-    const navEl = document.getElementById('nav-' + p);
-    if (navEl) navEl.classList.remove('active');
-  });
-  // Show target page
-  const target = document.getElementById('page-' + page);
-  if (target) {
-    target.classList.add('active');
-    target.style.animation = 'none';
-    target.offsetHeight;
-    target.style.animation = '';
-  }
-  const navTarget = document.getElementById('nav-' + page);
-  if (navTarget) navTarget.classList.add('active');
-  // Update hash safely (works in iframes too)
-  try { window.location.hash = page === 'home' ? '' : page; } catch(e) {}
-  // Scroll to top
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-  closeMobileNav();
-}
-
-// Handle browser back/forward via hash change
-window.addEventListener('hashchange', () => {
-  const page = getPageFromHash();
-  navigate(page);
-});
-
-function getPageFromHash() {
-  const hash = window.location.hash.replace('#', '');
-  return PAGES.includes(hash) ? hash : 'home';
-}
-
-// Init on load
-(function() {
-  const startPage = getPageFromHash();
-  navigate(startPage);
-})();
 
 </script>
 
