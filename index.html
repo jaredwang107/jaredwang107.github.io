@@ -402,7 +402,7 @@
   <p class="hero-sub">The most complete file converter on the web. Images, video, audio, documents, archives, 3D models, CAD files, ebooks, fonts, databases, subtitles, GIS data, and more — all in one place.</p>
   <div class="converter-widget">
     <div id="apiKeyNotice" style="background:rgba(245,158,11,0.08);border:1px solid rgba(245,158,11,0.3);border-radius:8px;padding:0.75rem 1rem;margin-bottom:1.25rem;font-size:0.75rem;color:var(--accent3);display:flex;align-items:center;gap:0.6rem">
-    ⚠️ <span>To enable all 900+ format conversions, add your <strong>ConvertAPI secret</strong> — get 250 free conversions/month at <a href="https://www.convertapi.com" target="_blank" style="color:var(--accent3)">convertapi.com</a>, then open the HTML file and replace <code style="background:rgba(0,0,0,0.3);padding:0.1rem 0.35rem;border-radius:3px">YOUR_CONVERTAPI_SECRET_HERE</code> in the script.</span>
+    ⚠️ <span>To enable all 900+ format conversions, add your <strong>ConvertAPI secret</strong> — get 250 free conversions/month at <a href="https://www.convertapi.com" target="_blank" style="color:var(--accent3)">convertapi.com</a>, then open the HTML file and replace <code style="background:rgba(0,0,0,0.3);padding:0.1rem 0.35rem;border-radius:3px">EWeTqAn86jM7wBhOEqRXiJqV0Uk4ejsC</code> in the script.</span>
   </div>
   <div class="drop-zone" id="dropZone">
       <span class="drop-icon">📂</span>
@@ -1025,24 +1025,7 @@ const CATEGORIES = [
       card.innerHTML = `<div class="fmt-ext">.${f.ext}</div><div class="fmt-name">${f.name}</div>`;
       card.title = `Click to convert ${f.ext} files`;
       card.addEventListener('click', () => {
-        // Highlight this card as the pending target
-        document.querySelectorAll('.fmt-card').forEach(c => c.classList.remove('pending-target'));
-        card.classList.add('pending-target');
-        // Scroll to converter section
-        document.getElementById('dropZone').scrollIntoView({behavior:'smooth', block:'center'});
-        // Store pending output format
-        window._pendingOutputFmt = f.ext.toLowerCase();
-        // Show hint on drop zone
-        const hint = document.querySelector('#dropZone .drop-sub');
-        if (hint) {
-          if (!hint._origHTML) hint._origHTML = hint.innerHTML;
-          hint.innerHTML = `Drop your file here — output will be <span>.${f.ext.toUpperCase()}</span>`;
-          clearTimeout(hint._hintTimer);
-          hint._hintTimer = setTimeout(() => { hint.innerHTML = hint._origHTML; }, 6000);
-        }
-        const fi = document.getElementById('fileInput');
-        fi.accept = '';
-        setTimeout(() => fi.click(), 400);
+        window.location.href = `index.html?to=${f.ext.toLowerCase()}`;
       });
       grid.appendChild(card);
     });
@@ -1183,6 +1166,42 @@ function renderFileList() {
   clearStatus();
   // Clear pending format after applying it
   window._pendingOutputFmt = null;
+
+// ── Read ?to= URL param on page load ─────────────────────────
+(function() {
+  const params = new URLSearchParams(window.location.search);
+  const toFmt = params.get('to');
+  if (!toFmt) return;
+
+  // Store as pending output format
+  window._pendingOutputFmt = toFmt.toLowerCase();
+
+  // Scroll to the drop zone
+  const dz = document.getElementById('dropZone');
+  if (dz) {
+    setTimeout(() => {
+      dz.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      // Show hint
+      const hint = dz.querySelector('.drop-sub');
+      if (hint) {
+        if (!hint._origHTML) hint._origHTML = hint.innerHTML;
+        hint.innerHTML = `Drop your file here — it will be converted to <span>.${toFmt.toUpperCase()}</span>`;
+        clearTimeout(hint._hintTimer);
+        hint._hintTimer = setTimeout(() => { hint.innerHTML = hint._origHTML; }, 8000);
+      }
+      // Highlight the drop zone
+      dz.style.borderColor = 'var(--accent)';
+      dz.style.background = 'rgba(0,229,255,0.04)';
+      setTimeout(() => {
+        dz.style.borderColor = '';
+        dz.style.background = '';
+      }, 3000);
+    }, 400);
+  }
+
+  // Clean the URL
+  try { history.replaceState({}, '', window.location.pathname); } catch(e) {}
+})();
 }
 
 function removeFile(i) { files.splice(i, 1); renderFileList(); }
@@ -1347,9 +1366,9 @@ async function ffmpegConvert(file, srcExt, targetFmt, filename, setProgress) {
 // ── ConvertAPI ───────────────────────────────────────────────
 async function cloudConvert(file, targetFmt, filename, setProgress) {
   // ⚠️ REPLACE THIS: Go to convertapi.com → Sign up free → Dashboard → Auth → copy your Secret
-  const API_SECRET = 'YOUR_CONVERTAPI_SECRET_HERE';
+  const API_SECRET = 'EWeTqAn86jM7wBhOEqRXiJqV0Uk4ejsC';
 
-  if (!API_SECRET || API_SECRET === 'YOUR_CONVERTAPI_SECRET_HERE') {
+  if (!API_SECRET || API_SECRET === 'EWeTqAn86jM7wBhOEqRXiJqV0Uk4ejsC') {
     throw new Error('No ConvertAPI secret set. Sign up free at convertapi.com, then paste your Secret into API_SECRET in the code.');
   }
 
