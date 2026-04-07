@@ -1008,24 +1008,8 @@ const CATEGORIES = [
       card.innerHTML = `<div class="fmt-ext">.${f.ext}</div><div class="fmt-name">${f.name}</div>`;
       card.title = `Click to convert ${f.ext} files`;
       card.addEventListener('click', () => {
-        // Highlight this card as the pending target
-        document.querySelectorAll('.fmt-card').forEach(c => c.classList.remove('pending-target'));
-        card.classList.add('pending-target');
-        // Scroll to converter section
-        document.getElementById('dropZone').scrollIntoView({behavior:'smooth', block:'center'});
-        // Store pending output format
-        window._pendingOutputFmt = f.ext.toLowerCase();
-        // Show hint on drop zone
-        const hint = document.querySelector('#dropZone .drop-sub');
-        if (hint) {
-          if (!hint._origHTML) hint._origHTML = hint.innerHTML;
-          hint.innerHTML = `Drop your file here — output will be <span>.${f.ext.toUpperCase()}</span>`;
-          clearTimeout(hint._hintTimer);
-          hint._hintTimer = setTimeout(() => { hint.innerHTML = hint._origHTML; }, 6000);
-        }
-        const fi = document.getElementById('fileInput');
-        fi.accept = '';
-        setTimeout(() => fi.click(), 400);
+        // Redirect to home page with format pre-selected via URL param
+        window.location.href = `index.html?to=${f.ext.toLowerCase()}`;
       });
       grid.appendChild(card);
     });
