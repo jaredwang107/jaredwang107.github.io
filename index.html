@@ -402,7 +402,7 @@
   <p class="hero-sub">The most complete file converter on the web. Images, video, audio, documents, archives, 3D models, CAD files, ebooks, fonts, databases, subtitles, GIS data, and more — all in one place.</p>
   <div class="converter-widget">
     <div id="apiKeyNotice" style="background:rgba(245,158,11,0.08);border:1px solid rgba(245,158,11,0.3);border-radius:8px;padding:0.75rem 1rem;margin-bottom:1.25rem;font-size:0.75rem;color:var(--accent3);display:flex;align-items:center;gap:0.6rem">
-    ⚠️ <span>To enable all 900+ format conversions, add your <strong>ConvertAPI secret</strong> — get 250 free conversions/month at <a href="https://www.convertapi.com" target="_blank" style="color:var(--accent3)">convertapi.com</a>, then open the HTML file and replace <code style="background:rgba(0,0,0,0.3);padding:0.1rem 0.35rem;border-radius:3px">EWeTqAn86jM7wBhOEqRXiJqV0Uk4ejsC</code> in the script.</span>
+    ⚠️ <span>To enable all 900+ format conversions, add your <strong>ConvertAPI secret</strong> — get 250 free conversions/month at <a href="https://www.convertapi.com" target="_blank" style="color:var(--accent3)">convertapi.com</a>, then open the HTML file and replace <code style="background:rgba(0,0,0,0.3);padding:0.1rem 0.35rem;border-radius:3px">YOUR_CONVERTAPI_SECRET_HERE</code> in the script.</span>
   </div>
   <div class="drop-zone" id="dropZone">
       <span class="drop-icon">📂</span>
@@ -1368,7 +1368,7 @@ async function cloudConvert(file, targetFmt, filename, setProgress) {
   // ⚠️ REPLACE THIS: Go to convertapi.com → Sign up free → Dashboard → Auth → copy your Secret
   const API_SECRET = 'EWeTqAn86jM7wBhOEqRXiJqV0Uk4ejsC';
 
-  if (!API_SECRET || API_SECRET === 'EWeTqAn86jM7wBhOEqRXiJqV0Uk4ejsC') {
+  if (!API_SECRET || API_SECRET === 'YOUR_CONVERTAPI_SECRET_HERE') {
     throw new Error('No ConvertAPI secret set. Sign up free at convertapi.com, then paste your Secret into API_SECRET in the code.');
   }
 
