@@ -1173,8 +1173,10 @@ function renderFileList() {
   const toFmt = params.get('to');
   if (!toFmt) return;
 
-  // Store as pending output format
-  window._pendingOutputFmt = toFmt.toLowerCase();
+  // Store as pending output format - normalize aliases
+  const fmtAliases = { 'jpeg':'jpg', 'tiff':'tif', 'mpeg':'mpg', 'htm':'html' };
+  const normalizedFmt = fmtAliases[toFmt.toLowerCase()] || toFmt.toLowerCase();
+  window._pendingOutputFmt = normalizedFmt;
 
   // Scroll to the drop zone
   const dz = document.getElementById('dropZone');
@@ -1185,7 +1187,7 @@ function renderFileList() {
       const hint = dz.querySelector('.drop-sub');
       if (hint) {
         if (!hint._origHTML) hint._origHTML = hint.innerHTML;
-        hint.innerHTML = `Drop your file here — it will be converted to <span>.${toFmt.toUpperCase()}</span>`;
+        hint.innerHTML = `Drop your file here — it will be converted to <span>.${normalizedFmt.toUpperCase()}</span>`;
         clearTimeout(hint._hintTimer);
         hint._hintTimer = setTimeout(() => { hint.innerHTML = hint._origHTML; }, 8000);
       }
@@ -1199,10 +1201,9 @@ function renderFileList() {
     }, 400);
   }
 
-  // Clean the URL
+  // Clean the URL (safe - won't error in sandboxed iframes)
   try { history.replaceState({}, '', window.location.pathname); } catch(e) {}
 })();
-}
 
 function removeFile(i) { files.splice(i, 1); renderFileList(); }
 
