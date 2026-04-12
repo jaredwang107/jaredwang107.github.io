@@ -1615,7 +1615,7 @@ function handleSubscribe() {
     showModalError('');
     document.getElementById('finePrint').innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:-2px;margin-right:4px"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg> Complete the payment in WeChat, then click confirm below.';
     setTimeout(() => {
-      btn.textContent = '✓ Payment Received — Confirm';
+      btn.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" style="vertical-align:-2px;margin-right:5px"><polyline points="20 6 9 17 4 12"/></svg> Payment Received — Confirm';
       btn.disabled = false;
       btn.onclick = confirmWechatPayment;
     }, 3000);
@@ -1643,7 +1643,7 @@ function confirmWechatPayment() {
 
 function processPayment() {
   const btn = document.getElementById('submitBtn');
-  btn.textContent = '◌ Processing...'; btn.disabled = true;
+  btn.textContent = 'Processing...'; btn.disabled = true;
   const planEl = document.getElementById('modalPlanName');
   const planName = planEl ? planEl.textContent.replace(' Plan','') : 'Pro';
 
@@ -1780,15 +1780,15 @@ function checkPin() {
     perf.innerHTML = `
       <div style="background:rgba(16,185,129,0.08);border:1px solid rgba(16,185,129,0.25);border-radius:10px;padding:1rem;width:100%;text-align:left">
         <ul style="list-style:none;display:flex;flex-direction:column;gap:0.5rem;font-size:0.78rem">
-          <li style="color:var(--text)"><span style="color:var(--success)">✓</span> Unlimited conversions — no daily cap</li>
-          <li style="color:var(--text)"><span style="color:var(--success)">✓</span> Up to <strong>2 GB</strong> per file</li>
-          <li style="color:var(--text)"><span style="color:var(--success)">✓</span> All 900+ formats unlocked</li>
-          <li style="color:var(--text)"><span style="color:var(--success)">✓</span> Unlimited batch processing</li>
-          <li style="color:var(--text)"><span style="color:var(--success)">✓</span> Priority processing (max speed)</li>
-          <li style="color:var(--text)"><span style="color:var(--success)">✓</span> Advanced encoding options</li>
-          <li style="color:var(--text)"><span style="color:var(--success)">✓</span> Full REST API access</li>
-          <li style="color:var(--text)"><span style="color:var(--success)">✓</span> Unlimited team seats</li>
-          <li style="color:var(--text)"><span style="color:var(--success)">✓</span> Usage analytics dashboard</li>
+          <li style="color:var(--text)"><span style="color:var(--success)"><svg width='11' height='11' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='3'><polyline points='20 6 9 17 4 12'/></svg></span> Unlimited conversions — no daily cap</li>
+          <li style="color:var(--text)"><span style="color:var(--success)"><svg width='11' height='11' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='3'><polyline points='20 6 9 17 4 12'/></svg></span> Up to <strong>2 GB</strong> per file</li>
+          <li style="color:var(--text)"><span style="color:var(--success)"><svg width='11' height='11' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='3'><polyline points='20 6 9 17 4 12'/></svg></span> All 900+ formats unlocked</li>
+          <li style="color:var(--text)"><span style="color:var(--success)"><svg width='11' height='11' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='3'><polyline points='20 6 9 17 4 12'/></svg></span> Unlimited batch processing</li>
+          <li style="color:var(--text)"><span style="color:var(--success)"><svg width='11' height='11' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='3'><polyline points='20 6 9 17 4 12'/></svg></span> Priority processing (max speed)</li>
+          <li style="color:var(--text)"><span style="color:var(--success)"><svg width='11' height='11' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='3'><polyline points='20 6 9 17 4 12'/></svg></span> Advanced encoding options</li>
+          <li style="color:var(--text)"><span style="color:var(--success)"><svg width='11' height='11' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='3'><polyline points='20 6 9 17 4 12'/></svg></span> Full REST API access</li>
+          <li style="color:var(--text)"><span style="color:var(--success)"><svg width='11' height='11' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='3'><polyline points='20 6 9 17 4 12'/></svg></span> Unlimited team seats</li>
+          <li style="color:var(--text)"><span style="color:var(--success)"><svg width='11' height='11' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='3'><polyline points='20 6 9 17 4 12'/></svg></span> Usage analytics dashboard</li>
         </ul>
       </div>`;
     setTimeout(() => {
@@ -2306,10 +2306,10 @@ function closeMobileNav() {
             <div style="font-family:'Syne',sans-serif;font-size:2.5rem;font-weight:800;margin-bottom:0.25rem">$9.99</div>
             <div style="font-size:0.72rem;color:var(--muted);margin-bottom:1.5rem">/ month</div>
             <ul style="list-style:none;display:flex;flex-direction:column;gap:0.5rem;font-size:0.75rem;color:var(--muted);margin-bottom:1.5rem">
-              <li><span style="color:var(--success)">✓</span> Unlimited conversions</li>
+              <li><span style="color:var(--success)"><svg width='11' height='11' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='3'><polyline points='20 6 9 17 4 12'/></svg></span> Unlimited conversions</li>
               <li><span style="color:var(--success)">✓</span> Up to 2 GB per file</li>
-              <li><span style="color:var(--success)">✓</span> All 900+ formats</li>
-              <li><span style="color:var(--success)">✓</span> Priority processing</li>
+              <li><span style="color:var(--success)"><svg width='11' height='11' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='3'><polyline points='20 6 9 17 4 12'/></svg></span> All 900+ formats</li>
+              <li><span style="color:var(--success)"><svg width='11' height='11' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='3'><polyline points='20 6 9 17 4 12'/></svg></span> Priority processing</li>
             </ul>
             <button class="db-btn primary" style="width:100%" onclick="closeDashboardPage();openModal('Pro')">Upgrade to Pro</button>
           </div>
@@ -2321,7 +2321,7 @@ function closeMobileNav() {
               <li><span style="color:var(--success)">✓</span> Everything in Pro</li>
               <li><span style="color:var(--success)">✓</span> REST API access</li>
               <li><span style="color:var(--success)">✓</span> 5 team seats</li>
-              <li><span style="color:var(--success)">✓</span> Usage analytics</li>
+              <li><span style="color:var(--success)"><svg width='11' height='11' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='3'><polyline points='20 6 9 17 4 12'/></svg></span> Usage analytics</li>
             </ul>
             <button class="db-btn" style="width:100%;border-color:rgba(167,139,250,0.4);color:#a78bfa" onclick="closeDashboardPage();openModal('Business')">Get Business</button>
           </div>
