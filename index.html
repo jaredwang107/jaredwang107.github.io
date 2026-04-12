@@ -1394,12 +1394,23 @@ async function cloudConvert(file, targetFmt, filename, setProgress) {
 
   // 1. Upload file to ConvertAPI
   setProgress(20);
-  const uploadForm = new FormData();
-  uploadForm.append('file', file, file.name);
+  // Map unusual extensions to proper MIME types for upload
+  const mimeMap = {
+    mts:'video/mp2t', m2ts:'video/mp2t', ts:'video/mp2t',
+    mkv:'video/x-matroska', webm:'video/webm', avi:'video/x-msvideo',
+    mov:'video/quicktime', wmv:'video/x-ms-wmv', flv:'video/x-flv',
+    mp4:'video/mp4', m4v:'video/mp4', '3gp':'video/3gpp',
+    aac:'audio/aac', flac:'audio/flac', ogg:'audio/ogg',
+    opus:'audio/opus', m4a:'audio/mp4', wma:'audio/x-ms-wma',
+  };
+  const fileExt2 = file.name.split('.').pop().toLowerCase();
+  const mimeType = mimeMap[fileExt2] || file.type || 'application/octet-stream';
+  const uploadBlob = new Blob([await file.arrayBuffer()], { type: mimeType });
+  const uploadFile = new File([uploadBlob], file.name, { type: mimeType });
   const uploadRes = await fetch('https://v2.convertapi.com/upload', {
     method: 'POST',
     headers: { 'Content-Disposition': `inline; filename="${file.name}"` },
-    body: file
+    body: uploadFile
   });
   if (!uploadRes.ok) {
     const err = await uploadRes.text();
