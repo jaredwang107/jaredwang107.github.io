@@ -1,9 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-E0K0QXQ93T"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-E0K0QXQ93T');
+</script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Features — ConvertFlow</title>
+<title>ConvertFlow — Universal File Converter</title>
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='40' y2='40' gradientUnits='userSpaceOnUse'%3E%3Cstop offset='0%25' stop-color='%2300e5ff'/%3E%3Cstop offset='100%25' stop-color='%237c3aed'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='40' height='40' rx='10' fill='%230a0a0f'/%3E%3Crect width='40' height='40' rx='10' fill='url(%23g)' opacity='0.2'/%3E%3Cpath d='M8 14h10l4 12 4-20 4 8h2' stroke='url(%23g)' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round' fill='none'/%3E%3Ccircle cx='32' cy='22' r='2' fill='%2300e5ff'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
@@ -60,6 +68,7 @@
   .file-list { margin-top: 1.5rem; display: flex; flex-direction: column; gap: 0.75rem; }
   .file-item { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 1rem; display: flex; align-items: center; gap: 1rem; }
   .file-ext { color: white; padding: 0.3rem 0.5rem; border-radius: 4px; font-size: 0.65rem; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; min-width: 52px; text-align: center; flex-shrink: 0; }
+  .file-icon-wrap { flex-shrink: 0; }
   .file-info { flex: 1; min-width: 0; }
   .file-name { font-size: 0.8rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-bottom: 0.2rem; }
   .file-size { font-size: 0.7rem; color: var(--muted); }
@@ -125,7 +134,7 @@
   .plan-features li { font-size: 0.78rem; padding: 0.6rem 0; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 0.75rem; color: var(--muted); }
   .plan-features li:last-child { border-bottom: none; }
   .plan-features li.active { color: var(--text); }
-  .check { color: var(--success); } .cross { color: var(--border); }
+  .check { color: var(--success); font-weight: 700; } .cross { color: var(--muted); font-weight: 400; opacity: 0.5; }
   .btn-plan { width: 100%; padding: 0.9rem; border-radius: 8px; font-family: 'Syne', sans-serif; font-size: 0.9rem; font-weight: 700; cursor: pointer; transition: all 0.2s; border: 1px solid var(--border); background: transparent; color: var(--text); }
   .btn-plan:hover { border-color: var(--text); }
   .btn-plan.primary { background: var(--accent); color: #000; border-color: var(--accent); }
@@ -361,13 +370,10 @@
   .db-msg.err { background:rgba(239,68,68,0.08); border:1px solid rgba(239,68,68,0.25); color:var(--danger); }
   @media(max-width:768px){ .db-sidebar{display:none} .db-stats-row{grid-template-columns:1fr 1fr} .db-grid-2,.db-grid-3{grid-template-columns:1fr} .db-content{padding:1.5rem} }
 
-
-  .nav-page-link { position: relative; }
-  .nav-page-link.active { color: var(--text) !important; }
-  .nav-page-link.active::after { content:''; position:absolute; bottom:-4px; left:0; right:0; height:2px; background:var(--accent); border-radius:2px; }
 </style>
 </head>
 <body>
+
 <nav>
   <a href="#" class="logo" id="logoBtn" title="ConvertFlow">
     <svg width="36" height="36" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -379,9 +385,9 @@
     <span class="logo-text">Convert<span>Flow</span><sup class="copyright-badge">©</sup></span>
   </a>
   <ul>
-    <li><a href="index.html" id="nav-home" class="nav-page-link">Home</a></li>
+    <li><a href="index.html" id="nav-home" class="nav-page-link active">Home</a></li>
     <li><a href="formats.html" id="nav-formats" class="nav-page-link">Formats</a></li>
-    <li><a href="features.html" id="nav-features" class="nav-page-link active">Features</a></li>
+    <li><a href="features.html" id="nav-features" class="nav-page-link">Features</a></li>
     <li><a href="pricing.html" id="nav-pricing" class="nav-page-link">Pricing</a></li>
     <li id="navSignIn"><a href="#" onclick="openAuthModal('signin')">Sign In</a></li>
     <li id="navUserLi" style="display:none">
@@ -390,27 +396,53 @@
         <a href="#" onclick="signOut()" style="color:var(--muted);font-size:0.75rem;text-decoration:none;border:1px solid var(--border);padding:0.3rem 0.75rem;border-radius:4px;transition:all 0.2s" onmouseover="this.style.borderColor='var(--text)'" onmouseout="this.style.borderColor='var(--border)'">Sign Out</a>
       </span>
     </li>
-    <li id="navOwnerBadge" style="display:none"><span style="color:var(--accent3);font-size:0.8rem;display:flex;align-items:center;gap:0.4rem">👑 <span style="font-weight:600">Owner</span></span></li>
+    <li id="navOwnerBadge" style="display:none"><span style="color:var(--accent3);font-size:0.8rem;display:flex;align-items:center;gap:0.4rem"><svg width="16" height="16" viewBox="0 0 24 24" fill="#f59e0b" style="vertical-align:-2px;margin-right:4px"><path d="M2 19l2-9 4.5 4L12 5l3.5 9L20 10l2 9H2z"/></svg><span style="font-weight:600">Owner</span></span></li>
     <li id="navProLi"><a href="pricing.html" class="nav-cta" id="navProBtn">Get Pro →</a></li>
     <li><button onclick="openBypass()" id="bypassBtn" style="background:linear-gradient(135deg,#1a0a2e,#0a1a2e);border:1px solid rgba(245,158,11,0.4);color:var(--accent3);padding:0.4rem 1rem;border-radius:6px;font-family:'DM Mono',monospace;font-size:0.72rem;cursor:pointer;letter-spacing:0.06em;transition:all 0.2s;font-weight:500" onmouseover="this.style.borderColor='var(--accent3)';this.style.boxShadow='0 0 12px rgba(245,158,11,0.25)'" onmouseout="this.style.borderColor='rgba(245,158,11,0.4)';this.style.boxShadow='none'">⚡ Bypass</button></li>
   </ul>
   <button class="hamburger" id="hamburgerBtn" onclick="toggleMobileNav()" aria-label="Menu"><span></span><span></span><span></span></button>
 </nav>
-<div style="padding-top:80px"><section class="features" id="features">
-  <p class="section-label">Why ConvertFlow</p>
-  <h2 class="section-title">Built different.<br>Converts everything.</h2>
-  <div class="features-grid">
-    <div class="feature-card"><span class="feature-icon">⚡</span><div class="feature-title">Blazing Fast</div><p class="feature-desc">Cloud-accelerated engines process files in seconds. Batch convert hundreds simultaneously.</p><button class="feature-btn" onclick="window.location.href='index.html'">Try It Now →</button></div>
-    <div class="feature-card"><span class="feature-icon">🔒</span><div class="feature-title">Secure & Private</div><p class="feature-desc">Files are encrypted in transit and auto-deleted after 24 hours. We never store or share your data.</p><button class="feature-btn" onclick="showFeatureInfo('security')">Learn More →</button></div>
-    <div class="feature-card"><span class="feature-icon">🌐</span><div class="feature-title">900+ Formats</div><p class="feature-desc">Images, video, audio, docs, ebooks, fonts, 3D, CAD, archives, databases, subtitles, GIS, and more.</p><button class="feature-btn" href='formats.html'>Browse Formats →</button></div>
-    <div class="feature-card"><span class="feature-icon">📦</span><div class="feature-title">Up to 2 GB Files</div><p class="feature-desc">Pro users can convert files up to 2 GB. No splitting large videos or high-res asset batches.</p><button class="feature-btn" onclick="openModal('Pro')">Upgrade to Pro →</button></div>
-    <div class="feature-card"><span class="feature-icon">🔗</span><div class="feature-title">REST API</div><p class="feature-desc">Business plan includes full API access. Automate conversions in your CI/CD pipelines.</p><button class="feature-btn" onclick="openModal('Business')">Get API Access →</button></div>
-    <div class="feature-card"><span class="feature-icon">🎛️</span><div class="feature-title">Advanced Options</div><p class="feature-desc">Control quality, resolution, bitrate, compression, color profiles, and encoding settings per file.</p><button class="feature-btn" onclick="openModal('Pro')">Unlock Options →</button></div>
-    <div class="feature-card"><span class="feature-icon">📊</span><div class="feature-title">Batch Processing</div><p class="feature-desc">Upload and convert up to 50 files at once with Pro, unlimited with Business.</p><button class="feature-btn" onclick="openModal('Pro')">Start Batch →</button></div>
-    <div class="feature-card"><span class="feature-icon">🖥️</span><div class="feature-title">No Install Needed</div><p class="feature-desc">100% browser-based. Works on Mac, Windows, Linux, iOS, and Android seamlessly.</p><button class="feature-btn" onclick="window.scrollTo({top:0,behavior:'smooth'})">Start Converting →</button></div>
+
+<div class="hero">
+  <div class="hero-glow"></div>
+  <div class="hero-glow2"></div>
+  <div class="hero-badge"><span class="badge-dot"></span>900+ Formats · Up to 2 GB · Any file type</div>
+  <h1>Convert<span class="accent-line"> anything.</span><br><span class="dim">Instantly.</span></h1>
+  <p class="hero-sub">The most complete file converter on the web. Images, video, audio, documents, archives, 3D models, CAD files, ebooks, fonts, databases, subtitles, GIS data, and more — all in one place.</p>
+  <div class="converter-widget">
+    <div id="apiKeyNotice" style="background:rgba(245,158,11,0.08);border:1px solid rgba(245,158,11,0.3);border-radius:8px;padding:0.75rem 1rem;margin-bottom:1.25rem;font-size:0.75rem;color:var(--accent3);display:flex;align-items:center;gap:0.6rem">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2" style="vertical-align:-2px;flex-shrink:0;margin-right:4px"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg> <span>To enable all 900+ format conversions, add your <strong>ConvertAPI secret</strong> — get 250 free conversions/month at <a href="https://www.convertapi.com" target="_blank" style="color:var(--accent3)">convertapi.com</a>, then open the HTML file and replace <code style="background:rgba(0,0,0,0.3);padding:0.1rem 0.35rem;border-radius:3px">YOUR_CONVERTAPI_SECRET_HERE</code> in the script.</span>
   </div>
-</section>
+  <div class="drop-zone" id="dropZone">
+      <span class="drop-icon"><svg width="56" height="56" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3 7C3 5.9 3.9 5 5 5h4l2 2h8c1.1 0 2 .9 2 2v8c0 1.1-.9 2-2 2H5c-1.1 0-2-.9-2-2V7z" stroke="url(#folderGrad)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="rgba(0,229,255,0.06)"/><path d="M12 11v4M10 13h4" stroke="url(#folderGrad)" stroke-width="1.5" stroke-linecap="round"/><defs><linearGradient id="folderGrad" x1="3" y1="5" x2="21" y2="19" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="#00e5ff"/><stop offset="100%" stop-color="#7c3aed"/></linearGradient></defs></svg></span>
+      <div class="drop-title">Drop any file here</div>
+      <div class="drop-sub">or <span>browse</span> to upload · Max <span>2 GB</span> per file · <span>900+</span> formats</div>
+      <button class="btn-browse" onclick="document.getElementById('fileInput').click()">Choose Files</button>
+      <input type="file" id="fileInput" multiple>
+    </div>
+    <div class="file-list" id="fileList"></div>
+    <button class="btn-convert" id="convertBtn" onclick="startConvert()"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="margin-right:0.4rem;vertical-align:-2px"><path d="M13 2L4.5 13.5H11L10 22L20.5 9.5H14L13 2z"/></svg> Convert All Files</button>
+    <div class="status-msg" id="statusMsg"></div>
+    <div class="limit-note" id="limitNote" style="display:none"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2" style="vertical-align:-2px;flex-shrink:0;margin-right:4px"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg> Free plan: 500 MB max. <span class="upgrade-link" onclick="openModal('Pro')">Upgrade to Pro</span> for 2 GB.</div>
+  </div>
 </div>
+
+<footer>
+  <div style="display:flex;align-items:center;gap:0.75rem">
+    <svg width="20" height="20" viewBox="0 0 40 40" fill="none"><rect width="40" height="40" rx="10" fill="#00e5ff" opacity="0.15"/><path d="M8 14h10l4 12 4-20 4 8h2" stroke="#00e5ff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    <span>© 2026 ConvertFlow™ — All rights reserved. ConvertFlow and its logo are registered trademarks.</span>
+  </div>
+  <div style="display:flex;gap:2rem;align-items:center;flex-wrap:wrap">
+    <a href="#" style="color:var(--muted);text-decoration:none">Privacy</a>
+    <a href="#" style="color:var(--muted);text-decoration:none">Terms</a>
+    <a href="#" style="color:var(--muted);text-decoration:none">API Docs</a>
+    <a href="#" style="color:var(--muted);text-decoration:none">Contact</a>
+  </div>
+</footer>
+
+
+
+
 <!-- AUTH MODAL (Sign In / Register / Account) -->
 <div class="modal-overlay" id="authOverlay" onclick="closeAuthOnBg(event)" style="z-index:1002">
   <div class="modal" style="max-width:420px">
@@ -428,7 +460,7 @@
       <div class="form-group" style="position:relative">
         <label>Password</label>
         <input type="password" id="authPassword" placeholder="••••••••" style="padding-right:2.5rem">
-        <button onclick="toggleAuthPw()" style="position:absolute;right:0.75rem;top:2rem;background:none;border:none;color:var(--muted);cursor:pointer;font-size:0.8rem">👁</button>
+        <button onclick="toggleAuthPw()" style="position:absolute;right:0.75rem;top:2rem;background:none;border:none;color:var(--muted);cursor:pointer"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></button>
       </div>
       <div class="form-group" id="authNameGroup" style="display:none"><label>Full Name</label><input type="text" id="authName" placeholder="Jane Smith"></div>
       <div class="form-group" id="authConfirmGroup" style="display:none">
@@ -437,7 +469,7 @@
       </div>
       <div id="authError" style="color:var(--danger);font-size:0.75rem;margin-bottom:1rem;display:none;background:rgba(239,68,68,0.08);border:1px solid rgba(239,68,68,0.25);border-radius:6px;padding:0.6rem 0.75rem"></div>
       <button class="btn-submit" id="authSubmitBtn" onclick="handleAuth()">Sign In</button>
-      <p class="fine-print" style="margin-top:0.75rem">🔒 Your data is stored locally and never shared.</p>
+      <p class="fine-print" style="margin-top:0.75rem"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:-2px;margin-right:3px"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg> Your data is stored locally and never shared.</p>
     </div>
 
     <!-- ACCOUNT PANEL (shown after login) -->
@@ -485,7 +517,7 @@
         <div class="form-group" style="margin-bottom:0.85rem"><label>Full Name</label><input type="text" id="accEditName" class="dash-input" placeholder="Your name"></div>
         <div class="form-group" style="margin-bottom:0.85rem"><label>Email</label><input type="email" id="accEditEmail" class="dash-input" placeholder="your@email.com"></div>
         <button class="btn-submit" onclick="saveAccProfile()" style="margin-bottom:0.5rem">Save Changes</button>
-        <div id="accProfileMsg" style="color:var(--success);font-size:0.75rem;text-align:center;display:none">✅ Profile updated!</div>
+        <div id="accProfileMsg" style="color:var(--success);font-size:0.75rem;text-align:center;display:none"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="vertical-align:-2px;margin-right:3px"><polyline points="20 6 9 17 4 12"/></svg> Profile updated!</div>
       </div>
 
       <!-- Security sub-panel -->
@@ -509,7 +541,7 @@
 <div class="modal-overlay" id="bypassOverlay" onclick="closeBypassOnBg(event)" style="z-index:1001">
   <div class="modal" style="max-width:380px;text-align:center">
     <button class="modal-close" onclick="closeBypass()">×</button>
-    <div style="font-size:2.5rem;margin-bottom:0.75rem" id="bypassIcon">🔐</div>
+    <div style="font-size:2.5rem;margin-bottom:0.75rem" id="bypassIcon"><svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="1.5" stroke-linecap="round"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/><circle cx="12" cy="16" r="1.5" fill="#f59e0b"/></svg></div>
     <div class="modal-title" id="bypassTitle" style="text-align:center">Owner Bypass</div>
     <p style="font-size:0.78rem;color:var(--muted);margin-bottom:1.5rem;line-height:1.6" id="bypassSub">Enter your owner PIN to unlock all Business features for free.</p>
 
@@ -520,7 +552,7 @@
       <div class="pin-dot" id="p2">—</div>
       <div class="pin-dot" id="p3">—</div>
     </div>
-    <div id="pinError" style="color:var(--danger);font-size:0.72rem;margin-bottom:0.75rem;display:none">❌ Incorrect PIN. Try again.</div>
+    <div id="pinError" style="color:var(--danger);font-size:0.72rem;margin-bottom:0.75rem;display:none"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" style="vertical-align:-1px;margin-right:3px"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg> Incorrect PIN. Try again.</div>
 
     <!-- Keypad -->
     <div id="pinKeypad" style="display:grid;grid-template-columns:repeat(3,1fr);gap:0.5rem;max-width:240px;margin:0 auto">
@@ -544,7 +576,7 @@
 <!-- OWNER MODE BAR -->
 <div id="ownerBar" style="display:none;position:fixed;bottom:0;left:0;right:0;z-index:200;background:linear-gradient(90deg,#0a0a0f,#1a0a00,#0a0a0f);border-top:1px solid var(--accent3);padding:0.6rem 2rem;align-items:center;justify-content:space-between;font-size:0.72rem;flex-wrap:wrap;gap:0.5rem">
   <div style="display:flex;align-items:center;gap:0.75rem;color:var(--accent3);font-weight:500">
-    <span style="font-size:1.2rem;animation:none">👑</span>
+    <span style="animation:none"><svg width="20" height="20" viewBox="0 0 24 24" fill="#f59e0b"><path d="M2 19l2-9 4.5 4L12 5l3.5 9L20 10l2 9H2z"/></svg></span>
     <span style="background:var(--accent3);color:#000;padding:0.15rem 0.5rem;border-radius:3px;font-size:0.62rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase">OWNER</span>
     <span>You have full Business access — all features unlocked for free.</span>
   </div>
@@ -570,7 +602,7 @@
     <div class="form-group"><label>Email Address</label><input type="email" placeholder="jane@example.com"></div>
     <div id="paymentSection">
       <div class="pay-tabs">
-        <button class="pay-tab active" onclick="switchPayTab('card',this)">💳 Credit Card</button>
+        <button class="pay-tab active" onclick="switchPayTab('card',this)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:-2px;margin-right:4px"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg> Credit Card</button>
         <button class="pay-tab" onclick="switchPayTab('wechat',this)">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="#07C160"><path d="M8.69 12.02c.56 0 1.01-.46 1.01-1.02s-.45-1.02-1.01-1.02-1.01.46-1.01 1.02.45 1.02 1.01 1.02zm4.62 0c.56 0 1.01-.46 1.01-1.02s-.45-1.02-1.01-1.02-1.01.46-1.01 1.02.45 1.02 1.01 1.02zM12 2C6.48 2 2 6.16 2 11.3c0 3.01 1.56 5.67 3.99 7.38L5 22l3.43-1.71c.88.25 1.83.4 2.82.4.18 0 .36 0 .54-.01-.11-.41-.17-.84-.17-1.28 0-3.65 3.36-6.6 7.5-6.6.25 0 .5.01.75.03C18.63 7.25 15.66 2 12 2zm7.5 18.8c.42 0 .75-.34.75-.75s-.33-.75-.75-.75-.75.34-.75.75.33.75.75.75zm3 0c.42 0 .75-.34.75-.75s-.33-.75-.75-.75-.75.34-.75.75.33.75.75.75zm-7.5-6c-2.9 0-5.25 2.09-5.25 4.67S12.1 24 15 24c.82 0 1.6-.18 2.3-.48L20 24l-.78-2.43C20.29 20.63 21 19.2 21 17.47c0-2.58-2.35-4.67-5.25-4.67-.26 0-.51.01-.75.03z"/></svg>
           WeChat Pay
@@ -591,23 +623,10 @@
       </div>
     </div>
     <button class="btn-submit" id="submitBtn" onclick="handleSubscribe()">Create Account</button>
-    <p class="fine-print" id="finePrint">🔒 Secured by 256-bit SSL encryption. Cancel anytime.</p>
+    <p class="fine-print" id="finePrint"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:-2px;margin-right:3px"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg> Secured by 256-bit SSL encryption. Cancel anytime.</p>
   </div>
 </div>
 
-
-<footer>
-  <div style="display:flex;align-items:center;gap:0.75rem">
-    <svg width="20" height="20" viewBox="0 0 40 40" fill="none"><rect width="40" height="40" rx="10" fill="#00e5ff" opacity="0.15"/><path d="M8 14h10l4 12 4-20 4 8h2" stroke="#00e5ff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-    <span>© 2026 ConvertFlow™ — All rights reserved. ConvertFlow and its logo are registered trademarks.</span>
-  </div>
-  <div style="display:flex;gap:2rem;align-items:center;flex-wrap:wrap">
-    <a href="#" style="color:var(--muted);text-decoration:none">Privacy</a>
-    <a href="#" style="color:var(--muted);text-decoration:none">Terms</a>
-    <a href="#" style="color:var(--muted);text-decoration:none">API Docs</a>
-    <a href="#" style="color:var(--muted);text-decoration:none">Contact</a>
-  </div>
-</footer>
 <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 
 // ── IN-MEMORY STORE (replaces localStorage for sandbox compatibility) ──
@@ -1015,24 +1034,7 @@ const CATEGORIES = [
       card.innerHTML = `<div class="fmt-ext">.${f.ext}</div><div class="fmt-name">${f.name}</div>`;
       card.title = `Click to convert ${f.ext} files`;
       card.addEventListener('click', () => {
-        // Highlight this card as the pending target
-        document.querySelectorAll('.fmt-card').forEach(c => c.classList.remove('pending-target'));
-        card.classList.add('pending-target');
-        // Scroll to converter section
-        document.getElementById('dropZone').scrollIntoView({behavior:'smooth', block:'center'});
-        // Store pending output format
-        window._pendingOutputFmt = f.ext.toLowerCase();
-        // Show hint on drop zone
-        const hint = document.querySelector('#dropZone .drop-sub');
-        if (hint) {
-          if (!hint._origHTML) hint._origHTML = hint.innerHTML;
-          hint.innerHTML = `Drop your file here — output will be <span>.${f.ext.toUpperCase()}</span>`;
-          clearTimeout(hint._hintTimer);
-          hint._hintTimer = setTimeout(() => { hint.innerHTML = hint._origHTML; }, 6000);
-        }
-        const fi = document.getElementById('fileInput');
-        fi.accept = '';
-        setTimeout(() => fi.click(), 400);
+        window.location.href = `index.html?to=${f.ext.toLowerCase()}`;
       });
       grid.appendChild(card);
     });
@@ -1158,7 +1160,14 @@ function renderFileList() {
     const item = document.createElement('div');
     item.className = 'file-item';
     item.innerHTML = `
-      <div class="file-ext" style="background:${color}">${ext.toUpperCase().slice(0,6)}</div>
+      <div class="file-icon-wrap" style="flex-shrink:0">
+        <svg width="48" height="56" viewBox="0 0 48 56" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M8 0h24l12 12v40a4 4 0 0 1-4 4H8a4 4 0 0 1-4-4V4a4 4 0 0 1 4-4z" fill="${color}" opacity="0.15"/>
+          <path d="M8 0h24l12 12v40a4 4 0 0 1-4 4H8a4 4 0 0 1-4-4V4a4 4 0 0 1 4-4z" stroke="${color}" stroke-width="1.5" fill="none"/>
+          <path d="M32 0l12 12H34a2 2 0 0 1-2-2V0z" fill="${color}" opacity="0.4"/>
+          <text x="24" y="40" text-anchor="middle" font-family="'DM Mono',monospace" font-weight="700" font-size="${ext.length > 4 ? '7.5' : '9'}" fill="${color}" letter-spacing="0.5">${ext.toUpperCase().slice(0,6)}</text>
+        </svg>
+      </div>
       <div class="file-info">
         <div class="file-name" title="${f.name}">${f.name}</div>
         <div class="file-size">${formatBytes(f.size)}${tooBig ? ' · <span style="color:var(--danger)">Exceeds free limit</span>' : ''}</div>
@@ -1175,6 +1184,44 @@ function renderFileList() {
   window._pendingOutputFmt = null;
 }
 
+// ── Read ?to= URL param on page load ─────────────────────────
+(function() {
+  const params = new URLSearchParams(window.location.search);
+  const toFmt = params.get('to');
+  if (!toFmt) return;
+
+  // Store as pending output format - normalize aliases
+  const fmtAliases = { 'jpeg':'jpg', 'tiff':'tif', 'mpeg':'mpg', 'htm':'html' };
+  const normalizedFmt = fmtAliases[toFmt.toLowerCase()] || toFmt.toLowerCase();
+  window._pendingOutputFmt = normalizedFmt;
+
+  // Scroll to the drop zone
+  const dz = document.getElementById('dropZone');
+  if (dz) {
+    setTimeout(() => {
+      dz.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      // Show hint
+      const hint = dz.querySelector('.drop-sub');
+      if (hint) {
+        if (!hint._origHTML) hint._origHTML = hint.innerHTML;
+        hint.innerHTML = `Drop your file here — it will be converted to <span>.${normalizedFmt.toUpperCase()}</span>`;
+        clearTimeout(hint._hintTimer);
+        hint._hintTimer = setTimeout(() => { hint.innerHTML = hint._origHTML; }, 8000);
+      }
+      // Highlight the drop zone
+      dz.style.borderColor = 'var(--accent)';
+      dz.style.background = 'rgba(0,229,255,0.04)';
+      setTimeout(() => {
+        dz.style.borderColor = '';
+        dz.style.background = '';
+      }, 3000);
+    }, 400);
+  }
+
+  // Clean the URL (safe - won't error in sandboxed iframes)
+  try { history.replaceState({}, '', window.location.pathname); } catch(e) {}
+})();
+
 function removeFile(i) { files.splice(i, 1); renderFileList(); }
 
 // ── CONVERTAPI SECRET — replace with your own from convertapi.com ──
@@ -1184,7 +1231,7 @@ function startConvert() {
   if (!files.length) return;
   clearStatus();
   const btn = document.getElementById('convertBtn');
-  btn.disabled = true; btn.textContent = '⚙️ Converting...';
+  btn.disabled = true; btn.textContent = 'Converting...';
   let idx = 0;
   function processNext() {
     if (idx >= files.length) { finishConvert(); return; }
@@ -1216,7 +1263,7 @@ function startConvert() {
         if (errMsg === 'Failed to fetch' || errMsg.toLowerCase().includes('failed to fetch')) {
           errMsg = 'Network blocked — deploy to Cloudflare to use conversions. The API cannot be reached from the Claude preview sandbox.';
         }
-        showStatus(`⚠️ "${f.name}": ${errMsg}`, 'error');
+        showStatus(`⚠ "${f.name}": ${errMsg}`, 'error');
         btn.disabled = false; btn.textContent = '⚡ Convert All Files';
       });
   }
@@ -1336,8 +1383,8 @@ async function ffmpegConvert(file, srcExt, targetFmt, filename, setProgress) {
 
 // ── ConvertAPI ───────────────────────────────────────────────
 async function cloudConvert(file, targetFmt, filename, setProgress) {
-  // ⚠️ REPLACE THIS: Go to convertapi.com → Sign up free → Dashboard → Auth → copy your Secret
-  const API_SECRET = 'YOUR_CONVERTAPI_SECRET_HERE';
+  // REPLACE THIS: Go to convertapi.com → Sign up free → Dashboard → Auth → copy your Secret
+  const API_SECRET = 'EWeTqAn86jM7wBhOEqRXiJqV0Uk4ejsC';
 
   if (!API_SECRET || API_SECRET === 'YOUR_CONVERTAPI_SECRET_HERE') {
     throw new Error('No ConvertAPI secret set. Sign up free at convertapi.com, then paste your Secret into API_SECRET in the code.');
@@ -1347,12 +1394,23 @@ async function cloudConvert(file, targetFmt, filename, setProgress) {
 
   // 1. Upload file to ConvertAPI
   setProgress(20);
-  const uploadForm = new FormData();
-  uploadForm.append('file', file, file.name);
+  // Map unusual extensions to proper MIME types for upload
+  const mimeMap = {
+    mts:'video/mp2t', m2ts:'video/mp2t', ts:'video/mp2t',
+    mkv:'video/x-matroska', webm:'video/webm', avi:'video/x-msvideo',
+    mov:'video/quicktime', wmv:'video/x-ms-wmv', flv:'video/x-flv',
+    mp4:'video/mp4', m4v:'video/mp4', '3gp':'video/3gpp',
+    aac:'audio/aac', flac:'audio/flac', ogg:'audio/ogg',
+    opus:'audio/opus', m4a:'audio/mp4', wma:'audio/x-ms-wma',
+  };
+  const fileExt2 = file.name.split('.').pop().toLowerCase();
+  const mimeType = mimeMap[fileExt2] || file.type || 'application/octet-stream';
+  const uploadBlob = new Blob([await file.arrayBuffer()], { type: mimeType });
+  const uploadFile = new File([uploadBlob], file.name, { type: mimeType });
   const uploadRes = await fetch('https://v2.convertapi.com/upload', {
     method: 'POST',
     headers: { 'Content-Disposition': `inline; filename="${file.name}"` },
-    body: file
+    body: uploadFile
   });
   if (!uploadRes.ok) {
     const err = await uploadRes.text();
@@ -1520,7 +1578,7 @@ function loadScript(src) {
 function finishConvert() {
   const btn = document.getElementById('convertBtn');
   btn.disabled = false; btn.textContent = '⚡ Convert All Files';
-  showStatus(`✅ ${files.length} file${files.length > 1 ? 's' : ''} converted — check your downloads!`, 'success');
+  showStatus(`✓ ${files.length} file${files.length > 1 ? 's' : ''} converted — check your downloads!`, 'success');
   // Track stats
   const stats = JSON.parse(localStorage.getItem('cf_stats') || '{"conversions":0,"bytes":0,"formats":[]}');
   const history = JSON.parse(localStorage.getItem('cf_history') || '[]');
@@ -1554,7 +1612,7 @@ function openModal(plan) {
   document.getElementById('modalPlanPrice').textContent = p.price;
   document.getElementById('paymentSection').style.display = p.payment ? 'block' : 'none';
   document.getElementById('submitBtn').textContent = p.label;
-  document.getElementById('finePrint').textContent = p.payment ? '🔒 Secured by 256-bit SSL. Cancel anytime.' : '🔒 No credit card required for the free plan.';
+  document.getElementById('finePrint').textContent = p.payment ? '★ Secured by SSL. Cancel anytime.' : 'No credit card required for the free plan.';
   document.getElementById('modalOverlay').classList.add('open');
 }
 function closeModal() { document.getElementById('modalOverlay').classList.remove('open'); }
@@ -1574,9 +1632,9 @@ function handleSubscribe() {
     const btn = document.getElementById('submitBtn');
     btn.textContent = '⏳ Waiting for payment...'; btn.disabled = true;
     showModalError('');
-    document.getElementById('finePrint').innerHTML = '📱 Complete the payment in WeChat, then click confirm below.';
+    document.getElementById('finePrint').innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:-2px;margin-right:4px"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg> Complete the payment in WeChat, then click confirm below.';
     setTimeout(() => {
-      btn.textContent = '✅ Payment Received — Confirm';
+      btn.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" style="vertical-align:-2px;margin-right:5px"><polyline points="20 6 9 17 4 12"/></svg> Payment Received — Confirm';
       btn.disabled = false;
       btn.onclick = confirmWechatPayment;
     }, 3000);
@@ -1604,12 +1662,12 @@ function confirmWechatPayment() {
 
 function processPayment() {
   const btn = document.getElementById('submitBtn');
-  btn.textContent = '⚙️ Processing...'; btn.disabled = true;
+  btn.textContent = 'Processing...'; btn.disabled = true;
   const planEl = document.getElementById('modalPlanName');
   const planName = planEl ? planEl.textContent.replace(' Plan','') : 'Pro';
 
   setTimeout(() => {
-    btn.textContent = '✅ Success!';
+    btn.textContent = '✓ Success!';
     // Save subscription to account
     const stored = localStorage.getItem('cf_user');
     if (stored) {
@@ -1624,8 +1682,8 @@ function processPayment() {
       btn.onclick = handleSubscribe;
       isPro = true; renderFileList();
       const msg = planName === 'Free'
-        ? `🎉 Welcome to ConvertFlow! Your free account is ready.`
-        : `🎉 Welcome to ConvertFlow ${planName}! All features unlocked.`;
+        ? `✓ Welcome to ConvertFlow! Your free account is ready.`
+        : `✓ Welcome to ConvertFlow ${planName}! All features unlocked.`;
       showStatus(msg, 'success');
     }, 1200);
   }, 1800);
@@ -1635,22 +1693,22 @@ function showModalError(msg) {
   // Show error inside modal — reuse finePrint area
   const fp = document.getElementById('finePrint');
   if (msg) {
-    fp.innerHTML = `<span style="color:var(--danger)">⚠️ ${msg}</span>`;
+    fp.innerHTML = `<span style="color:var(--danger)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2" style="vertical-align:-2px;flex-shrink:0;margin-right:4px"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg> ${msg}</span>`;
   } else {
-    fp.textContent = '🔒 Secured by 256-bit SSL. Cancel anytime.';
+    fp.textContent = '★ Secured by SSL. Cancel anytime.';
   }
 }
 
 function showFeatureInfo(type) {
   if (type === 'security') {
-    document.getElementById('modalTitle').textContent = '🔒 Security & Privacy';
+    document.getElementById('modalTitle').textContent = 'Security & Privacy';
     document.getElementById('modalSub').textContent = 'Your files and privacy are our top priority.';
     document.getElementById('modalPlanName').textContent = 'How we protect you';
     document.getElementById('modalPlanPrice').textContent = 'Always';
     document.getElementById('paymentSection').style.display = 'none';
     document.getElementById('submitBtn').textContent = 'Got it';
     document.getElementById('submitBtn').onclick = closeModal;
-    document.getElementById('finePrint').textContent = '✅ 256-bit SSL · Auto-delete after 24h · No data sharing · GDPR compliant';
+    document.getElementById('finePrint').textContent = '✓ 256-bit SSL · Auto-delete after 24h · No data sharing · GDPR compliant';
     // Insert security details
     document.getElementById('modalSub').innerHTML =
       '<strong style="color:var(--text)">End-to-end encryption</strong> — All uploads use TLS 1.3.<br><br>' +
@@ -1676,7 +1734,7 @@ function openBypass() {
   pinEntry = '';
   updatePinDisplay();
   document.getElementById('pinError').style.display = 'none';
-  document.getElementById('bypassIcon').textContent = '🔐';
+  document.getElementById('bypassIcon').innerHTML = '<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="1.5" stroke-linecap="round"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/><circle cx="12" cy="16" r="1.5" fill="#f59e0b"/></svg>';
   document.getElementById('bypassTitle').textContent = 'Owner Bypass';
   document.getElementById('bypassSub').textContent = 'Enter your 4-digit owner PIN to unlock all Business features for free.';
   document.getElementById('pinKeypad').style.display = 'grid';
@@ -1718,7 +1776,7 @@ function updatePinDisplay() {
   for (let i = 0; i < 4; i++) {
     const dot = document.getElementById('p' + i);
     if (i < pinEntry.length) {
-      dot.textContent = '●';
+      dot.classList.add('filled');
       dot.classList.add('filled');
     } else {
       dot.textContent = '—';
@@ -1730,10 +1788,10 @@ function updatePinDisplay() {
 function checkPin() {
   if (pinEntry === OWNER_PIN) {
     // SUCCESS
-    document.getElementById('bypassIcon').textContent = '👑';
+    document.getElementById('bypassIcon').innerHTML = '<svg width="32" height="32" viewBox="0 0 24 24" fill="#f59e0b"><path d="M2 19l2-9 4.5 4L12 5l3.5 9L20 10l2 9H2z"/></svg>';
     document.getElementById('bypassTitle').textContent = 'Access Granted';
     document.getElementById('bypassSub').innerHTML =
-      '<span style="color:var(--success)">✅ Owner verified.</span> All Business features are now unlocked for free.';
+      '<span style="color:var(--success)">✓ Owner verified.</span> All Business features are now unlocked for free.';
     document.getElementById('pinKeypad').style.display = 'none';
     document.getElementById('pinError').style.display = 'none';
     // Show unlocked perks list
@@ -1741,15 +1799,15 @@ function checkPin() {
     perf.innerHTML = `
       <div style="background:rgba(16,185,129,0.08);border:1px solid rgba(16,185,129,0.25);border-radius:10px;padding:1rem;width:100%;text-align:left">
         <ul style="list-style:none;display:flex;flex-direction:column;gap:0.5rem;font-size:0.78rem">
-          <li style="color:var(--text)"><span style="color:var(--success)">✓</span> Unlimited conversions — no daily cap</li>
-          <li style="color:var(--text)"><span style="color:var(--success)">✓</span> Up to <strong>2 GB</strong> per file</li>
-          <li style="color:var(--text)"><span style="color:var(--success)">✓</span> All 900+ formats unlocked</li>
-          <li style="color:var(--text)"><span style="color:var(--success)">✓</span> Unlimited batch processing</li>
-          <li style="color:var(--text)"><span style="color:var(--success)">✓</span> Priority processing (max speed)</li>
-          <li style="color:var(--text)"><span style="color:var(--success)">✓</span> Advanced encoding options</li>
-          <li style="color:var(--text)"><span style="color:var(--success)">✓</span> Full REST API access</li>
-          <li style="color:var(--text)"><span style="color:var(--success)">✓</span> Unlimited team seats</li>
-          <li style="color:var(--text)"><span style="color:var(--success)">✓</span> Usage analytics dashboard</li>
+          <li style="color:var(--text)"><span style="color:var(--success)"><svg width='11' height='11' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='3'><polyline points='20 6 9 17 4 12'/></svg></span> Unlimited conversions — no daily cap</li>
+          <li style="color:var(--text)"><span style="color:var(--success)"><svg width='11' height='11' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='3'><polyline points='20 6 9 17 4 12'/></svg></span> Up to <strong>2 GB</strong> per file</li>
+          <li style="color:var(--text)"><span style="color:var(--success)"><svg width='11' height='11' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='3'><polyline points='20 6 9 17 4 12'/></svg></span> All 900+ formats unlocked</li>
+          <li style="color:var(--text)"><span style="color:var(--success)"><svg width='11' height='11' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='3'><polyline points='20 6 9 17 4 12'/></svg></span> Unlimited batch processing</li>
+          <li style="color:var(--text)"><span style="color:var(--success)"><svg width='11' height='11' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='3'><polyline points='20 6 9 17 4 12'/></svg></span> Priority processing (max speed)</li>
+          <li style="color:var(--text)"><span style="color:var(--success)"><svg width='11' height='11' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='3'><polyline points='20 6 9 17 4 12'/></svg></span> Advanced encoding options</li>
+          <li style="color:var(--text)"><span style="color:var(--success)"><svg width='11' height='11' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='3'><polyline points='20 6 9 17 4 12'/></svg></span> Full REST API access</li>
+          <li style="color:var(--text)"><span style="color:var(--success)"><svg width='11' height='11' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='3'><polyline points='20 6 9 17 4 12'/></svg></span> Unlimited team seats</li>
+          <li style="color:var(--text)"><span style="color:var(--success)"><svg width='11' height='11' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='3'><polyline points='20 6 9 17 4 12'/></svg></span> Usage analytics dashboard</li>
         </ul>
       </div>`;
     setTimeout(() => {
@@ -1766,7 +1824,7 @@ function checkPin() {
       d.style.animation = 'none';
       d.style.borderColor = 'var(--danger)';
       d.style.color = 'var(--danger)';
-      d.textContent = '✕';
+      d.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>';
     }
     document.getElementById('pinError').style.display = 'block';
     setTimeout(() => {
@@ -1789,7 +1847,7 @@ function activateOwnerMode() {
   document.getElementById('navOwnerBadge').style.display = 'list-item';
   // Update bypass button
   const bypassBtn = document.getElementById('bypassBtn');
-  bypassBtn.textContent = '👑 Owner Active';
+  bypassBtn.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="#f59e0b"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg> Owner Active';
   bypassBtn.style.background = 'linear-gradient(135deg,rgba(245,158,11,0.15),rgba(245,158,11,0.05))';
   bypassBtn.style.borderColor = 'var(--accent3)';
   bypassBtn.style.boxShadow = '0 0 16px rgba(245,158,11,0.2)';
@@ -1803,7 +1861,7 @@ function activateOwnerMode() {
   document.body.style.paddingBottom = '70px';
   // Re-render file list with no limits
   renderFileList();
-  showStatus('👑 Owner mode active — all Business features unlocked for free!', 'success');
+  showStatus('★ Owner mode active — all Business features unlocked for free!', 'success');
 }
 
 function revokeOwner() {
@@ -1926,7 +1984,7 @@ function handleAuth() {
 
 function loginUser(user) {
   const btn = document.getElementById('authSubmitBtn');
-  btn.textContent = '✅ Success!'; btn.disabled = true;
+  btn.textContent = '✓ Success!'; btn.disabled = true;
   setTimeout(() => {
     btn.disabled = false;
     btn.textContent = currentAuthTab === 'signin' ? 'Sign In' : 'Create Account';
@@ -2022,15 +2080,15 @@ function saveAccPassword() {
   const stored = localStorage.getItem('cf_user');
   if (!stored) return;
   const user = JSON.parse(stored);
-  if (atob(user.password) !== cur) { msg.style.color='var(--danger)'; msg.textContent='❌ Current password incorrect.'; msg.style.display='block'; return; }
-  if (nw.length < 6) { msg.style.color='var(--danger)'; msg.textContent='❌ Password must be 6+ characters.'; msg.style.display='block'; return; }
-  if (nw !== con) { msg.style.color='var(--danger)'; msg.textContent='❌ Passwords do not match.'; msg.style.display='block'; return; }
+  if (atob(user.password) !== cur) { msg.style.color='var(--danger)'; msg.textContent='✗ Current password incorrect.'; msg.style.display='block'; return; }
+  if (nw.length < 6) { msg.style.color='var(--danger)'; msg.textContent='✗ Password must be 6+ characters.'; msg.style.display='block'; return; }
+  if (nw !== con) { msg.style.color='var(--danger)'; msg.textContent='✗ Passwords do not match.'; msg.style.display='block'; return; }
   user.password = btoa(nw);
   localStorage.setItem('cf_user', JSON.stringify(user));
   document.getElementById('accCurPw').value = '';
   document.getElementById('accNewPw').value = '';
   document.getElementById('accConPw').value = '';
-  msg.style.color = 'var(--success)'; msg.textContent = '✅ Password updated!'; msg.style.display = 'block';
+  msg.style.color = 'var(--success)'; msg.textContent = '✓ Password updated!'; msg.style.display = 'block';
   setTimeout(() => msg.style.display = 'none', 2500);
 }
 
@@ -2095,5 +2153,203 @@ function closeMobileNav() {
 }
 
 </script>
+
+<!-- ── FULL PAGE DASHBOARD ──────────────────────────────── -->
+<div class="db-page" id="dbPage">
+
+  <!-- Sidebar -->
+  <aside class="db-sidebar">
+    <a href="#" class="db-logo" onclick="closeDashboardPage();return false;">
+      <svg width="28" height="28" viewBox="0 0 40 40" fill="none"><defs><linearGradient id="dg" x1="0" y1="0" x2="40" y2="40" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="#00e5ff"/><stop offset="100%" stop-color="#7c3aed"/></linearGradient></defs><rect width="40" height="40" rx="10" fill="url(#dg)" opacity="0.15"/><path d="M8 14h10l4 12 4-20 4 8h2" stroke="url(#dg)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <span class="db-logo-text">Convert<span>Flow</span></span>
+    </a>
+    <ul class="db-nav">
+      <li><button class="db-nav-btn active" onclick="dbShowPanel('overview',this)"><svg width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' style='margin-right:6px;vertical-align:-2px'><rect x='3' y='3' width='7' height='7'/><rect x='14' y='3' width='7' height='7'/><rect x='3' y='14' width='7' height='7'/><rect x='14' y='14' width='7' height='7'/></svg><span class="db-nav-icon"><svg width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2'><path d='M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z'/><polyline points='9 22 9 12 15 12 15 22'/></svg></span> Overview</button></li>
+      <li><button class="db-nav-btn" onclick="dbShowPanel('conversions',this)"><span class="db-nav-icon">⚡</span> Conversions</button></li>
+      <li><button class="db-nav-btn" onclick="dbShowPanel('profile',this)"><svg width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' style='margin-right:6px;vertical-align:-2px'><path d='M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2'/><circle cx='12' cy='7' r='4'/></svg><span class="db-nav-icon"><svg width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2'><path d='M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2'/><circle cx='12' cy='7' r='4'/></svg></span> Profile</button></li>
+      <li><button class="db-nav-btn" onclick="dbShowPanel('security',this)"><span class="db-nav-icon"><svg width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2'><rect x='5' y='11' width='14' height='10' rx='2'/><path d='M8 11V7a4 4 0 0 1 8 0v4'/></svg></span> Security</button></li>
+      <li><button class="db-nav-btn" onclick="dbShowPanel('billing',this)"><span class="db-nav-icon"><svg width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2'><rect x='1' y='4' width='22' height='16' rx='2'/><line x1='1' y1='10' x2='23' y2='10'/></svg></span> Billing</button></li>
+    </ul>
+    <div class="db-sidebar-footer">
+      <div class="db-user-chip">
+        <div class="db-mini-avatar" id="dbMiniAvatar"></div>
+        <div class="db-user-info">
+          <div class="db-user-name" id="dbSidebarName"></div>
+          <div class="db-user-plan" id="dbSidebarPlan"></div>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Main -->
+  <main class="db-main">
+    <div class="db-topbar">
+      <div class="db-page-title" id="dbPageTitle">Overview</div>
+      <div class="db-topbar-actions">
+        <button class="db-btn" onclick="closeDashboardPage()">← Back to Converter</button>
+        <button class="db-btn danger" onclick="dbSignOut()">Sign Out</button>
+      </div>
+    </div>
+
+    <div class="db-content">
+
+      <!-- OVERVIEW PANEL -->
+      <div class="db-panel active" id="dbPanel-overview">
+        <div class="db-welcome">
+          <div>
+            <div class="db-welcome-title" id="dbWelcomeTitle">Welcome back</div>
+            <div class="db-welcome-sub" id="dbWelcomeSub">Here's what's happening with your account.</div>
+          </div>
+          <button class="db-btn primary" onclick="closeDashboardPage()">Start Converting →</button>
+        </div>
+
+        <div class="db-stats-row">
+          <div class="db-stat-card"><div class="db-stat-icon">⚡</div><div class="db-stat-val" id="dbStatConv">0</div><div class="db-stat-label">Total Conversions</div></div>
+          <div class="db-stat-card"><div class="db-stat-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.5" stroke-linecap="round"><path d="M3 7C3 5.9 3.9 5 5 5h4l2 2h8c1.1 0 2 .9 2 2v8c0 1.1-.9 2-2 2H5c-1.1 0-2-.9-2-2V7z"/></svg></div><div class="db-stat-val" id="dbStatFiles">0</div><div class="db-stat-label">Files Processed</div></div>
+          <div class="db-stat-card"><div class="db-stat-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.5" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15 15 0 0 1 4 10 15 15 0 0 1-4 10 15 15 0 0 1-4-10 15 15 0 0 1 4-10z"/></svg></div><div class="db-stat-val" id="dbStatFormats">0</div><div class="db-stat-label">Formats Used</div></div>
+          <div class="db-stat-card"><div class="db-stat-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.5" stroke-linecap="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg></div><div class="db-stat-val" id="dbStatData">0 MB</div><div class="db-stat-label">Data Processed</div></div>
+        </div>
+
+        <div class="db-grid-2">
+          <div class="db-card">
+            <div class="db-card-title">Recent Conversions</div>
+            <div id="dbRecentHistory"><div style="color:var(--muted);font-size:0.78rem;padding:1rem 0;text-align:center">No conversions yet — drop a file to get started!</div></div>
+          </div>
+          <div class="db-card">
+            <div class="db-card-title">Activity <span style="font-size:0.62rem;color:var(--border);font-weight:400;text-transform:none">last 7 days</span></div>
+            <div class="db-activity-bar" id="dbActivityBar"></div>
+            <div style="display:flex;justify-content:space-between;margin-top:0.5rem">
+              <span id="dbActivityLabels" style="display:contents"></span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- CONVERSIONS PANEL -->
+      <div class="db-panel" id="dbPanel-conversions">
+        <div class="db-card" style="margin-bottom:1.5rem">
+          <div class="db-card-title">
+            Conversion History
+            <button onclick="dbClearHistory()" class="db-btn" style="font-size:0.65rem;padding:0.25rem 0.65rem">Clear All</button>
+          </div>
+          <div id="dbFullHistory"><div style="color:var(--muted);font-size:0.78rem;padding:1rem 0;text-align:center">No conversions yet.</div></div>
+        </div>
+      </div>
+
+      <!-- PROFILE PANEL -->
+      <div class="db-panel" id="dbPanel-profile">
+        <div class="db-grid-2">
+          <div class="db-card">
+            <div class="db-card-title">Personal Info</div>
+            <div style="display:flex;align-items:center;gap:1rem;margin-bottom:1.75rem">
+              <div id="dbBigAvatar" style="width:64px;height:64px;border-radius:50%;background:linear-gradient(135deg,var(--accent2),var(--accent));display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-size:1.4rem;font-weight:800;color:white;flex-shrink:0"></div>
+              <div>
+                <div id="dbProfileName" style="font-family:'Syne',sans-serif;font-size:1.1rem;font-weight:800;margin-bottom:0.2rem"></div>
+                <div id="dbProfileEmail" style="font-size:0.75rem;color:var(--muted)"></div>
+              </div>
+            </div>
+            <div class="db-form-row">
+              <div class="db-field"><label>Full Name</label><input class="db-input" type="text" id="dbEditName" placeholder="Your name"></div>
+              <div class="db-field"><label>Email</label><input class="db-input" type="email" id="dbEditEmail" placeholder="your@email.com"></div>
+            </div>
+            <button class="db-btn primary" onclick="dbSaveProfile()">Save Changes</button>
+            <div class="db-msg ok" id="dbProfileMsg"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="vertical-align:-2px;margin-right:3px"><polyline points="20 6 9 17 4 12"/></svg> Profile updated!</div>
+          </div>
+          <div class="db-card">
+            <div class="db-card-title">Account Details</div>
+            <div style="display:flex;flex-direction:column;gap:1rem">
+              <div style="background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:1rem;display:flex;justify-content:space-between;align-items:center">
+                <span style="font-size:0.75rem;color:var(--muted)">Member Since</span>
+                <span id="dbMemberSince" style="font-size:0.78rem"></span>
+              </div>
+              <div style="background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:1rem;display:flex;justify-content:space-between;align-items:center">
+                <span style="font-size:0.75rem;color:var(--muted)">Current Plan</span>
+                <span id="dbCurrentPlanLabel" style="font-size:0.78rem;color:var(--accent)"></span>
+              </div>
+              <div style="background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:1rem;display:flex;justify-content:space-between;align-items:center">
+                <span style="font-size:0.75rem;color:var(--muted)">Daily Limit</span>
+                <span id="dbDailyLimit" style="font-size:0.78rem"></span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SECURITY PANEL -->
+      <div class="db-panel" id="dbPanel-security">
+        <div class="db-grid-2">
+          <div class="db-card">
+            <div class="db-card-title">Change Password</div>
+            <div class="db-field" style="margin-bottom:1rem"><label>Current Password</label><input class="db-input" type="password" id="dbCurPw" placeholder="••••••••"></div>
+            <div class="db-field" style="margin-bottom:1rem"><label>New Password</label><input class="db-input" type="password" id="dbNewPw" placeholder="••••••••"></div>
+            <div class="db-field" style="margin-bottom:1.25rem"><label>Confirm New Password</label><input class="db-input" type="password" id="dbConPw" placeholder="••••••••"></div>
+            <button class="db-btn primary" onclick="dbSavePassword()">Update Password</button>
+            <div class="db-msg ok" id="dbPwOkMsg"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="vertical-align:-2px;margin-right:3px"><polyline points="20 6 9 17 4 12"/></svg> Password updated!</div>
+            <div class="db-msg err" id="dbPwErrMsg"></div>
+          </div>
+          <div class="db-card">
+            <div class="db-card-title">Danger Zone</div>
+            <div style="background:rgba(239,68,68,0.05);border:1px solid rgba(239,68,68,0.2);border-radius:10px;padding:1.25rem;margin-bottom:1rem">
+              <div style="font-family:'Syne',sans-serif;font-size:0.9rem;font-weight:700;margin-bottom:0.4rem">Delete Account</div>
+              <div style="font-size:0.75rem;color:var(--muted);margin-bottom:1rem;line-height:1.5">Permanently delete your account and all data. This cannot be undone.</div>
+              <button class="db-btn danger" onclick="dbDeleteAccount()">Delete My Account</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- BILLING PANEL -->
+      <div class="db-panel" id="dbPanel-billing">
+        <div id="dbPlanCard" class="db-plan-card">
+          <div>
+            <div style="font-size:0.7rem;color:var(--muted);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:0.4rem">Current Plan</div>
+            <div class="db-plan-name" id="dbBillingPlanName">Free</div>
+            <div class="db-plan-desc" id="dbBillingPlanDesc">10 conversions/day · Up to 500 MB per file</div>
+          </div>
+          <span class="db-plan-badge" id="dbBillingBadge"></span>
+        </div>
+        <div class="db-grid-3">
+          <div class="db-card" style="border-color:var(--border)">
+            <div style="font-family:'Syne',sans-serif;font-size:0.8rem;font-weight:700;text-transform:uppercase;color:var(--muted);margin-bottom:1rem">Free</div>
+            <div style="font-family:'Syne',sans-serif;font-size:2.5rem;font-weight:800;margin-bottom:0.25rem">$0</div>
+            <div style="font-size:0.72rem;color:var(--muted);margin-bottom:1.5rem">forever</div>
+            <ul style="list-style:none;display:flex;flex-direction:column;gap:0.5rem;font-size:0.75rem;color:var(--muted);margin-bottom:1.5rem">
+              <li><span style="color:var(--success)">✓</span> 10 conversions/day</li>
+              <li><span style="color:var(--success)">✓</span> 500 MB per file</li>
+              <li><span style="color:var(--success)">✓</span> 200+ formats</li>
+            </ul>
+          </div>
+          <div class="db-card" style="border-color:rgba(0,229,255,0.35);background:linear-gradient(135deg,rgba(0,229,255,0.04),rgba(124,58,237,0.04));position:relative">
+            <div style="position:absolute;top:-11px;left:50%;transform:translateX(-50%);background:var(--accent);color:#000;font-size:0.6rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;padding:0.25rem 0.85rem;border-radius:100px">Most Popular</div>
+            <div style="font-family:'Syne',sans-serif;font-size:0.8rem;font-weight:700;text-transform:uppercase;color:var(--accent);margin-bottom:1rem">Pro</div>
+            <div style="font-family:'Syne',sans-serif;font-size:2.5rem;font-weight:800;margin-bottom:0.25rem">$9.99</div>
+            <div style="font-size:0.72rem;color:var(--muted);margin-bottom:1.5rem">/ month</div>
+            <ul style="list-style:none;display:flex;flex-direction:column;gap:0.5rem;font-size:0.75rem;color:var(--muted);margin-bottom:1.5rem">
+              <li><span style="color:var(--success)"><svg width='11' height='11' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='3'><polyline points='20 6 9 17 4 12'/></svg></span> Unlimited conversions</li>
+              <li><span style="color:var(--success)">✓</span> Up to 2 GB per file</li>
+              <li><span style="color:var(--success)"><svg width='11' height='11' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='3'><polyline points='20 6 9 17 4 12'/></svg></span> All 900+ formats</li>
+              <li><span style="color:var(--success)"><svg width='11' height='11' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='3'><polyline points='20 6 9 17 4 12'/></svg></span> Priority processing</li>
+            </ul>
+            <button class="db-btn primary" style="width:100%" onclick="closeDashboardPage();openModal('Pro')">Upgrade to Pro</button>
+          </div>
+          <div class="db-card">
+            <div style="font-family:'Syne',sans-serif;font-size:0.8rem;font-weight:700;text-transform:uppercase;color:#a78bfa;margin-bottom:1rem">Business</div>
+            <div style="font-family:'Syne',sans-serif;font-size:2.5rem;font-weight:800;margin-bottom:0.25rem">$29.99</div>
+            <div style="font-size:0.72rem;color:var(--muted);margin-bottom:1.5rem">/ month</div>
+            <ul style="list-style:none;display:flex;flex-direction:column;gap:0.5rem;font-size:0.75rem;color:var(--muted);margin-bottom:1.5rem">
+              <li><span style="color:var(--success)">✓</span> Everything in Pro</li>
+              <li><span style="color:var(--success)">✓</span> REST API access</li>
+              <li><span style="color:var(--success)">✓</span> 5 team seats</li>
+              <li><span style="color:var(--success)"><svg width='11' height='11' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='3'><polyline points='20 6 9 17 4 12'/></svg></span> Usage analytics</li>
+            </ul>
+            <button class="db-btn" style="width:100%;border-color:rgba(167,139,250,0.4);color:#a78bfa" onclick="closeDashboardPage();openModal('Business')">Get Business</button>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /db-content -->
+  </main>
+</div>
+
 </body>
 </html>
