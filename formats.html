@@ -552,10 +552,10 @@
     <span>You have full Business access — all features unlocked for free.</span>
   </div>
   <div style="display:flex;gap:1.5rem;align-items:center;color:var(--muted);font-size:0.68rem">
-    <span style="color:var(--success)"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg> Unlimited conversions</span>
-    <span style="color:var(--success)"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg> 2 GB files</span>
-    <span style="color:var(--success)"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg> API access</span>
-    <span style="color:var(--success)"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg> All 900+ formats</span>
+    <span style="color:var(--success)">✓ Unlimited conversions</span>
+    <span style="color:var(--success)">✓ 2 GB files</span>
+    <span style="color:var(--success)">✓ API access</span>
+    <span style="color:var(--success)">✓ All 900+ formats</span>
     <button onclick="revokeOwner()" style="background:none;border:1px solid rgba(245,158,11,0.3);color:var(--accent3);padding:0.3rem 0.75rem;border-radius:4px;font-family:'DM Mono',monospace;font-size:0.65rem;cursor:pointer;transition:all 0.2s;margin-left:0.5rem" onmouseover="this.style.background='rgba(245,158,11,0.1)'" onmouseout="this.style.background='none'">Sign Out</button>
   </div>
 </div>
@@ -1378,12 +1378,24 @@ async function cloudConvert(file, targetFmt, filename, setProgress) {
 
   // 1. Upload file to ConvertAPI
   setProgress(20);
-  const uploadForm = new FormData();
-  uploadForm.append('file', file, file.name);
+  // Map unusual extensions to proper MIME types for upload
+  const mimeMap = {
+    mts:'video/mp2t', m2ts:'video/mp2t', ts:'video/mp2t',
+    mkv:'video/x-matroska', webm:'video/webm', avi:'video/x-msvideo',
+    mov:'video/quicktime', wmv:'video/x-ms-wmv', flv:'video/x-flv',
+    mp4:'video/mp4', m4v:'video/mp4', '3gp':'video/3gpp',
+    aac:'audio/aac', flac:'audio/flac', ogg:'audio/ogg',
+    opus:'audio/opus', m4a:'audio/mp4', wma:'audio/x-ms-wma',
+  };
+  const fileExt2 = file.name.split('.').pop().toLowerCase();
+  const mimeType = mimeMap[fileExt2] || file.type || 'application/octet-stream';
+  // Use multipart form upload for better compatibility with unusual file types
+  const formData = new FormData();
+  const renamedFile = new File([file], file.name, { type: mimeType });
+  formData.append('file', renamedFile);
   const uploadRes = await fetch('https://v2.convertapi.com/upload', {
     method: 'POST',
-    headers: { 'Content-Disposition': `inline; filename="${file.name}"` },
-    body: file
+    body: formData
   });
   if (!uploadRes.ok) {
     const err = await uploadRes.text();
@@ -1585,7 +1597,7 @@ function openModal(plan) {
   document.getElementById('modalPlanPrice').textContent = p.price;
   document.getElementById('paymentSection').style.display = p.payment ? 'block' : 'none';
   document.getElementById('submitBtn').textContent = p.label;
-  document.getElementById('finePrint').textContent = p.payment ? 'Secured by SSL. Cancel anytime.' : 'No credit card required for the free plan.';
+  document.getElementById('finePrint').textContent = p.payment ? '★ Secured by SSL. Cancel anytime.' : 'No credit card required for the free plan.';
   document.getElementById('modalOverlay').classList.add('open');
 }
 function closeModal() { document.getElementById('modalOverlay').classList.remove('open'); }
@@ -1603,7 +1615,7 @@ function handleSubscribe() {
   if (isWechat) {
     // WeChat Pay: show confirmation step
     const btn = document.getElementById('submitBtn');
-    btn.textContent = '⏳ Waiting for payment...'; btn.disabled = true;
+    btn.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:-2px;margin-right:5px;animation:spin 2s linear infinite"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg> Waiting for payment...'; btn.disabled = true;
     showModalError('');
     document.getElementById('finePrint').innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:-2px;margin-right:4px"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg> Complete the payment in WeChat, then click confirm below.';
     setTimeout(() => {
@@ -1655,8 +1667,8 @@ function processPayment() {
       btn.onclick = handleSubscribe;
       isPro = true; renderFileList();
       const msg = planName === 'Free'
-        ? `Welcome to ConvertFlow! Your free account is ready.`
-        : `Welcome to ConvertFlow ${planName}! All features unlocked.`;
+        ? `✓ Welcome to ConvertFlow! Your free account is ready.`
+        : `✓ Welcome to ConvertFlow ${planName}! All features unlocked.`;
       showStatus(msg, 'success');
     }, 1200);
   }, 1800);
@@ -1668,7 +1680,7 @@ function showModalError(msg) {
   if (msg) {
     fp.innerHTML = `<span style="color:var(--danger)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2" style="vertical-align:-2px;flex-shrink:0;margin-right:4px"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg> ${msg}</span>`;
   } else {
-    fp.textContent = 'Secured by SSL. Cancel anytime.';
+    fp.textContent = '★ Secured by SSL. Cancel anytime.';
   }
 }
 
@@ -1681,7 +1693,7 @@ function showFeatureInfo(type) {
     document.getElementById('paymentSection').style.display = 'none';
     document.getElementById('submitBtn').textContent = 'Got it';
     document.getElementById('submitBtn').onclick = closeModal;
-    document.getElementById('finePrint').textContent = '256-bit SSL · Auto-delete after 24h · No data sharing · GDPR compliant';
+    document.getElementById('finePrint').textContent = '✓ 256-bit SSL · Auto-delete after 24h · No data sharing · GDPR compliant';
     // Insert security details
     document.getElementById('modalSub').innerHTML =
       '<strong style="color:var(--text)">End-to-end encryption</strong> — All uploads use TLS 1.3.<br><br>' +
@@ -1707,7 +1719,7 @@ function openBypass() {
   pinEntry = '';
   updatePinDisplay();
   document.getElementById('pinError').style.display = 'none';
-  document.getElementById('bypassIcon').innerHTML = '<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="1.5" stroke-linecap="round"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/><circle cx="12" cy="16" r="1.5" fill="#f59e0b"/></svg>';
+  { const _bi = document.getElementById('bypassIcon'); if(_bi) _bi.innerHTML = '<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="1.5" stroke-linecap="round"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/><circle cx="12" cy="16" r="1.5" fill="#f59e0b"/></svg>'; }
   document.getElementById('bypassTitle').textContent = 'Owner Bypass';
   document.getElementById('bypassSub').textContent = 'Enter your 4-digit owner PIN to unlock all Business features for free.';
   document.getElementById('pinKeypad').style.display = 'grid';
@@ -1764,7 +1776,7 @@ function checkPin() {
     document.getElementById('bypassIcon').innerHTML = '<svg width="32" height="32" viewBox="0 0 24 24" fill="#f59e0b"><path d="M2 19l2-9 4.5 4L12 5l3.5 9L20 10l2 9H2z"/></svg>';
     document.getElementById('bypassTitle').textContent = 'Access Granted';
     document.getElementById('bypassSub').innerHTML =
-      '<span style="color:var(--success)">Owner verified.</span> All Business features are now unlocked for free.';
+      '<span style="color:var(--success)">✓ Owner verified.</span> All Business features are now unlocked for free.';
     document.getElementById('pinKeypad').style.display = 'none';
     document.getElementById('pinError').style.display = 'none';
     // Show unlocked perks list
@@ -1834,7 +1846,7 @@ function activateOwnerMode() {
   document.body.style.paddingBottom = '70px';
   // Re-render file list with no limits
   renderFileList();
-  showStatus('Owner mode active — all Business features unlocked for free!', 'success');
+  showStatus('★ Owner mode active — all Business features unlocked for free!', 'success');
 }
 
 function revokeOwner() {
@@ -1845,7 +1857,7 @@ function revokeOwner() {
   document.getElementById('ownerBar').style.display = 'none';
   document.body.style.paddingBottom = '0';
   const bypassBtn = document.getElementById('bypassBtn');
-  bypassBtn.innerHTML = '<svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" style="vertical-align:-1px;margin-right:3px"><path d="M13 2L4.5 13.5H11L10 22L20.5 9.5H14L13 2z"/></svg> Bypass';
+  bypassBtn.textContent = '⚡ Bypass';
   bypassBtn.style.background = 'linear-gradient(135deg,#1a0a2e,#0a1a2e)';
   bypassBtn.style.borderColor = 'rgba(245,158,11,0.4)';
   bypassBtn.style.boxShadow = 'none';
@@ -2053,9 +2065,9 @@ function saveAccPassword() {
   const stored = localStorage.getItem('cf_user');
   if (!stored) return;
   const user = JSON.parse(stored);
-  if (atob(user.password) !== cur) { msg.style.color='var(--danger)'; msg.textContent='Incorrect password.'; msg.style.display='block'; return; }
-  if (nw.length < 6) { msg.style.color='var(--danger)'; msg.textContent='Password must be 6+ characters.'; msg.style.display='block'; return; }
-  if (nw !== con) { msg.style.color='var(--danger)'; msg.textContent='Passwords do not match.'; msg.style.display='block'; return; }
+  if (atob(user.password) !== cur) { msg.style.color='var(--danger)'; msg.textContent='✗ Current password incorrect.'; msg.style.display='block'; return; }
+  if (nw.length < 6) { msg.style.color='var(--danger)'; msg.textContent='✗ Password must be 6+ characters.'; msg.style.display='block'; return; }
+  if (nw !== con) { msg.style.color='var(--danger)'; msg.textContent='✗ Passwords do not match.'; msg.style.display='block'; return; }
   user.password = btoa(nw);
   localStorage.setItem('cf_user', JSON.stringify(user));
   document.getElementById('accCurPw').value = '';
