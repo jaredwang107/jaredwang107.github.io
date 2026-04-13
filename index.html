@@ -1405,12 +1405,13 @@ async function cloudConvert(file, targetFmt, filename, setProgress) {
   };
   const fileExt2 = file.name.split('.').pop().toLowerCase();
   const mimeType = mimeMap[fileExt2] || file.type || 'application/octet-stream';
-  const uploadBlob = new Blob([await file.arrayBuffer()], { type: mimeType });
-  const uploadFile = new File([uploadBlob], file.name, { type: mimeType });
+  // Use multipart form upload for better compatibility with unusual file types
+  const formData = new FormData();
+  const renamedFile = new File([file], file.name, { type: mimeType });
+  formData.append('file', renamedFile);
   const uploadRes = await fetch('https://v2.convertapi.com/upload', {
     method: 'POST',
-    headers: { 'Content-Disposition': `inline; filename="${file.name}"` },
-    body: uploadFile
+    body: formData
   });
   if (!uploadRes.ok) {
     const err = await uploadRes.text();
@@ -1630,7 +1631,7 @@ function handleSubscribe() {
   if (isWechat) {
     // WeChat Pay: show confirmation step
     const btn = document.getElementById('submitBtn');
-    btn.textContent = '⏳ Waiting for payment...'; btn.disabled = true;
+    btn.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:-2px;margin-right:5px;animation:spin 2s linear infinite"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg> Waiting for payment...'; btn.disabled = true;
     showModalError('');
     document.getElementById('finePrint').innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:-2px;margin-right:4px"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg> Complete the payment in WeChat, then click confirm below.';
     setTimeout(() => {
@@ -1734,7 +1735,7 @@ function openBypass() {
   pinEntry = '';
   updatePinDisplay();
   document.getElementById('pinError').style.display = 'none';
-  document.getElementById('bypassIcon').innerHTML = '<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="1.5" stroke-linecap="round"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/><circle cx="12" cy="16" r="1.5" fill="#f59e0b"/></svg>';
+  { const _bi = document.getElementById('bypassIcon'); if(_bi) _bi.innerHTML = '<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="1.5" stroke-linecap="round"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/><circle cx="12" cy="16" r="1.5" fill="#f59e0b"/></svg>'; }
   document.getElementById('bypassTitle').textContent = 'Owner Bypass';
   document.getElementById('bypassSub').textContent = 'Enter your 4-digit owner PIN to unlock all Business features for free.';
   document.getElementById('pinKeypad').style.display = 'grid';
