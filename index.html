@@ -1225,7 +1225,7 @@ function renderFileList() {
 function removeFile(i) { files.splice(i, 1); renderFileList(); }
 
 // ── CONVERTAPI SECRET — replace with your own from convertapi.com ──
-const CONVERTAPI_SECRET = null; // Set via API_SECRET inside cloudConvert()
+const CONVERTAPI_SECRET = null; // Set this to your ConvertAPI secret from convertapi.com
 
 function startConvert() {
   if (!files.length) return;
@@ -1383,10 +1383,10 @@ async function ffmpegConvert(file, srcExt, targetFmt, filename, setProgress) {
 
 // ── ConvertAPI ───────────────────────────────────────────────
 async function cloudConvert(file, targetFmt, filename, setProgress) {
-  const API_SECRET = 'hdLCM4AeRt5L6GG19djpwFeq8fhYLdns';
+  const API_SECRET = CONVERTAPI_SECRET || 'hdLCM4AeRt5L6GG19djpwFeq8fhYLdns';
 
   if (!API_SECRET || API_SECRET === 'YOUR_CONVERTAPI_SECRET_HERE') {
-    throw new Error('No ConvertAPI secret set. Sign up free at convertapi.com, then paste your Secret into API_SECRET in the code.');
+    throw new Error('No ConvertAPI secret set. Sign up free at convertapi.com, then paste your Secret into CONVERTAPI_SECRET in the code.');
   }
 
   // Normalize source extension to what ConvertAPI expects
@@ -1421,7 +1421,7 @@ async function cloudConvert(file, targetFmt, filename, setProgress) {
   if (!uploadRes.ok) {
     let errText = '';
     try { errText = await uploadRes.text(); } catch(e) {}
-    throw new Error(`Upload failed (${uploadRes.status}): ${errText.slice(0,200)}`);
+    throw new Error(`Upload failed (${uploadRes.status}): ${errText || uploadRes.statusText}`);
   }
   let uploadData;
   try { uploadData = await uploadRes.json(); } catch(e) {
@@ -1436,19 +1436,30 @@ async function cloudConvert(file, targetFmt, filename, setProgress) {
   const convertUrl = `https://v2.convertapi.com/convert/${srcExt}/to/${targetFmt}?Secret=${API_SECRET}&StoreFile=true`;
   const convertBody = new FormData();
   convertBody.append('File', fileId);
-  const convertRes = await fetch(convertUrl, { method: 'POST', body: convertBody });
+  const convertRes = await fetch(convertUrl, {
+    method: 'POST',
+    body: convertBody,
+    headers: { Accept: 'application/json' }
+  });
   setProgress(75);
 
   if (!convertRes.ok) {
-    let errMsg = 'Conversion failed';
-    try {
-      const errData = await convertRes.json();
-      errMsg = errData.Message || errData.message || errMsg;
-      if (convertRes.status === 401 || convertRes.status === 403)
-        throw new Error('ConvertAPI secret is invalid or expired. Check your secret at convertapi.com.');
-      if (convertRes.status === 402)
-        throw new Error('ConvertAPI account is out of credits. Top up at convertapi.com (250 free conversions/month on free plan).');
-    } catch(e) { if (e.message !== 'Conversion failed') throw e; }
+    let errMsg = `Conversion failed (${convertRes.status})`;
+    const errText = await convertRes.text();
+    if (errText) {
+      try {
+        const errData = JSON.parse(errText);
+        errMsg = errData.Message || errData.message || errData.error || errText;
+      } catch(e) {
+        errMsg = errText;
+      }
+    }
+    if (convertRes.status === 401 || convertRes.status === 403)
+      throw new Error('ConvertAPI secret is invalid or expired. Check your secret at convertapi.com. ' + errMsg);
+    if (convertRes.status === 402)
+      throw new Error('ConvertAPI account is out of credits. Top up at convertapi.com (250 free conversions/month on free plan). ' + errMsg);
+    if (convertRes.status === 415)
+      throw new Error(`Unsupported conversion: ${srcExt.toUpperCase()} → ${targetFmt.toUpperCase()}. ConvertAPI rejected the media type. ${errMsg}`);
     throw new Error(errMsg + ' (' + convertRes.status + ')');
   }
 
