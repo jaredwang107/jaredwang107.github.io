@@ -2846,7 +2846,7 @@ async function cloudConvert(file, targetFmt, filename, setProgress) {
   const rawExt = file.name.split('.').pop().toLowerCase();
   const srcExt = extNorm[rawExt] || rawExt;
   const targetNorm = { jpeg:'jpg', jpe:'jpg', tif:'tiff', htm:'html', markdown:'md', yml:'yaml' };
-  const normalizedTargetFmt = targetNorm[targetFmt] || targetFmt;
+  const normalizedTargetFmt = targetNorm[targetFmt.toLowerCase()] || targetFmt.toLowerCase();
 
   // 1. Upload file to ConvertAPI
   setProgress(20);
@@ -2861,7 +2861,8 @@ async function cloudConvert(file, targetFmt, filename, setProgress) {
   const fileExt2 = file.name.split('.').pop().toLowerCase();
   const mimeType = mimeMap[fileExt2] || file.type || 'application/octet-stream';
   const uploadForm = new FormData();
-  uploadForm.append('file', file, file.name);
+  const uploadFile = new File([file], file.name, { type: mimeType });
+  uploadForm.append('file', uploadFile, uploadFile.name);
   const uploadRes = await fetch('https://v2.convertapi.com/upload', {
     method: 'POST',
     body: uploadForm
@@ -2880,17 +2881,23 @@ async function cloudConvert(file, targetFmt, filename, setProgress) {
 
   // 2. Convert
   setProgress(40);
-  const convertUrl = `https://v2.convertapi.com/convert/${srcExt}/to/${normalizedTargetFmt}?Secret=${API_SECRET}&StoreFile=true&File=${encodeURIComponent(fileId)}`;
-  let convertRes = await fetch(convertUrl, {
-    method: 'GET',
+  const convertBaseUrl = `https://v2.convertapi.com/convert/${srcExt}/to/${normalizedTargetFmt}?Secret=${API_SECRET}`;
+  const convertBody = new FormData();
+  convertBody.append('File', fileId);
+  convertBody.append('StoreFile', 'true');
+  let convertRes = await fetch(convertBaseUrl, {
+    method: 'POST',
+    body: convertBody,
     headers: { Accept: 'application/json' }
   });
 
-  if (!convertRes.ok && convertRes.status === 415) {
-    const fallbackBody = new FormData();
-    fallbackBody.append('File', fileId);
+  if (!convertRes.ok && (convertRes.status === 415 || convertRes.status === 400)) {
+    const convertUrl = `${convertBaseUrl}&File=${encodeURIComponent(fileId)}&StoreFile=true`;
     convertRes = await fetch(convertUrl, {
-      method: 'POST',
+      method: 'GET',
+      headers: { Accept: 'application/json' }
+    });
+
       body: fallbackBody,
       headers: { Accept: 'application/json' }
     });
