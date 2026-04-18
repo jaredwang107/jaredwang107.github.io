@@ -1414,7 +1414,8 @@ async function cloudConvert(file, targetFmt, filename, setProgress) {
   const mimeType = mimeMap[fileExt2] || file.type || 'application/octet-stream';
   // ConvertAPI upload via multipart/form-data (browser sets boundary, no custom headers = no CORS issues)
   const uploadForm = new FormData();
-  uploadForm.append('file', file, file.name);
+  const uploadFile = new File([file], file.name, { type: mimeType });
+  uploadForm.append('file', uploadFile, uploadFile.name);
   const uploadRes = await fetch('https://v2.convertapi.com/upload', {
     method: 'POST',
     body: uploadForm
@@ -1434,17 +1435,18 @@ async function cloudConvert(file, targetFmt, filename, setProgress) {
 
   // 2. Convert
   setProgress(40);
-  const convertUrl = `https://v2.convertapi.com/convert/${srcExt}/to/${normalizedTargetFmt}?Secret=${API_SECRET}&StoreFile=true&File=${encodeURIComponent(fileId)}`;
+  const convertBaseUrl = `https://v2.convertapi.com/convert/${srcExt}/to/${normalizedTargetFmt}?Secret=${API_SECRET}&StoreFile=true`;
+  const convertUrl = `${convertBaseUrl}&File=${encodeURIComponent(fileId)}`;
   let convertRes = await fetch(convertUrl, {
     method: 'GET',
     headers: { Accept: 'application/json' }
   });
 
-  if (!convertRes.ok && convertRes.status === 415) {
-    // Some ConvertAPI configurations expect a POST when FileId is passed in form data.
+  if (!convertRes.ok && (convertRes.status === 415 || convertRes.status === 400)) {
+    // Some ConvertAPI configurations expect a POST when FileId is passed in request form data.
     const fallbackBody = new FormData();
     fallbackBody.append('File', fileId);
-    convertRes = await fetch(convertUrl, {
+    convertRes = await fetch(convertBaseUrl, {
       method: 'POST',
       body: fallbackBody,
       headers: { Accept: 'application/json' }
