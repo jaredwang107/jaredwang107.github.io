@@ -1396,6 +1396,8 @@ async function cloudConvert(file, targetFmt, filename, setProgress) {
   };
   const rawExt = file.name.split('.').pop().toLowerCase();
   const srcExt = extNorm[rawExt] || rawExt;
+  const targetNorm = { jpeg:'jpg', jpe:'jpg', tif:'tiff', htm:'html', markdown:'md', yml:'yaml' };
+  const normalizedTargetFmt = targetNorm[targetFmt] || targetFmt;
 
   // 1. Upload file to ConvertAPI
   setProgress(20);
@@ -1432,15 +1434,23 @@ async function cloudConvert(file, targetFmt, filename, setProgress) {
 
   // 2. Convert
   setProgress(40);
-  // Build convert URL - Secret + FileId as query params, POST with no body
-  const convertUrl = `https://v2.convertapi.com/convert/${srcExt}/to/${targetFmt}?Secret=${API_SECRET}&StoreFile=true`;
-  const convertBody = new FormData();
-  convertBody.append('File', fileId);
-  const convertRes = await fetch(convertUrl, {
-    method: 'POST',
-    body: convertBody,
+  const convertUrl = `https://v2.convertapi.com/convert/${srcExt}/to/${normalizedTargetFmt}?Secret=${API_SECRET}&StoreFile=true&File=${encodeURIComponent(fileId)}`;
+  let convertRes = await fetch(convertUrl, {
+    method: 'GET',
     headers: { Accept: 'application/json' }
   });
+
+  if (!convertRes.ok && convertRes.status === 415) {
+    // Some ConvertAPI configurations expect a POST when FileId is passed in form data.
+    const fallbackBody = new FormData();
+    fallbackBody.append('File', fileId);
+    convertRes = await fetch(convertUrl, {
+      method: 'POST',
+      body: fallbackBody,
+      headers: { Accept: 'application/json' }
+    });
+  }
+
   setProgress(75);
 
   if (!convertRes.ok) {
