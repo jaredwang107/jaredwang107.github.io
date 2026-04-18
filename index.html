@@ -1383,14 +1383,19 @@ async function ffmpegConvert(file, srcExt, targetFmt, filename, setProgress) {
 
 // ── ConvertAPI ───────────────────────────────────────────────
 async function cloudConvert(file, targetFmt, filename, setProgress) {
-  // REPLACE THIS: Go to convertapi.com → Sign up free → Dashboard → Auth → copy your Secret
   const API_SECRET = 'EWeTqAn86jM7wBhOEqRXiJqV0Uk4ejsC';
 
   if (!API_SECRET || API_SECRET === 'YOUR_CONVERTAPI_SECRET_HERE') {
     throw new Error('No ConvertAPI secret set. Sign up free at convertapi.com, then paste your Secret into API_SECRET in the code.');
   }
 
-  const srcExt = file.name.split('.').pop().toLowerCase();
+  // Normalize source extension to what ConvertAPI expects
+  const extNorm = {
+    'mts':'mts', 'm2ts':'mts', 'jpeg':'jpg', 'jpe':'jpg',
+    'tif':'tiff', 'htm':'html', 'markdown':'md',
+  };
+  const rawExt = file.name.split('.').pop().toLowerCase();
+  const srcExt = extNorm[rawExt] || rawExt;
 
   // 1. Upload file to ConvertAPI
   setProgress(20);
@@ -1405,11 +1410,13 @@ async function cloudConvert(file, targetFmt, filename, setProgress) {
   };
   const fileExt2 = file.name.split('.').pop().toLowerCase();
   const mimeType = mimeMap[fileExt2] || file.type || 'application/octet-stream';
-  // ConvertAPI upload: filename via query param (avoids CORS preflight blocking headers)
-  const safeName = file.name.replace(/[^a-zA-Z0-9._-]/g, '_');
-  const uploadRes = await fetch(`https://v2.convertapi.com/upload?filename=${encodeURIComponent(safeName)}`, {
+  // ConvertAPI upload via multipart/form-data (browser sets boundary, no custom headers = no CORS issues)
+  const uploadForm = new FormData();
+  uploadForm.append('file', file, file.name);
+  const uploadRes = await fetch('https://v2.convertapi.com/upload', {
     method: 'POST',
-    body: file
+    body: uploadForm
+    // DO NOT set Content-Type - browser auto-sets multipart/form-data with correct boundary
   });
   if (!uploadRes.ok) {
     let errText = '';
@@ -1425,8 +1432,11 @@ async function cloudConvert(file, targetFmt, filename, setProgress) {
 
   // 2. Convert
   setProgress(40);
-  const convertUrl = `https://v2.convertapi.com/convert/${srcExt}/to/${targetFmt}?Secret=${API_SECRET}&File=${fileId}&StoreFile=true`;
-  const convertRes = await fetch(convertUrl, { method: 'POST' });
+  // Build convert URL - Secret + FileId as query params, POST with no body
+  const convertUrl = `https://v2.convertapi.com/convert/${srcExt}/to/${targetFmt}?Secret=${API_SECRET}&StoreFile=true`;
+  const convertBody = new FormData();
+  convertBody.append('File', fileId);
+  const convertRes = await fetch(convertUrl, { method: 'POST', body: convertBody });
   setProgress(75);
 
   if (!convertRes.ok) {
