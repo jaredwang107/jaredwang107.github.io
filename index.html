@@ -1405,12 +1405,10 @@ async function cloudConvert(file, targetFmt, filename, setProgress) {
   };
   const fileExt2 = file.name.split('.').pop().toLowerCase();
   const mimeType = mimeMap[fileExt2] || file.type || 'application/octet-stream';
-  // ConvertAPI upload: raw binary, filename in Content-Disposition (per docs)
-  const uploadRes = await fetch('https://v2.convertapi.com/upload', {
+  // ConvertAPI upload: filename via query param (avoids CORS preflight blocking headers)
+  const safeName = file.name.replace(/[^a-zA-Z0-9._-]/g, '_');
+  const uploadRes = await fetch(`https://v2.convertapi.com/upload?filename=${encodeURIComponent(safeName)}`, {
     method: 'POST',
-    headers: {
-      'Content-Disposition': `inline; filename="${file.name.replace(/[^a-zA-Z0-9._-]/g, '_')}"`,
-    },
     body: file
   });
   if (!uploadRes.ok) {
@@ -1604,10 +1602,12 @@ function showStatus(msg, type) { const el = document.getElementById('statusMsg')
 function clearStatus() { const el = document.getElementById('statusMsg'); if(el) el.className = 'status-msg'; }
 
 const PLANS = {
-  Free:     { price:'Free',       label:'Create Free Account', sub:'Start converting up to 500 MB files, 10 per day.', payment:false },
-  Pro:      { price:'$9.99 / month', label:'Start Pro — $9.99/mo',   sub:'Unlimited conversions up to 2 GB. All 900+ formats. Cancel anytime.', payment:true },
-  Business: { price:'$29.99 / month',label:'Get Business — $29.99/mo',sub:'Everything in Pro plus API access, team seats, and priority support.', payment:true },
-};
+  'Free':       { price: 0,     label: 'Create Free Account', sub: 'Free forever. 10 conversions/day, 500 MB limit.', payment: false },
+  'Pro':        { price: 17.49, label: 'Subscribe — $17.49/mo', sub: 'Unlimited conversions up to 2 GB. All 900+ formats.', payment: true },
+  'Growth':     { price: 29.99, label: 'Subscribe — $29.99/mo', sub: 'Everything in Pro plus 5 GB files, API access & 3 seats.', payment: true },
+  'Business':   { price: 49.99, label: 'Subscribe — $49.99/mo', sub: 'Everything in Growth plus 10 GB, 10 seats & priority support.', payment: true },
+  'Enterprise': { price: 99.99, label: 'Subscribe — $99.99/mo', sub: 'Unlimited everything. SLA, white-label & dedicated support.', payment: true },
+}
 
 function openModal(plan) {
   const p = PLANS[plan] || PLANS.Pro;
