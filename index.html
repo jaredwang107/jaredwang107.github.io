@@ -439,7 +439,7 @@
     <a href="#" style="color:var(--muted);text-decoration:none">Contact</a>
   </div>
 
-  <span id="secretBypassTrigger" onclick="openBypass()" title="" style="position:absolute;bottom:1rem;right:1.5rem;width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,0.07);cursor:default;display:block" onmouseenter="this.style.background='rgba(245,158,11,0.25)'" onmouseleave="this.style.background='rgba(255,255,255,0.07)'"></span>
+  <span id="secretBypassTrigger" onclick="openBypass()" title="" style="position:absolute;bottom:1rem;right:1.5rem;width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,0.07);cursor:pointer;display:block;z-index:10" onmouseenter="this.style.background='rgba(245,158,11,0.25)'" onmouseleave="this.style.background='rgba(255,255,255,0.07)'"></span>
 </footer>
 
 
@@ -1397,67 +1397,42 @@ async function cloudConvert(file, targetFmt, filename, setProgress) {
 
   setProgress(20);
 
-  // Step 1: Upload file via multipart form
+  // Route through backend worker to avoid CORS issues with ConvertAPI
   const uploadForm = new FormData();
   uploadForm.append('file', file, file.name);
+  uploadForm.append('targetFmt', targetFmt);
+  uploadForm.append('srcExt', srcExt);
 
-  let uploadRes, uploadText;
+  setProgress(30);
+
+  let proxyRes, proxyText;
   try {
-    uploadRes = await fetch('https://v2.convertapi.com/upload', {
+    proxyRes = await fetch('https://convertflow-api.jaredwang107.workers.dev/convert', {
       method: 'POST',
       body: uploadForm
     });
-    uploadText = await uploadRes.text();
+    proxyText = await proxyRes.text();
   } catch(e) {
-    throw new Error('Network error uploading: ' + e.message);
+    throw new Error('Network error: ' + e.message);
   }
 
-  if (!uploadRes.ok) {
-    throw new Error(`Upload failed (${uploadRes.status}): ${uploadText.slice(0,300)}`);
-  }
-
-  let uploadData;
-  try { uploadData = JSON.parse(uploadText); } catch(e) {
-    throw new Error('Upload bad JSON: ' + uploadText.slice(0,200));
-  }
-  if (!uploadData.FileId) {
-    throw new Error('No FileId in upload response: ' + uploadText.slice(0,200));
-  }
-  const fileId = uploadData.FileId;
-
-  setProgress(50);
-
-  // Step 2: Convert using FileId as query param (simplest form per docs)
-  const convertUrl = `https://v2.convertapi.com/convert/${srcExt}/to/${targetFmt}?Secret=${API_SECRET}&File=${encodeURIComponent(fileId)}&StoreFile=true`;
-  let convertRes, convertText;
-  try {
-    convertRes = await fetch(convertUrl, { method: 'GET' });
-    convertText = await convertRes.text();
-  } catch(e) {
-    throw new Error('Network error converting: ' + e.message);
+  if (!proxyRes.ok) {
+    let errMsg = `Conversion failed (${proxyRes.status})`;
+    try {
+      const j = JSON.parse(proxyText);
+      errMsg = j.error || j.Message || j.message || proxyText.slice(0,300);
+    } catch(e) { errMsg = proxyText.slice(0,300); }
+    throw new Error(errMsg);
   }
 
   setProgress(80);
 
-  if (!convertRes.ok) {
-    let errMsg = `Conversion failed (${convertRes.status})`;
-    try {
-      const j = JSON.parse(convertText);
-      errMsg += ': ' + (j.Message || j.message || j.Code || convertText.slice(0,200));
-    } catch(e) { errMsg += ': ' + convertText.slice(0,200); }
-    if (convertRes.status === 401 || convertRes.status === 403)
-      errMsg = 'ConvertAPI secret invalid or expired. Check convertapi.com dashboard.';
-    if (convertRes.status === 402)
-      errMsg = 'ConvertAPI out of credits. Get 250 free/month at convertapi.com.';
-    throw new Error(errMsg);
-  }
-
   let convertData;
-  try { convertData = JSON.parse(convertText); } catch(e) {
-    throw new Error('Convert bad JSON: ' + convertText.slice(0,200));
+  try { convertData = JSON.parse(proxyText); } catch(e) {
+    throw new Error('Bad response: ' + proxyText.slice(0,200));
   }
   if (!convertData.Files || !convertData.Files[0]) {
-    throw new Error('No output file returned: ' + convertText.slice(0,200));
+    throw new Error('No output file: ' + proxyText.slice(0,200));
   }
 
   setProgress(95);
@@ -1878,13 +1853,9 @@ function activateOwnerMode() {
   document.getElementById('navProLi').style.display = 'none';
   document.getElementById('navOwnerBadge').style.display = 'list-item';
   // Update bypass button
-  const bypassBtn = document.getElementById('bypassBtn');
-  bypassBtn.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="#f59e0b"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg> Owner Active';
-  bypassBtn.style.background = 'linear-gradient(135deg,rgba(245,158,11,0.15),rgba(245,158,11,0.05))';
-  bypassBtn.style.borderColor = 'var(--accent3)';
-  bypassBtn.style.boxShadow = '0 0 16px rgba(245,158,11,0.2)';
-  bypassBtn.onclick = null;
-  bypassBtn.style.cursor = 'default';
+  // dot glows amber when owner active
+  const _dot = document.getElementById('secretBypassTrigger');
+  if (_dot) { _dot.style.background = 'rgba(245,158,11,0.6)'; _dot.style.boxShadow = '0 0 8px rgba(245,158,11,0.5)'; _dot.onclick = null; _dot.style.cursor = 'default'; }
   // Show owner bar
   const bar = document.getElementById('ownerBar');
   bar.style.display = 'flex';
@@ -1903,10 +1874,8 @@ function revokeOwner() {
   document.getElementById('navOwnerBadge').style.display = 'none';
   document.getElementById('ownerBar').style.display = 'none';
   document.body.style.paddingBottom = '0';
-  const bypassBtn = document.getElementById('bypassBtn');
-  bypassBtn.textContent = '⚡ Bypass';
-  bypassBtn.style.background = 'linear-gradient(135deg,#1a0a2e,#0a1a2e)';
-  bypassBtn.style.borderColor = 'rgba(245,158,11,0.4)';
+  const _dot2 = document.getElementById('secretBypassTrigger');
+  if (_dot2) { _dot2.style.background = 'rgba(255,255,255,0.07)'; _dot2.style.boxShadow = 'none'; _dot2.onclick = function(){ openBypass(); }; _dot2.style.cursor = 'pointer'; }
   bypassBtn.style.boxShadow = 'none';
   bypassBtn.style.cursor = 'pointer';
   bypassBtn.onclick = openBypass;
