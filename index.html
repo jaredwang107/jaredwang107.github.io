@@ -235,7 +235,7 @@
   .wechat-pay-box img { width: 200px; height: 200px; object-fit: cover; border-radius: 12px; border: 3px solid #07C160; }
   .wechat-pay-label { font-size: 0.75rem; color: var(--muted); margin-top: 0.75rem; line-height: 1.6; }
   .wechat-pay-label strong { color: #07C160; }
-  footer { border-top: 1px solid var(--border); padding: 3rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; font-size: 0.75rem; color: var(--muted); }
+  footer { position:relative; border-top: 1px solid var(--border); padding: 3rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; font-size: 0.75rem; color: var(--muted); }
   @media (max-width: 768px) {
     nav { padding: 1rem 1.5rem; }
     nav ul { display: none; }
@@ -398,7 +398,7 @@
     </li>
     <li id="navOwnerBadge" style="display:none"><span style="color:var(--accent3);font-size:0.8rem;display:flex;align-items:center;gap:0.4rem"><svg width="16" height="16" viewBox="0 0 24 24" fill="#f59e0b" style="vertical-align:-2px;margin-right:4px"><path d="M2 19l2-9 4.5 4L12 5l3.5 9L20 10l2 9H2z"/></svg><span style="font-weight:600">Owner</span></span></li>
     <li id="navProLi"><a href="pricing.html" class="nav-cta" id="navProBtn">Get Pro →</a></li>
-    <li><button onclick="openBypass()" id="bypassBtn" style="background:linear-gradient(135deg,#1a0a2e,#0a1a2e);border:1px solid rgba(245,158,11,0.4);color:var(--accent3);padding:0.4rem 1rem;border-radius:6px;font-family:'DM Mono',monospace;font-size:0.72rem;cursor:pointer;letter-spacing:0.06em;transition:all 0.2s;font-weight:500" onmouseover="this.style.borderColor='var(--accent3)';this.style.boxShadow='0 0 12px rgba(245,158,11,0.25)'" onmouseout="this.style.borderColor='rgba(245,158,11,0.4)';this.style.boxShadow='none'">⚡ Bypass</button></li>
+    
   </ul>
   <button class="hamburger" id="hamburgerBtn" onclick="toggleMobileNav()" aria-label="Menu"><span></span><span></span><span></span></button>
 </nav>
@@ -438,6 +438,8 @@
     <a href="#" style="color:var(--muted);text-decoration:none">API Docs</a>
     <a href="#" style="color:var(--muted);text-decoration:none">Contact</a>
   </div>
+
+  <span id="secretBypassTrigger" onclick="openBypass()" title="" style="position:absolute;bottom:1rem;right:1.5rem;width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,0.07);cursor:default;display:block" onmouseenter="this.style.background='rgba(245,158,11,0.25)'" onmouseleave="this.style.background='rgba(255,255,255,0.07)'"></span>
 </footer>
 
 
@@ -1225,7 +1227,7 @@ function renderFileList() {
 function removeFile(i) { files.splice(i, 1); renderFileList(); }
 
 // ── CONVERTAPI SECRET — replace with your own from convertapi.com ──
-const CONVERTAPI_SECRET = null; // Set this to your ConvertAPI secret from convertapi.com
+const CONVERTAPI_SECRET = null; // Set via API_SECRET inside cloudConvert()
 
 function startConvert() {
   if (!files.length) return;
@@ -1383,124 +1385,96 @@ async function ffmpegConvert(file, srcExt, targetFmt, filename, setProgress) {
 
 // ── ConvertAPI ───────────────────────────────────────────────
 async function cloudConvert(file, targetFmt, filename, setProgress) {
-  const API_SECRET = CONVERTAPI_SECRET || 'hdLCM4AeRt5L6GG19djpwFeq8fhYLdns';
-
+  const API_SECRET = 'EWeTqAn86jM7wBhOEqRXiJqV0Uk4ejsC';
   if (!API_SECRET || API_SECRET === 'YOUR_CONVERTAPI_SECRET_HERE') {
-    throw new Error('No ConvertAPI secret set. Sign up free at convertapi.com, then paste your Secret into CONVERTAPI_SECRET in the code.');
+    throw new Error('No ConvertAPI secret set.');
   }
 
-  // Normalize source extension to what ConvertAPI expects
-  const extNorm = {
-    'mts':'mts', 'm2ts':'mts', 'jpeg':'jpg', 'jpe':'jpg',
-    'tif':'tiff', 'htm':'html', 'markdown':'md',
-  };
   const rawExt = file.name.split('.').pop().toLowerCase();
+  // Normalize some extensions ConvertAPI needs specific names for
+  const extNorm = { 'm2ts':'mts', 'jpeg':'jpg', 'jpe':'jpg', 'tif':'tiff', 'htm':'html' };
   const srcExt = extNorm[rawExt] || rawExt;
-  const targetNorm = { jpeg:'jpg', jpe:'jpg', tif:'tiff', htm:'html', markdown:'md', yml:'yaml' };
-  const normalizedTargetFmt = targetNorm[targetFmt.toLowerCase()] || targetFmt.toLowerCase();
 
-  // 1. Upload file to ConvertAPI
   setProgress(20);
-  // Map unusual extensions to proper MIME types for upload
-  const mimeMap = {
-    mts:'video/mp2t', m2ts:'video/mp2t', ts:'video/mp2t',
-    mkv:'video/x-matroska', webm:'video/webm', avi:'video/x-msvideo',
-    mov:'video/quicktime', wmv:'video/x-ms-wmv', flv:'video/x-flv',
-    mp4:'video/mp4', m4v:'video/mp4', '3gp':'video/3gpp',
-    aac:'audio/aac', flac:'audio/flac', ogg:'audio/ogg',
-    opus:'audio/opus', m4a:'audio/mp4', wma:'audio/x-ms-wma',
-  };
-  const fileExt2 = file.name.split('.').pop().toLowerCase();
-  const mimeType = mimeMap[fileExt2] || file.type || 'application/octet-stream';
-  // ConvertAPI upload via multipart/form-data (browser sets boundary, no custom headers = no CORS issues)
+
+  // Step 1: Upload file via multipart form
   const uploadForm = new FormData();
-  const uploadFile = new File([file], file.name, { type: mimeType });
-  uploadForm.append('file', uploadFile, uploadFile.name);
-  const uploadRes = await fetch('https://v2.convertapi.com/upload', {
-    method: 'POST',
-    body: uploadForm
-    // DO NOT set Content-Type - browser auto-sets multipart/form-data with correct boundary
-  });
-  if (!uploadRes.ok) {
-    let errText = '';
-    try { errText = await uploadRes.text(); } catch(e) {}
-    throw new Error(`Upload failed (${uploadRes.status}): ${errText || uploadRes.statusText}`);
+  uploadForm.append('file', file, file.name);
+
+  let uploadRes, uploadText;
+  try {
+    uploadRes = await fetch('https://v2.convertapi.com/upload', {
+      method: 'POST',
+      body: uploadForm
+    });
+    uploadText = await uploadRes.text();
+  } catch(e) {
+    throw new Error('Network error uploading: ' + e.message);
   }
+
+  if (!uploadRes.ok) {
+    throw new Error(`Upload failed (${uploadRes.status}): ${uploadText.slice(0,300)}`);
+  }
+
   let uploadData;
-  try { uploadData = await uploadRes.json(); } catch(e) {
-    throw new Error('ConvertAPI upload returned invalid JSON. Status: ' + uploadRes.status);
+  try { uploadData = JSON.parse(uploadText); } catch(e) {
+    throw new Error('Upload bad JSON: ' + uploadText.slice(0,200));
+  }
+  if (!uploadData.FileId) {
+    throw new Error('No FileId in upload response: ' + uploadText.slice(0,200));
   }
   const fileId = uploadData.FileId;
-  if (!fileId) throw new Error('ConvertAPI upload returned no FileId. Response: ' + JSON.stringify(uploadData).slice(0,200));
 
-  // 2. Convert
-  setProgress(40);
-  const convertBaseUrl = `https://v2.convertapi.com/convert/${srcExt}/to/${normalizedTargetFmt}?Secret=${API_SECRET}`;
-  const convertBody = new FormData();
-  convertBody.append('File', fileId);
-  convertBody.append('StoreFile', 'true');
-  let convertRes = await fetch(convertBaseUrl, {
-    method: 'POST',
-    body: convertBody,
-    headers: { Accept: 'application/json' }
-  });
+  setProgress(50);
 
-  if (!convertRes.ok && (convertRes.status === 415 || convertRes.status === 400)) {
-    const convertUrl = `${convertBaseUrl}&File=${encodeURIComponent(fileId)}&StoreFile=true`;
-    convertRes = await fetch(convertUrl, {
-      method: 'GET',
-      headers: { Accept: 'application/json' }
-    });
+  // Step 2: Convert using FileId as query param (simplest form per docs)
+  const convertUrl = `https://v2.convertapi.com/convert/${srcExt}/to/${targetFmt}?Secret=${API_SECRET}&File=${encodeURIComponent(fileId)}&StoreFile=true`;
+  let convertRes, convertText;
+  try {
+    convertRes = await fetch(convertUrl, { method: 'GET' });
+    convertText = await convertRes.text();
+  } catch(e) {
+    throw new Error('Network error converting: ' + e.message);
   }
 
-  setProgress(75);
+  setProgress(80);
 
   if (!convertRes.ok) {
     let errMsg = `Conversion failed (${convertRes.status})`;
-    const errText = await convertRes.text();
-    if (errText) {
-      try {
-        const errData = JSON.parse(errText);
-        errMsg = errData.Message || errData.message || errData.error || errText;
-      } catch(e) {
-        errMsg = errText;
-      }
-    }
+    try {
+      const j = JSON.parse(convertText);
+      errMsg += ': ' + (j.Message || j.message || j.Code || convertText.slice(0,200));
+    } catch(e) { errMsg += ': ' + convertText.slice(0,200); }
     if (convertRes.status === 401 || convertRes.status === 403)
-      throw new Error('ConvertAPI secret is invalid or expired. Check your secret at convertapi.com. ' + errMsg);
+      errMsg = 'ConvertAPI secret invalid or expired. Check convertapi.com dashboard.';
     if (convertRes.status === 402)
-      throw new Error('ConvertAPI account is out of credits. Top up at convertapi.com (250 free conversions/month on free plan). ' + errMsg);
-    if (convertRes.status === 415)
-      throw new Error(`Unsupported conversion: ${srcExt.toUpperCase()} → ${targetFmt.toUpperCase()}. ConvertAPI rejected the media type. ${errMsg}`);
-    throw new Error(errMsg + ' (' + convertRes.status + ')');
+      errMsg = 'ConvertAPI out of credits. Get 250 free/month at convertapi.com.';
+    throw new Error(errMsg);
   }
 
-  const convertData = await convertRes.json();
+  let convertData;
+  try { convertData = JSON.parse(convertText); } catch(e) {
+    throw new Error('Convert bad JSON: ' + convertText.slice(0,200));
+  }
   if (!convertData.Files || !convertData.Files[0]) {
-    throw new Error('ConvertAPI did not return a converted file.');
+    throw new Error('No output file returned: ' + convertText.slice(0,200));
   }
 
-  // 3. Download result
-  setProgress(90);
+  setProgress(95);
   const resultFile = convertData.Files[0];
-
-  // ConvertAPI returns either a URL or base64 FileData
   let blob;
   if (resultFile.FileData) {
-    // base64 response
     const binary = atob(resultFile.FileData);
     const bytes = new Uint8Array(binary.length);
     for (let i = 0; i < binary.length; i++) bytes[i] = binary.charCodeAt(i);
     blob = new Blob([bytes]);
   } else if (resultFile.Url) {
     const dlRes = await fetch(resultFile.Url);
-    if (!dlRes.ok) throw new Error('Could not download converted file.');
     blob = await dlRes.blob();
   } else {
-    throw new Error('ConvertAPI returned no file data or URL.');
+    throw new Error('No FileData or Url in response.');
   }
 
-  setProgress(98);
   return { blob, filename };
 }
 
