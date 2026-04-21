@@ -62,11 +62,12 @@
   .btn-browse:hover { opacity: 0.85; }
   #fileInput { display: none; }
   .file-list { margin-top: 1.5rem; display: flex; flex-direction: column; gap: 0.75rem; }
-  .file-item { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 1rem; display: flex; align-items: center; gap: 1rem; }
+  .file-item { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 0.85rem 1rem; display: flex; align-items: center; gap: 1rem; transition: border-color 0.2s; }
+  .file-item:hover { border-color: rgba(255,255,255,0.15); }
   .file-ext { color: white; padding: 0.3rem 0.5rem; border-radius: 4px; font-size: 0.65rem; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; min-width: 52px; text-align: center; flex-shrink: 0; }
   .file-icon-wrap { flex-shrink: 0; }
   .file-info { flex: 1; min-width: 0; }
-  .file-name { font-size: 0.8rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-bottom: 0.2rem; }
+  .file-name { font-size: 0.82rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-bottom: 0.2rem; font-weight: 500; }
   .file-size { font-size: 0.7rem; color: var(--muted); }
   .progress-bar-wrap { background: var(--border); border-radius: 100px; height: 4px; overflow: hidden; margin-top: 0.5rem; display: none; }
   .progress-bar-fill { height: 100%; background: linear-gradient(90deg, var(--accent), var(--accent2)); border-radius: 100px; width: 0%; transition: width 0.2s; }
@@ -1135,11 +1136,18 @@ function renderFileList() {
     item.className = 'file-item';
     item.innerHTML = `
       <div class="file-icon-wrap" style="flex-shrink:0">
-        <svg width="48" height="56" viewBox="0 0 48 56" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M8 0h24l12 12v40a4 4 0 0 1-4 4H8a4 4 0 0 1-4-4V4a4 4 0 0 1 4-4z" fill="${color}" opacity="0.15"/>
-          <path d="M8 0h24l12 12v40a4 4 0 0 1-4 4H8a4 4 0 0 1-4-4V4a4 4 0 0 1 4-4z" stroke="${color}" stroke-width="1.5" fill="none"/>
-          <path d="M32 0l12 12H34a2 2 0 0 1-2-2V0z" fill="${color}" opacity="0.4"/>
-          <text x="24" y="40" text-anchor="middle" font-family="'DM Mono',monospace" font-weight="700" font-size="${ext.length > 4 ? '7.5' : '9'}" fill="${color}" letter-spacing="0.5">${ext.toUpperCase().slice(0,6)}</text>
+        <svg width="44" height="52" viewBox="0 0 44 52" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <!-- Body -->
+          <rect x="0" y="0" width="44" height="52" rx="6" fill="#1e1e2e"/>
+          <!-- Colored top band -->
+          <rect x="0" y="0" width="44" height="22" rx="6" fill="${color}" opacity="0.25"/>
+          <rect x="0" y="16" width="44" height="6" fill="${color}" opacity="0.25"/>
+          <!-- Folded corner -->
+          <path d="M30 0 L44 14 L30 14 Z" fill="${color}" opacity="0.5"/>
+          <!-- Border -->
+          <rect x="0.75" y="0.75" width="42.5" height="50.5" rx="5.25" stroke="${color}" stroke-opacity="0.4" stroke-width="1.5" fill="none"/>
+          <!-- Extension label -->
+          <text x="22" y="42" text-anchor="middle" font-family="'DM Mono',monospace" font-weight="700" font-size="${ext.length > 4 ? '7' : ext.length > 3 ? '8.5' : '10'}" fill="${color}" letter-spacing="0.5">.${ext.toUpperCase().slice(0,5)}</text>
         </svg>
       </div>
       <div class="file-info">
