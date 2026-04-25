@@ -1399,48 +1399,46 @@ async function cloudConvert(file, targetFmt, filename, setProgress) {
   }
 
   const rawExt = file.name.split('.').pop().toLowerCase();
-  // Normalize some extensions ConvertAPI needs specific names for
-  const extNorm = { 'm2ts':'mts', 'jpeg':'jpg', 'jpe':'jpg', 'tif':'tiff', 'htm':'html' };
+  // Normalize extensions ConvertAPI doesn't support
+  const extNorm = { 'mts':'mpg', 'm2ts':'mpg', 'ts':'mpg', 'jpeg':'jpg', 'jpe':'jpg', 'tif':'tiff', 'htm':'html', 'markdown':'md' };
   const srcExt = extNorm[rawExt] || rawExt;
 
   setProgress(20);
 
-  // Route through backend worker to avoid CORS issues with ConvertAPI
-  const uploadForm = new FormData();
-  uploadForm.append('file', file, file.name);
-  uploadForm.append('targetFmt', targetFmt);
-  uploadForm.append('srcExt', srcExt);
+  // Call ConvertAPI directly - send file + secret in one multipart POST
+  const convertForm = new FormData();
+  convertForm.append('File', file, file.name);
 
   setProgress(30);
 
-  let proxyRes, proxyText;
+  const convertUrl = `https://v2.convertapi.com/convert/${srcExt}/to/${targetFmt}?Secret=${API_SECRET}&StoreFile=true`;
+  let convertRes, convertText;
   try {
-    proxyRes = await fetch('https://convertflow-api.jaredwang107.workers.dev/convert', {
-      method: 'POST',
-      body: uploadForm
-    });
-    proxyText = await proxyRes.text();
+    convertRes = await fetch(convertUrl, { method: 'POST', body: convertForm });
+    convertText = await convertRes.text();
   } catch(e) {
     throw new Error('Network error: ' + e.message);
   }
 
-  if (!proxyRes.ok) {
-    let errMsg = `Conversion failed (${proxyRes.status})`;
+  if (!convertRes.ok) {
+    let errMsg = `Conversion failed (${convertRes.status})`;
     try {
-      const j = JSON.parse(proxyText);
-      errMsg = j.error || j.Message || j.message || proxyText.slice(0,300);
-    } catch(e) { errMsg = proxyText.slice(0,300); }
+      const j = JSON.parse(convertText);
+      errMsg = j.Message || j.message || j.Code || convertText.slice(0,300);
+    } catch(e) { errMsg = convertText.slice(0,300); }
+    if (convertRes.status === 401 || convertRes.status === 403) errMsg = 'ConvertAPI secret invalid or expired.';
+    if (convertRes.status === 402) errMsg = 'ConvertAPI out of credits.';
     throw new Error(errMsg);
   }
 
   setProgress(80);
 
   let convertData;
-  try { convertData = JSON.parse(proxyText); } catch(e) {
-    throw new Error('Bad response: ' + proxyText.slice(0,200));
+  try { convertData = JSON.parse(convertText); } catch(e) {
+    throw new Error('Bad response: ' + convertText.slice(0,200));
   }
   if (!convertData.Files || !convertData.Files[0]) {
-    throw new Error('No output file: ' + proxyText.slice(0,200));
+    throw new Error('No output file: ' + convertText.slice(0,200));
   }
 
   setProgress(95);
