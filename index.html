@@ -1405,13 +1405,18 @@ async function cloudConvert(file, targetFmt, filename, setProgress) {
 
   setProgress(20);
 
-  // Call ConvertAPI directly - send file + secret in one multipart POST
+  // Call ConvertAPI directly per docs:
+  // - File part named "File" (uppercase) with correct filename
+  // - StoreFile as separate form field
+  // - srcExt aliased for unsupported extensions
   const convertForm = new FormData();
-  convertForm.append('File', file, file.name);
+  const aliasedName = file.name.replace(/\.[^.]+$/, `.${srcExt}`);
+  convertForm.append('File', file, aliasedName);
+  convertForm.append('StoreFile', 'true');
 
   setProgress(30);
 
-  const convertUrl = `https://v2.convertapi.com/convert/${srcExt}/to/${targetFmt}?Secret=${API_SECRET}&StoreFile=true`;
+  const convertUrl = `https://v2.convertapi.com/convert/${srcExt}/to/${targetFmt}?Secret=${API_SECRET}`;
   let convertRes, convertText;
   try {
     convertRes = await fetch(convertUrl, { method: 'POST', body: convertForm });
