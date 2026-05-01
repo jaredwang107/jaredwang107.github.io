@@ -1405,21 +1405,32 @@ async function cloudConvert(file, targetFmt, filename, setProgress) {
 
   setProgress(20);
 
-  // Call ConvertAPI directly per docs:
-  // - File part named "File" (uppercase) with correct filename
-  // - StoreFile as separate form field
-  // - srcExt aliased for unsupported extensions
-  const convertForm = new FormData();
+  // ConvertAPI JSON body format (most reliable per docs)
+  // Read file as base64
+  const fileBuffer = await file.arrayBuffer();
+  const fileBytes = new Uint8Array(fileBuffer);
+  let binary = '';
+  for (let i = 0; i < fileBytes.length; i++) binary += String.fromCharCode(fileBytes[i]);
+  const base64Data = btoa(binary);
   const aliasedName = file.name.replace(/\.[^.]+$/, `.${srcExt}`);
-  convertForm.append('File', file, aliasedName);
-  convertForm.append('StoreFile', 'true');
 
   setProgress(30);
 
   const convertUrl = `https://v2.convertapi.com/convert/${srcExt}/to/${targetFmt}?Secret=${API_SECRET}`;
+  const body = {
+    Parameters: [
+      { Name: 'File', FileValue: { Name: aliasedName, Data: base64Data } },
+      { Name: 'StoreFile', Value: 'true' }
+    ]
+  };
+
   let convertRes, convertText;
   try {
-    convertRes = await fetch(convertUrl, { method: 'POST', body: convertForm });
+    convertRes = await fetch(convertUrl, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(body)
+    });
     convertText = await convertRes.text();
   } catch(e) {
     throw new Error('Network error: ' + e.message);
@@ -1429,8 +1440,8 @@ async function cloudConvert(file, targetFmt, filename, setProgress) {
     let errMsg = `Conversion failed (${convertRes.status})`;
     try {
       const j = JSON.parse(convertText);
-      errMsg = j.Message || j.message || j.Code || convertText.slice(0,300);
-    } catch(e) { errMsg = convertText.slice(0,300); }
+      errMsg = j.Message || j.message || (j.InvalidParameters && j.InvalidParameters.map(p=>p.Message).join(', ')) || convertText.slice(0,400);
+    } catch(e) { errMsg = convertText.slice(0,400); }
     if (convertRes.status === 401 || convertRes.status === 403) errMsg = 'ConvertAPI secret invalid or expired.';
     if (convertRes.status === 402) errMsg = 'ConvertAPI out of credits.';
     throw new Error(errMsg);
