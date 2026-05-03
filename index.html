@@ -1438,6 +1438,9 @@ async function cloudConvert(file, targetFmt, filename, setProgress) {
 
   if (!convertRes.ok) {
     let errMsg = `Conversion failed (${convertRes.status})`;
+    // Show full raw response for debugging
+    console.error('ConvertAPI full response:', convertText);
+    alert('DEBUG - Full ConvertAPI response:\n' + convertText.slice(0, 1000));
     try {
       const j = JSON.parse(convertText);
       errMsg = j.Message || j.message || (j.InvalidParameters && j.InvalidParameters.map(p=>p.Message).join(', ')) || convertText.slice(0,400);
