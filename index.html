@@ -1393,92 +1393,128 @@ async function ffmpegConvert(file, srcExt, targetFmt, filename, setProgress) {
 
 // ── ConvertAPI ───────────────────────────────────────────────
 async function cloudConvert(file, targetFmt, filename, setProgress) {
+  // CloudConvert API - supports 200+ formats including all video
+  const CC_KEY = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiY2ZkZGQzNDk0NGJkZTlmNTFhYWZiOTUzMzk2ZGViZjVlMWMxYjA5OTJmMDBlOGFjZTJmY2UzNzkyOWM1ODBmYWQ3NmFlMjJmY2VlMzA0ZDkiLCJpYXQiOjE3NzgxMTM3MjQuMTQ3OTcxLCJuYmYiOjE3NzgxMTM3MjQuMTQ3OTcyLCJleHAiOjQ5MzM3ODczMjQuMTQwMjgxLCJzdWIiOiI3NDU3MDAxMSIsInNjb3BlcyI6WyJ0YXNrLnJlYWQiLCJ0YXNrLndyaXRlIl19.dVHvT54OE-rnFl6_UlEJDJwgQpSYTvxmTiJIgerNClhWafvtLmZAb7sxgS6ry4aowSX5hcsY2bPy78K2hztWWhBYzp1riEbCqjRrcnHzI-wrdLJSBJtGuYtfgyr4x1q6eLUGScfsuH8B30Zu_l_n79xeTt2DHKybkP9hBXJ7HdZsxEcamwRaLxZLsL2BVK7fqfxJ6xiNZdnhDn5CnXlqrVUU1ieU2ax-UR_8aWPyn1Yi4pv2rgqG81DuQQQwYX0CdDPKCxFf0TCuJuBCo0rfHodwgY_n0H5fCKvsI0P0AV8DUbCXcRnzDTWVq0n1DAsFL7_ZeMMJ2pkgfPcmszrT87uGgsdHcoFdxeHXjsr_4J8H-UFKWyvUr5qO3Q0Ubr-2FElDJSIObaXLvGS1YUZ1uqTA_Ir6Xk3Dyk0SNawYwAcESXWygYRXiY4tPePbXpFqrBmDjyp6AJg26JDdaAWrvrERCLbdvsiHoGxkkVIKVkfmJh3eeIxjDOLDuUeyELi9F5uIe7vXYqznfUdqpPDCX2Dmf18axyI6Vpax78gnDigiXBreKBzXeKuYzeVDD3mqBzqDqAiToJyBAaddioSdcdXl5tQVDqNm4HE2vuY5WLyGZydfBz7P2VWIi6OMobvX2I-S3UZbLCc3ZavFYvfUsDhLP4VtR_UeXmIrjzRGlew';
+  // If no CloudConvert key, fall back to ConvertAPI for non-video
   const API_SECRET = 'wdUWMN4pt0MDBJ27v2mUXSLxnPDZJFD1';
-  if (!API_SECRET || API_SECRET === 'YOUR_CONVERTAPI_SECRET_HERE') {
-    throw new Error('No ConvertAPI secret set.');
-  }
 
   const rawExt = file.name.split('.').pop().toLowerCase();
-  // Normalize extensions ConvertAPI doesn't support
-  const extNorm = { 'mts':'mpg', 'm2ts':'mpg', 'ts':'mpg', 'jpeg':'jpg', 'jpe':'jpg', 'tif':'tiff', 'htm':'html', 'markdown':'md' };
-  const srcExt = extNorm[rawExt] || rawExt;
+  const videoExts = ['mts','m2ts','ts','mkv','avi','mov','wmv','flv','webm','m4v','3gp','vob','mpg','mpeg','rm','rmvb'];
+  const isVideo = videoExts.includes(rawExt);
 
-  setProgress(20);
+  setProgress(10);
 
-  // ConvertAPI JSON body format (most reliable per docs)
-  // Read file as base64
-  const fileBuffer = await file.arrayBuffer();
-  const fileBytes = new Uint8Array(fileBuffer);
-  let binary = '';
-  for (let i = 0; i < fileBytes.length; i++) binary += String.fromCharCode(fileBytes[i]);
-  const base64Data = btoa(binary);
-  const aliasedName = file.name.replace(/\.[^.]+$/, `.${srcExt}`);
+  if (isVideo) {
+    // Use CloudConvert for video files
+    // Step 1: Create a job
+    const jobRes = await fetch('https://api.cloudconvert.com/v2/jobs', {
+      method: 'POST',
+      headers: { 'Authorization': `Bearer ${CC_KEY}`, 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        tasks: {
+          'upload-file': { operation: 'import/upload' },
+          'convert-file': { operation: 'convert', input: 'upload-file', output_format: targetFmt },
+          'export-file': { operation: 'export/url', input: 'convert-file' }
+        }
+      })
+    });
+    if (!jobRes.ok) throw new Error('CloudConvert job create failed: ' + await jobRes.text());
+    const job = await jobRes.json();
+    const uploadTask = job.data.tasks.find(t => t.name === 'upload-file');
 
-  setProgress(30);
+    setProgress(20);
 
-  const convertUrl = `https://v2.convertapi.com/convert/${srcExt}/to/${targetFmt}?Secret=${API_SECRET}`;
-  const body = {
-    Parameters: [
-      { Name: 'File', FileValue: { Name: aliasedName, Data: base64Data } },
-      { Name: 'StoreFile', Value: 'true' }
-    ]
-  };
+    // Step 2: Upload file
+    const uploadForm = new FormData();
+    Object.entries(uploadTask.result.form.parameters).forEach(([k,v]) => uploadForm.append(k, v));
+    uploadForm.append('file', file, file.name);
+    const upRes = await fetch(uploadTask.result.form.url, { method: 'POST', body: uploadForm });
+    if (!upRes.ok) throw new Error('CloudConvert upload failed: ' + upRes.status);
 
-  let convertRes, convertText;
-  try {
-    convertRes = await fetch(convertUrl, {
+    setProgress(40);
+
+    // Step 3: Poll for completion
+    const jobId = job.data.id;
+    let result, tries = 0;
+    while (tries++ < 60) {
+      await new Promise(r => setTimeout(r, 3000));
+      const pollRes = await fetch(`https://api.cloudconvert.com/v2/jobs/${jobId}`, {
+        headers: { 'Authorization': `Bearer ${CC_KEY}` }
+      });
+      const pollData = await pollRes.json();
+      const status = pollData.data.status;
+      setProgress(40 + Math.min(tries * 2, 45));
+      if (status === 'finished') { result = pollData.data; break; }
+      if (status === 'error') throw new Error('CloudConvert conversion error: ' + JSON.stringify(pollData.data.tasks?.find(t=>t.status==='error')?.message));
+    }
+    if (!result) throw new Error('Conversion timed out after 3 minutes.');
+
+    setProgress(90);
+    const exportTask = result.tasks.find(t => t.name === 'export-file');
+    const fileUrl = exportTask.result.files[0].url;
+    const dlRes = await fetch(fileUrl);
+    const blob = await dlRes.blob();
+    return { blob, filename };
+
+  } else {
+    // Use ConvertAPI for documents, images, etc.
+    const extNorm = { 'jpeg':'jpg', 'jpe':'jpg', 'tif':'tiff', 'htm':'html', 'markdown':'md' };
+    const srcExt = extNorm[rawExt] || rawExt;
+
+    const fileBuffer = await file.arrayBuffer();
+    const fileBytes = new Uint8Array(fileBuffer);
+    let binary = '';
+    for (let i = 0; i < fileBytes.length; i++) binary += String.fromCharCode(fileBytes[i]);
+    const base64Data = btoa(binary);
+    const aliasedName = file.name.replace(/\.[^.]+$/, `.${srcExt}`);
+
+    setProgress(30);
+
+    const convertUrl = `https://v2.convertapi.com/convert/${srcExt}/to/${targetFmt}?Secret=${API_SECRET}`;
+    const body = {
+      Parameters: [
+        { Name: 'File', FileValue: { Name: aliasedName, Data: base64Data } },
+        { Name: 'StoreFile', Value: 'true' }
+      ]
+    };
+
+    const convertRes = await fetch(convertUrl, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(body)
     });
-    convertText = await convertRes.text();
-  } catch(e) {
-    throw new Error('Network error: ' + e.message);
-  }
+    const convertText = await convertRes.text();
 
-  if (!convertRes.ok) {
-    let errMsg = `Conversion failed (${convertRes.status})`;
-    // Show full raw response for debugging
-    console.error('ConvertAPI full response:', convertText);
-    alert('DEBUG - Full ConvertAPI response:\n' + convertText.slice(0, 1000));
-    try {
-      const j = JSON.parse(convertText);
-      errMsg = j.Message || j.message || (j.InvalidParameters && j.InvalidParameters.map(p=>p.Message).join(', ')) || convertText.slice(0,400);
-    } catch(e) { errMsg = convertText.slice(0,400); }
-    if (convertRes.status === 401 || convertRes.status === 403) errMsg = 'ConvertAPI secret invalid or expired.';
-    if (convertRes.status === 402) errMsg = 'ConvertAPI out of credits.';
-    throw new Error(errMsg);
-  }
+    if (!convertRes.ok) {
+      let errMsg = `Conversion failed (${convertRes.status})`;
+      try {
+        const j = JSON.parse(convertText);
+        errMsg = j.Message || j.message || convertText.slice(0,300);
+      } catch(e) { errMsg = convertText.slice(0,300); }
+      throw new Error(errMsg);
+    }
 
-  setProgress(80);
+    setProgress(80);
+    let convertData;
+    try { convertData = JSON.parse(convertText); } catch(e) { throw new Error('Bad response: ' + convertText.slice(0,200)); }
+    if (!convertData.Files || !convertData.Files[0]) throw new Error('No output file: ' + convertText.slice(0,200));
 
-  let convertData;
-  try { convertData = JSON.parse(convertText); } catch(e) {
-    throw new Error('Bad response: ' + convertText.slice(0,200));
-  }
-  if (!convertData.Files || !convertData.Files[0]) {
-    throw new Error('No output file: ' + convertText.slice(0,200));
-  }
+    const resultFile = convertData.Files[0];
+    let blob;
+    if (resultFile.FileData) {
+      const bin = atob(resultFile.FileData);
+      const bytes = new Uint8Array(bin.length);
+      for (let i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
+      blob = new Blob([bytes]);
+    } else if (resultFile.Url) {
+      const dlRes = await fetch(resultFile.Url);
+      blob = await dlRes.blob();
+    } else throw new Error('No FileData or Url in response.');
 
-  setProgress(95);
-  const resultFile = convertData.Files[0];
-  let blob;
-  if (resultFile.FileData) {
-    const binary = atob(resultFile.FileData);
-    const bytes = new Uint8Array(binary.length);
-    for (let i = 0; i < binary.length; i++) bytes[i] = binary.charCodeAt(i);
-    blob = new Blob([bytes]);
-  } else if (resultFile.Url) {
-    const dlRes = await fetch(resultFile.Url);
-    blob = await dlRes.blob();
-  } else {
-    throw new Error('No FileData or Url in response.');
+    return { blob, filename };
   }
-
-  return { blob, filename };
 }
 
-// ── In-browser helpers ───────────────────────────────────────
 async function imgConvert(file, targetFmt, filename, setProgress) {
   return new Promise((resolve, reject) => {
     const img = new Image();
