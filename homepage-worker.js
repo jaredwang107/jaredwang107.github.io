@@ -1,0 +1,363 @@
+// Cloudflare Worker — deploy this as your homepage worker
+// Route: www.web-gadgets.com/* (lower priority than your ConvertFlow worker)
+
+const HTML = `<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Web Gadgets — Free Online Tools</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0d0d0d;
+      --surface: #161616;
+      --border: #2a2a2a;
+      --accent: #f0c060;
+      --accent2: #60c0f0;
+      --text: #f0ede8;
+      --muted: #888;
+    }
+
+    html, body {
+      height: 100%;
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'DM Mono', monospace;
+      overflow-x: hidden;
+    }
+
+    /* Grain overlay */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 999;
+      opacity: 0.4;
+    }
+
+    header {
+      padding: 2rem 3rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid var(--border);
+      animation: fadeDown 0.6s ease both;
+    }
+
+    .logo {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.4rem;
+      color: var(--accent);
+      letter-spacing: -0.02em;
+    }
+
+    .logo span {
+      color: var(--text);
+    }
+
+    nav a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.8rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+    nav a:hover { color: var(--accent); }
+
+    /* Hero */
+    .hero {
+      min-height: 70vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 5rem 3rem 3rem;
+      position: relative;
+      animation: fadeUp 0.8s ease 0.1s both;
+    }
+
+    .hero-tag {
+      font-size: 0.72rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+    .hero-tag::before {
+      content: '';
+      display: inline-block;
+      width: 2rem;
+      height: 1px;
+      background: var(--accent);
+    }
+
+    h1 {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(3.5rem, 8vw, 7rem);
+      line-height: 0.95;
+      letter-spacing: -0.03em;
+      max-width: 14ch;
+      margin-bottom: 2rem;
+    }
+
+    h1 em {
+      font-style: italic;
+      color: var(--accent);
+    }
+
+    .hero-sub {
+      font-size: 0.9rem;
+      color: var(--muted);
+      max-width: 42ch;
+      line-height: 1.7;
+    }
+
+    /* Decorative line */
+    .divider {
+      width: 100%;
+      height: 1px;
+      background: var(--border);
+      margin: 0 3rem;
+      width: calc(100% - 6rem);
+    }
+
+    /* Tools grid */
+    .tools-section {
+      padding: 4rem 3rem 6rem;
+      animation: fadeUp 0.8s ease 0.25s both;
+    }
+
+    .section-label {
+      font-size: 0.72rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 2.5rem;
+    }
+
+    .tools-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 1px;
+      border: 1px solid var(--border);
+    }
+
+    .tool-card {
+      background: var(--surface);
+      padding: 2.5rem;
+      text-decoration: none;
+      color: var(--text);
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      position: relative;
+      overflow: hidden;
+      transition: background 0.25s;
+      border: 1px solid transparent;
+    }
+
+    .tool-card::after {
+      content: '→';
+      position: absolute;
+      top: 2rem;
+      right: 2rem;
+      font-size: 1.2rem;
+      color: var(--accent);
+      opacity: 0;
+      transform: translateX(-8px);
+      transition: opacity 0.25s, transform 0.25s;
+    }
+
+    .tool-card:hover {
+      background: #1e1e1e;
+      border-color: var(--border);
+    }
+
+    .tool-card:hover::after {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    .tool-icon {
+      font-size: 2rem;
+      line-height: 1;
+    }
+
+    .tool-name {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.5rem;
+      letter-spacing: -0.02em;
+    }
+
+    .tool-desc {
+      font-size: 0.82rem;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    .tool-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--accent2);
+      margin-top: auto;
+      padding-top: 1rem;
+      border-top: 1px solid var(--border);
+    }
+
+    .tool-badge::before {
+      content: '';
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--accent2);
+    }
+
+    /* Footer */
+    footer {
+      padding: 2rem 3rem;
+      border-top: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+      animation: fadeUp 0.8s ease 0.4s both;
+    }
+
+    footer p {
+      font-size: 0.75rem;
+      color: var(--muted);
+    }
+
+    .support-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.78rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--bg);
+      background: var(--accent);
+      padding: 0.6rem 1.2rem;
+      text-decoration: none;
+      border: none;
+      cursor: pointer;
+      transition: opacity 0.2s, transform 0.2s;
+      font-family: 'DM Mono', monospace;
+    }
+
+    .support-btn:hover {
+      opacity: 0.85;
+      transform: translateY(-1px);
+    }
+
+    /* Animations */
+    @keyframes fadeDown {
+      from { opacity: 0; transform: translateY(-16px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 600px) {
+      header, .hero, .tools-section, footer { padding-left: 1.5rem; padding-right: 1.5rem; }
+      .divider { margin: 0 1.5rem; width: calc(100% - 3rem); }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="logo">Web<span>Gadgets</span></div>
+    <nav>
+      <a href="mailto:codingpan@codingpan.com">Contact</a>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <div class="hero-tag">Free online tools</div>
+    <h1>Useful little <em>gadgets</em> for the web.</h1>
+    <p class="hero-sub">A small collection of free, no-fuss tools built for everyday tasks. No sign-up. No ads. Just tools that work.</p>
+  </section>
+
+  <div class="divider"></div>
+
+  <section class="tools-section">
+    <div class="section-label">// Tools</div>
+    <div class="tools-grid">
+
+      <a class="tool-card" href="/convertflow">
+        <div class="tool-icon">⇄</div>
+        <div class="tool-name">ConvertFlow</div>
+        <p class="tool-desc">Convert files between 900+ formats — images, video, audio, documents, archives, ebooks, and more. Up to 2 GB.</p>
+        <div class="tool-badge">Free · 900+ formats</div>
+      </a>
+
+      <!-- Add more tool cards here as you build them -->
+      <!-- Example:
+      <a class="tool-card" href="/another-tool">
+        <div class="tool-icon">✦</div>
+        <div class="tool-name">Another Tool</div>
+        <p class="tool-desc">Description of the next tool you build.</p>
+        <div class="tool-badge">Free · Coming soon</div>
+      </a>
+      -->
+
+    </div>
+  </section>
+
+  <footer>
+  <div style="display:flex;justify-content:center;padding:2rem 1rem;">
+    <div style="width:340px;background:#fff;border:1px solid #eee;border-radius:12px;overflow:hidden;font-family:sans-serif;">
+      <div style="background:#5D3A1A;padding:2rem 1.75rem 1.5rem;">
+        <div style="font-size:48px;margin-bottom:0.75rem;">☕</div>
+        <p style="font-size:20px;font-weight:600;color:#FDE9C9;margin:0 0 0.25rem;">Buy me a hot chocolate</p>
+        <p style="font-size:13px;color:#C49A6C;margin:0;">Support ConvertFlow</p>
+      </div>
+      <div style="padding:1.5rem 1.75rem;">
+        <p style="font-size:14px;color:#666;line-height:1.6;margin:0 0 1.25rem;">ConvertFlow is completely free, with no ads. If it saved you some time, you're welcome to buy me a hot chocolate — it means a lot!</p>
+        <a href="https://www.paypal.com/ncp/payment/L4DQ6J2JUJ8FC" target="_blank"
+          style="display:flex;align-items:center;justify-content:center;gap:8px;width:100%;padding:0.75rem;background:#0070ba;color:#fff;border-radius:8px;text-decoration:none;font-size:14px;font-weight:500;box-sizing:border-box;">
+          ☕ Pay with PayPal
+        </a>
+        <p style="font-size:11px;color:#aaa;text-align:center;margin:0.75rem 0 0;">No account needed · Secure payment</p>
+      </div>
+    </div>
+  </div>
+  </footer>
+
+</body>
+</html>`;
+
+export default {
+  async fetch(request) {
+    const url = new URL(request.url);
+
+    // Only serve homepage for root path — let other routes pass through
+    if (url.pathname === '/' || url.pathname === '') {
+      return new Response(HTML, {
+        headers: {
+          'Content-Type': 'text/html;charset=UTF-8',
+          'Cache-Control': 'public, max-age=3600',
+        },
+      });
+    }
+
+    // For any other path not handled, return 404
+    return new Response('Not found', { status: 404 });
+  },
+};
