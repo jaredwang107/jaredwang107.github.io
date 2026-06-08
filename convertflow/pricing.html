@@ -416,10 +416,10 @@
     <span class="logo-text">Convert<span>Flow</span><sup class="copyright-badge">©</sup></span>
   </a>
   <ul>
-    <li><a href="index.html" id="nav-home" class="nav-page-link">Home</a></li>
-    <li><a href="formats.html" id="nav-formats" class="nav-page-link">Formats</a></li>
-    <li><a href="features.html" id="nav-features" class="nav-page-link">Features</a></li>
-    <li><a href="pricing.html" id="nav-pricing" class="nav-page-link active">Pricing</a></li>
+    <li><a href="/convertflow/" id="nav-home" class="nav-page-link">Home</a></li>
+    <li><a href="/convertflow/formats.html" id="nav-formats" class="nav-page-link">Formats</a></li>
+    <li><a href="/convertflow/features.html" id="nav-features" class="nav-page-link">Features</a></li>
+    <li><a href="/convertflow/pricing.html" id="nav-pricing" class="nav-page-link active">Pricing</a></li>
     <li id="navSignIn"><a href="#" onclick="openAuthModal('signin')">Sign In</a></li>
     <li id="navUserLi" style="display:none">
       <span style="display:flex;align-items:center;gap:0.75rem">
@@ -428,7 +428,7 @@
       </span>
     </li>
     <li id="navOwnerBadge" style="display:none"><span style="color:var(--accent3);font-size:0.8rem;display:flex;align-items:center;gap:0.4rem"><svg width="16" height="16" viewBox="0 0 24 24" fill="#f59e0b" style="vertical-align:-2px;margin-right:4px"><path d="M2 19l2-9 4.5 4L12 5l3.5 9L20 10l2 9H2z"/></svg><span style="font-weight:600">Owner</span></span></li>
-    <li id="navProLi"><a href="pricing.html" class="nav-cta" id="navProBtn">Get Pro →</a></li>
+    <li id="navProLi"><a href="/convertflow/pricing.html" class="nav-cta" id="navProBtn">Get Pro →</a></li>
     
   </ul>
   <button class="hamburger" id="hamburgerBtn" onclick="toggleMobileNav()" aria-label="Menu"><span></span><span></span><span></span></button>
@@ -1851,7 +1851,7 @@ const CATEGORIES = [
       card.innerHTML = `<div class="fmt-ext">.${f.ext}</div><div class="fmt-name">${f.name}</div>`;
       card.title = `Click to convert ${f.ext} files`;
       card.addEventListener('click', () => {
-        window.location.href = `index.html?to=${f.ext.toLowerCase()}`;
+        window.location.href = `/convertflow/?to=${f.ext.toLowerCase()}`;
       });
       grid.appendChild(card);
     });
