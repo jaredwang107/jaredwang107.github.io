@@ -1,0 +1,102 @@
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg: #0d0d0d;
+  --surface: #161616;
+  --border: #2a2a2a;
+  --accent: #f0c060;
+  --accent2: #60c0f0;
+  --text: #f0ede8;
+  --muted: #888;
+  --success: #4ade80;
+  --danger: #f87171;
+}
+
+body {
+  min-height: 100vh;
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'DM Mono', monospace;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem 1.5rem;
+  gap: 2rem;
+}
+
+.page-content {
+  width: 100%;
+  max-width: 480px;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.page-content--hero {
+  flex: 1;
+  justify-content: center;
+  max-width: 420px;
+}
+
+.page-footer {
+  width: 100%;
+  max-width: 420px;
+  margin-top: auto;
+  flex-shrink: 0;
+}
+
+.page-title {
+  font-family: 'DM Serif Display', serif;
+  font-size: 1.6rem;
+  line-height: 1.2;
+}
+
+.page-desc {
+  font-size: 0.82rem;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+.site-header {
+  width: 100%;
+  max-width: 480px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.site-header--minimal {
+  justify-content: center;
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.site-brand {
+  font-family: 'DM Serif Display', serif;
+  font-size: 1.2rem;
+  color: var(--text);
+  text-decoration: none;
+}
+
+.site-brand span { color: var(--accent); }
+
+.site-footer {
+  width: 100%;
+  max-width: 480px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+  text-align: center;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border);
+}
+
+.site-footer-copy {
+  font-size: 0.75rem;
+  color: var(--muted);
+}
+
