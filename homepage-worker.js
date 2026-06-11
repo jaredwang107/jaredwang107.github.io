@@ -1,11 +1,12 @@
-<!DOCTYPE html>
+// Cloudflare Worker — deploy this as your homepage worker
+// Route: www.web-gadgets.com/* (lower priority than your ConvertFlow worker)
+
+const HTML = `<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Web Gadgets — Free Online Tools</title>
-  <meta name="description" content="Free online tools by Web Gadgets. Convert files between 900+ formats and more — no sign-up, no ads.">
-  <link rel="canonical" href="https://www.web-gadgets.com/">
   <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -299,12 +300,22 @@
     <div class="section-label">// Tools</div>
     <div class="tools-grid">
 
-      <a class="tool-card" href="/convertflow/">
+      <a class="tool-card" href="/convertflow">
         <div class="tool-icon">⇄</div>
         <div class="tool-name">ConvertFlow</div>
         <p class="tool-desc">Convert files between 900+ formats — images, video, audio, documents, archives, ebooks, and more. Up to 2 GB.</p>
         <div class="tool-badge">Free · 900+ formats</div>
       </a>
+
+      <!-- Add more tool cards here as you build them -->
+      <!-- Example:
+      <a class="tool-card" href="/another-tool">
+        <div class="tool-icon">✦</div>
+        <div class="tool-name">Another Tool</div>
+        <p class="tool-desc">Description of the next tool you build.</p>
+        <div class="tool-badge">Free · Coming soon</div>
+      </a>
+      -->
 
     </div>
   </section>
@@ -330,4 +341,23 @@
   </footer>
 
 </body>
-</html>
+</html>`;
+
+export default {
+  async fetch(request) {
+    const url = new URL(request.url);
+
+    // Only serve homepage for root path — let other routes pass through
+    if (url.pathname === '/' || url.pathname === '') {
+      return new Response(HTML, {
+        headers: {
+          'Content-Type': 'text/html;charset=UTF-8',
+          'Cache-Control': 'public, max-age=3600',
+        },
+      });
+    }
+
+    // For any other path not handled, return 404
+    return new Response('Not found', { status: 404 });
+  },
+};
