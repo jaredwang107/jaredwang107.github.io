@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Due Date Calculator</title>
+<meta name="description" content="Calculate pregnancy due date from last menstrual period (Naegele’s rule).">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230a0a0f'/%3E%3Cpath d='M12 32 L20 32 L26 48 L34 16 L42 40 L50 32 L52 32' fill='none' stroke='%2300e5ff' stroke-width='3.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3Ccircle cx='52' cy='32' r='4' fill='%2300e5ff'/%3E%3C/svg%3E">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#0a0a0f;--surface:#12121a;--card:#1a1a26;--border:#2a2a3a;--accent:#00e5ff;--accent2:#7c3aed;--text:#e8e8f0;--muted:#6b6b88;--ok:#10b981;--danger:#ef4444}
+html,body{min-height:100%;background:var(--bg);color:var(--text);font-family:'DM Mono',monospace}
+body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:999;opacity:.5;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E")}
+nav{position:sticky;top:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:1rem 2rem;background:rgba(10,10,15,.9);backdrop-filter:blur(20px);border-bottom:1px solid var(--border)}
+.logo{display:flex;align-items:center;gap:.6rem;text-decoration:none;color:var(--text);font-family:'Syne',sans-serif;font-weight:800;font-size:1.15rem;letter-spacing:-.03em}
+.logo span{color:var(--accent)}
+.logo-mark{width:28px;height:28px;border-radius:7px;overflow:hidden;border:1px solid rgba(0,229,255,.25)}
+.logo-mark svg{width:100%;height:100%;display:block}
+.nav-links{display:flex;gap:1.5rem}
+.nav-links a{color:var(--muted);text-decoration:none;font-size:.78rem}
+.nav-links a:hover{color:var(--text)}
+.main{max-width:720px;margin:0 auto;padding:2.5rem 1.25rem 3rem;position:relative;z-index:1}
+.hero-label{font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);margin-bottom:.5rem}
+h1{font-family:'Syne',sans-serif;font-weight:800;font-size:clamp(1.5rem,4vw,2.1rem);letter-spacing:-.03em;margin-bottom:.4rem}
+.sub{font-size:.8rem;color:var(--muted);margin-bottom:1.75rem;line-height:1.6}
+.panel{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:1.35rem}
+.field{margin-bottom:.9rem}
+.field label{display:block;font-size:.65rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:.35rem}
+.field input,.field select,.field textarea{width:100%;background:var(--bg);border:1px solid var(--border);color:var(--text);padding:.7rem .85rem;border-radius:8px;font-family:'DM Mono',monospace;font-size:.88rem;outline:none;color-scheme:dark}
+.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--accent)}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:.7rem}
+.row3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:.7rem}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:.4rem;padding:.75rem 1.25rem;background:linear-gradient(135deg,var(--accent2),var(--accent));border:none;border-radius:8px;color:#fff;font-family:'Syne',sans-serif;font-weight:700;font-size:.9rem;cursor:pointer;width:100%;margin-top:.25rem}
+.btn:hover{opacity:.92}
+.results{margin-top:1.1rem;display:grid;gap:.5rem}
+.res-row{display:flex;justify-content:space-between;align-items:center;gap:1rem;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:.7rem 1rem}
+.res-label{font-size:.72rem;color:var(--muted)}
+.res-val{font-family:'Syne',sans-serif;font-weight:700;font-size:.95rem;color:var(--accent);word-break:break-all;text-align:right}
+.stat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:.55rem;margin-top:1rem}
+.stat{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:.9rem;text-align:center}
+.stat-val{font-family:'Syne',sans-serif;font-weight:800;font-size:1.35rem;color:var(--accent)}
+.stat-label{font-size:.65rem;color:var(--muted);margin-top:.3rem;text-transform:uppercase;letter-spacing:.05em}
+.note{font-size:.72rem;color:var(--muted);margin-top:.85rem;line-height:1.55}
+table{width:100%;border-collapse:collapse;font-size:.75rem;margin-top:1rem}
+th,td{border:1px solid var(--border);padding:.45rem .55rem;text-align:right}
+th{color:var(--muted);font-weight:500;text-align:left;background:var(--surface)}
+footer{text-align:center;padding:1.25rem;font-size:.7rem;color:var(--muted);border-top:1px solid var(--border)}
+footer a{color:var(--accent);text-decoration:none}
+@media(max-width:560px){.row,.row3{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<nav>
+  <a class="logo" href="/">
+    <div class="logo-mark"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect width="64" height="64" rx="14" fill="#0a0a0f"/><path d="M12 32 L20 32 L26 48 L34 16 L42 40 L50 32 L52 32" fill="none" stroke="#00e5ff" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/><circle cx="52" cy="32" r="4" fill="#00e5ff"/></svg></div>
+    Web<span>Gadgets</span>
+  </a>
+  <div class="nav-links"><a href="/">All tools</a><a href="mailto:jaredwang107@gmail.com">Contact</a></div>
+</nav>
+<main class="main">
+  <div class="hero-label">Free online tool</div>
+  <h1>Due Date Calculator</h1>
+  <p class="sub">Get an estimated due date from the first day of your last period.</p>
+  <div class="panel">
+<div class="field"><label>First day of last period</label><input type="date" id="lmp"></div>
+    <div class="field"><label>Cycle length (days)</label><input type="number" id="cycle" value="28"></div>
+    <button class="btn" id="go">Calculate</button><div class="stat-grid" id="out"></div>
+  </div>
+</main>
+<footer><a href="/">WebGadgets</a> · Free tools, no ads</footer>
+<script>
+document.getElementById('go').onclick=()=>{
+    const lmp=new Date(document.getElementById('lmp').value+'T00:00:00'); if(isNaN(lmp))return;
+    const cycle=+document.getElementById('cycle').value||28;
+    const due=new Date(lmp); due.setDate(due.getDate()+280+(cycle-28));
+    document.getElementById('out').innerHTML=`<div class="stat"><div class="stat-val">${due.toLocaleDateString()}</div><div class="stat-label">Estimated due date</div></div>`;};
+</script>
+</body>
+</html>
