@@ -3,67 +3,109 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>All Tools — Web Gadgets</title>
-  <meta name="description" content="Browse all free Web Gadgets tools with search — converters, calculators, timers, and more.">
+  <title>Web Gadgets — Free Online Tools</title>
+  <meta name="description" content="Free online tools by Web Gadgets. Converters, calculators, and utilities — no sign-up, no ads.">
+  <link rel="canonical" href="https://www.web-gadgets.com/">
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230a0a0f'/%3E%3Cpath d='M12 32 L20 32 L26 48 L34 16 L42 40 L50 32 L52 32' fill='none' stroke='%2300e5ff' stroke-width='3.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3Ccircle cx='52' cy='32' r='4' fill='%2300e5ff'/%3E%3C/svg%3E">
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
   <style>
-    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-    :root{--bg:#0a0a0f;--surface:#12121a;--card:#1a1a26;--border:#2a2a3a;--accent:#00e5ff;--accent2:#7c3aed;--text:#e8e8f0;--muted:#6b6b88}
-    html,body{min-height:100%;background:var(--bg);color:var(--text);font-family:'DM Mono',monospace;overflow-x:hidden}
-    body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:999;opacity:.5;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E")}
-    header{padding:1.25rem 3rem;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--border);background:rgba(10,10,15,.9);backdrop-filter:blur(20px);position:sticky;top:0;z-index:100}
-    .logo{font-family:'Syne',sans-serif;font-weight:800;font-size:1.3rem;color:var(--text);letter-spacing:-.03em;display:flex;align-items:center;gap:.6rem;text-decoration:none}
-    .logo span{color:var(--accent)}
-    .logo-mark{width:32px;height:32px;border-radius:8px;background:#0a0a0f;border:1px solid rgba(0,229,255,.25);overflow:hidden;flex-shrink:0}
-    .logo-mark svg{width:100%;height:100%;display:block}
-    nav a{color:var(--muted);text-decoration:none;font-size:.8rem;margin-left:1.25rem}
-    nav a:hover{color:var(--text)}
-    .page{max-width:820px;margin:0 auto;padding:2.5rem 1.5rem 4rem;position:relative;z-index:1}
-    .hero-label{font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);margin-bottom:.6rem}
-    h1{font-family:'Syne',sans-serif;font-weight:800;font-size:clamp(1.8rem,4vw,2.5rem);letter-spacing:-.03em;margin-bottom:.4rem}
-    .sub{font-size:.88rem;color:var(--muted);margin-bottom:1.5rem;line-height:1.6;max-width:48ch}
-    .search-wrap{position:relative;margin-bottom:1.25rem}
-    .search-wrap input{width:100%;background:var(--card);border:1px solid var(--border);color:var(--text);padding:.85rem 1rem .85rem 2.75rem;border-radius:12px;font-family:'DM Mono',monospace;font-size:.9rem;outline:none}
-    .search-wrap input:focus{border-color:var(--accent)}
-    .search-wrap svg{position:absolute;left:1rem;top:50%;transform:translateY(-50%);color:var(--muted);width:18px;height:18px}
-    .count{font-size:.72rem;color:var(--muted);margin-bottom:1.25rem}
-    .features-row{position:relative;z-index:1;display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:.65rem;margin-bottom:1.75rem}
-    .feature-chip{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:.75rem .85rem;display:flex;align-items:center;gap:.55rem;min-width:0}
-    .feature-chip-icon{width:28px;height:28px;border-radius:7px;background:rgba(0,229,255,.08);border:1px solid rgba(0,229,255,.15);display:flex;align-items:center;justify-content:center;flex-shrink:0;color:var(--accent)}
-    .feature-chip-title{font-family:'Syne',sans-serif;font-weight:700;font-size:.75rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-    .feature-chip-desc{font-size:.62rem;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-    .tools-grid{display:flex;flex-direction:column;gap:.8rem;position:relative;z-index:1}
-    .tool-card{position:relative;z-index:1;isolation:isolate;background:linear-gradient(160deg,#1a1a26,#14141e);border:1px solid var(--border);border-radius:14px;padding:1.1rem 1.3rem;text-decoration:none;color:var(--text);display:flex;flex-direction:row;align-items:center;gap:1.15rem;transition:border-color .25s,transform .25s,box-shadow .25s}
-    .tool-card:hover{border-color:rgba(0,229,255,.4);transform:translateY(-2px);box-shadow:0 10px 28px rgba(0,229,255,.1)}
-    .tool-card.hidden{display:none}
-    .tool-icon-wrap{width:52px;height:52px;border-radius:12px;background:linear-gradient(135deg,rgba(0,229,255,.12),rgba(124,58,237,.12));border:1px solid rgba(0,229,255,.22);display:flex;align-items:center;justify-content:center;color:var(--accent);flex-shrink:0}
-    .tool-icon-wrap svg{width:26px;height:26px;display:block}
-    .tool-body{flex:1;min-width:0;display:flex;flex-direction:column;gap:.28rem}
-    .tool-name-row{display:flex;align-items:center;justify-content:space-between;gap:1rem}
-    .tool-name{font-family:'Syne',sans-serif;font-weight:800;font-size:1.08rem;letter-spacing:-.02em}
-    .tool-cta{font-family:'Syne',sans-serif;font-size:.72rem;font-weight:700;color:var(--muted);flex-shrink:0}
-    .tool-card:hover .tool-cta{color:var(--accent)}
-    .tool-desc{font-size:.78rem;color:var(--muted);line-height:1.55}
-    .tool-badge{display:inline-flex;align-items:center;gap:.35rem;font-size:.62rem;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);margin-top:.15rem}
-    .tool-badge::before{content:'';width:5px;height:5px;border-radius:50%;background:var(--accent);box-shadow:0 0 6px var(--accent)}
-    .empty{text-align:center;color:var(--muted);padding:2rem;font-size:.85rem;display:none}
-    footer{border-top:1px solid var(--border);padding:2rem;text-align:center;font-size:.72rem;color:var(--muted)}
-    footer a{color:var(--accent);text-decoration:none}
-    @media(max-width:700px){.features-row{grid-template-columns:1fr 1fr}.feature-chip-desc{display:none}header,.page{padding-left:1.25rem;padding-right:1.25rem}}
-  
-    .lang-wrap { position: relative; margin-left: 0.35rem; }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #0a0a0f;
+      --surface: #12121a;
+      --card: #1a1a26;
+      --border: #2a2a3a;
+      --accent: #00e5ff;
+      --accent2: #7c3aed;
+      --text: #e8e8f0;
+      --muted: #6b6b88;
+    }
+    html, body {
+      min-height: 100%;
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'DM Mono', monospace;
+      overflow-x: hidden;
+    }
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 999;
+      opacity: 0.5;
+    }
+    header {
+      padding: 1.25rem 3rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid var(--border);
+      background: rgba(10,10,15,0.92);
+      backdrop-filter: blur(20px);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .logo {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: 1.3rem;
+      color: var(--text);
+      letter-spacing: -0.03em;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      text-decoration: none;
+    }
+    .logo span { color: var(--accent); }
+    .logo-mark {
+      width: 32px; height: 32px;
+      border-radius: 8px;
+      background: #0a0a0f;
+      border: 1px solid rgba(0,229,255,0.25);
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+    .logo-mark svg { width: 100%; height: 100%; display: block; }
+    nav {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    nav a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.8rem;
+      letter-spacing: 0.04em;
+      padding: 0.45rem 0.9rem;
+      border-radius: 8px;
+      border: 1px solid transparent;
+      transition: color 0.2s, border-color 0.2s, background 0.2s;
+    }
+    nav a:hover {
+      color: var(--text);
+      border-color: var(--border);
+      background: rgba(255,255,255,0.03);
+    }
+    nav a[href="tools.html"] {
+      color: var(--accent);
+      border-color: rgba(0,229,255,0.25);
+      background: rgba(0,229,255,0.06);
+    }
+    .lang-wrap { position: relative; margin-left: 0.25rem; }
     .lang-btn {
       display: inline-flex; align-items: center; gap: 0.35rem;
       color: var(--muted); background: transparent; border: 1px solid var(--border);
       border-radius: 8px; padding: 0.4rem 0.7rem; font-family: 'DM Mono', monospace;
-      font-size: 0.75rem; cursor: pointer; letter-spacing: 0.04em;
+      font-size: 0.75rem; cursor: pointer;
     }
     .lang-btn:hover { color: var(--text); border-color: rgba(0,229,255,0.35); }
     .lang-menu {
       display: none; position: absolute; right: 0; top: calc(100% + 6px);
       background: var(--card); border: 1px solid var(--border); border-radius: 10px;
-      min-width: 160px; padding: 0.35rem; z-index: 200;
+      min-width: 150px; padding: 0.35rem; z-index: 200;
       box-shadow: 0 12px 32px rgba(0,0,0,0.45);
     }
     .lang-menu.open { display: block; }
@@ -72,63 +114,265 @@
       color: var(--text); font-family: 'DM Mono', monospace; font-size: 0.78rem;
       padding: 0.55rem 0.75rem; border-radius: 6px; cursor: pointer;
     }
-    .lang-menu button:hover { background: rgba(0,229,255,0.08); color: var(--accent); }
-    .lang-menu button.active { color: var(--accent); }
+    .lang-menu button:hover, .lang-menu button.active { color: var(--accent); background: rgba(0,229,255,0.08); }
 
-</style>
+    .hero {
+      min-height: 52vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: flex-start;
+      padding: 4.5rem 3rem 3rem;
+      position: relative;
+      z-index: 1;
+    }
+    .hero-glow {
+      position: absolute; width: 560px; height: 560px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(0,229,255,0.08) 0%, transparent 70%);
+      pointer-events: none; top: 40%; left: 28%; transform: translate(-50%, -50%);
+    }
+    .hero-glow2 {
+      position: absolute; width: 380px; height: 380px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(124,58,237,0.1) 0%, transparent 70%);
+      pointer-events: none; top: 28%; left: 55%;
+    }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      background: rgba(0,229,255,0.08); border: 1px solid rgba(0,229,255,0.2);
+      border-radius: 100px; padding: 0.4rem 1rem; font-size: 0.7rem;
+      color: var(--accent); letter-spacing: 0.1em; text-transform: uppercase;
+      margin-bottom: 1.75rem; position: relative; z-index: 1;
+    }
+    .badge-dot {
+      width: 6px; height: 6px; background: var(--accent); border-radius: 50%;
+      box-shadow: 0 0 8px var(--accent); animation: blink 1.5s infinite;
+    }
+    @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
+    h1 {
+      font-family: 'Syne', sans-serif; font-weight: 800;
+      font-size: clamp(2.6rem, 6.5vw, 5rem); line-height: 1.05;
+      letter-spacing: -0.04em; max-width: 16ch; margin-bottom: 1.35rem;
+      position: relative; z-index: 1; color: var(--text);
+    }
+    h1 .accent { color: var(--accent); }
+    .hero-sub {
+      font-size: 0.95rem; color: var(--muted); max-width: 42ch;
+      line-height: 1.7; position: relative; z-index: 1;
+    }
+    .hero-actions {
+      display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: 2rem;
+      position: relative; z-index: 1;
+    }
+    .btn-primary {
+      display: inline-flex; align-items: center; gap: 0.4rem;
+      padding: 0.85rem 1.5rem; border-radius: 10px; text-decoration: none;
+      font-family: 'Syne', sans-serif; font-weight: 700; font-size: 0.95rem;
+      background: linear-gradient(135deg, var(--accent2), var(--accent));
+      color: #fff; border: none;
+    }
+    .btn-primary:hover { opacity: 0.92; }
+    .btn-ghost {
+      display: inline-flex; align-items: center; gap: 0.4rem;
+      padding: 0.85rem 1.5rem; border-radius: 10px; text-decoration: none;
+      font-family: 'Syne', sans-serif; font-weight: 700; font-size: 0.95rem;
+      background: transparent; color: var(--text); border: 1px solid var(--border);
+    }
+    .btn-ghost:hover { border-color: rgba(0,229,255,0.4); color: var(--accent); }
+
+    .divider {
+      height: 1px; margin: 0 3rem; width: calc(100% - 6rem);
+      background: linear-gradient(90deg, transparent, var(--border), transparent);
+      position: relative;
+    }
+
+    .features-row {
+      padding: 2.5rem 3rem 0;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0.75rem;
+      position: relative; z-index: 1;
+    }
+    .feature-chip {
+      background: var(--surface); border: 1px solid var(--border); border-radius: 10px;
+      padding: 0.9rem 1rem; display: flex; align-items: center; gap: 0.65rem; min-width: 0;
+    }
+    .feature-chip-icon {
+      width: 28px; height: 28px; border-radius: 7px;
+      background: rgba(0,229,255,0.08); border: 1px solid rgba(0,229,255,0.15);
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0; color: var(--accent);
+    }
+    .feature-chip-title {
+      font-family: 'Syne', sans-serif; font-weight: 700; font-size: 0.78rem;
+      color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
+    .feature-chip-desc {
+      font-size: 0.65rem; color: var(--muted);
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
+
+    .tools-section {
+      padding: 2.5rem 3rem 3rem;
+      position: relative; z-index: 1;
+    }
+    .section-header {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 1.5rem; flex-wrap: wrap; gap: 0.75rem;
+    }
+    .section-label {
+      font-size: 0.7rem; letter-spacing: 0.15em; text-transform: uppercase;
+      color: var(--accent); display: flex; align-items: center; gap: 0.75rem;
+    }
+    .section-label::before {
+      content: ''; width: 1.5rem; height: 1px; background: var(--accent);
+    }
+    .section-count {
+      font-size: 0.75rem; color: var(--accent); text-decoration: none;
+      border: 1px solid rgba(0,229,255,0.25); border-radius: 100px;
+      padding: 0.35rem 0.85rem; background: rgba(0,229,255,0.06);
+    }
+    .section-count:hover { background: rgba(0,229,255,0.12); }
+    .tools-grid {
+      display: flex; flex-direction: column; gap: 0.85rem; max-width: 720px;
+    }
+    .tool-card {
+      background: linear-gradient(160deg, #1a1a26 0%, #14141e 100%);
+      border: 1px solid var(--border); border-radius: 14px;
+      padding: 1.2rem 1.35rem; text-decoration: none; color: var(--text);
+      display: flex; flex-direction: row; align-items: center; gap: 1.2rem;
+      position: relative; z-index: 1; isolation: isolate;
+      transition: border-color 0.25s, transform 0.25s, box-shadow 0.25s;
+    }
+    .tool-card:hover {
+      border-color: rgba(0,229,255,0.4); transform: translateY(-2px);
+      box-shadow: 0 10px 28px rgba(0,229,255,0.1);
+    }
+    .tool-icon-wrap {
+      width: 52px; height: 52px; border-radius: 12px;
+      background: linear-gradient(135deg, rgba(0,229,255,0.12), rgba(124,58,237,0.12));
+      border: 1px solid rgba(0,229,255,0.22);
+      display: flex; align-items: center; justify-content: center;
+      color: var(--accent); flex-shrink: 0;
+    }
+    .tool-icon-wrap svg { width: 26px; height: 26px; display: block; }
+    .tool-body { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 0.28rem; }
+    .tool-name-row { display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+    .tool-name {
+      font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.1rem;
+      letter-spacing: -0.02em; color: var(--text);
+    }
+    .tool-cta {
+      font-family: 'Syne', sans-serif; font-size: 0.72rem; font-weight: 700;
+      color: var(--muted); flex-shrink: 0;
+    }
+    .tool-card:hover .tool-cta { color: var(--accent); }
+    .tool-desc { font-size: 0.78rem; color: var(--muted); line-height: 1.55; }
+    .tool-badge {
+      display: inline-flex; align-items: center; gap: 0.35rem; font-size: 0.62rem;
+      letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); margin-top: 0.15rem;
+    }
+    .tool-badge::before {
+      content: ''; width: 5px; height: 5px; border-radius: 50%;
+      background: var(--accent); box-shadow: 0 0 6px var(--accent);
+    }
+
+    footer {
+      border-top: 1px solid var(--border); padding: 3rem;
+      display: flex; justify-content: center; position: relative; z-index: 1;
+    }
+    .donate-wrap {
+      display: flex; flex-direction: column; align-items: center;
+      gap: 1rem; max-width: 400px; text-align: center;
+    }
+    .donate-msg { font-size: 0.82rem; color: var(--muted); line-height: 1.65; }
+    .donate-btn {
+      display: inline-flex; align-items: center; justify-content: center; gap: 0.55rem;
+      padding: 0.9rem 2.25rem;
+      background: linear-gradient(135deg, var(--accent2), var(--accent));
+      border: none; border-radius: 8px; color: #fff; text-decoration: none;
+      font-family: 'Syne', sans-serif; font-size: 1rem; font-weight: 700;
+    }
+    .donate-btn:hover { opacity: 0.92; }
+    .donate-note { font-size: 0.68rem; color: var(--muted); }
+
+    @media (max-width: 700px) {
+      header, .hero, .tools-section, .features-row, footer {
+        padding-left: 1.25rem; padding-right: 1.25rem;
+      }
+      .divider { margin: 0 1.25rem; width: calc(100% - 2.5rem); }
+      .features-row { grid-template-columns: 1fr 1fr; }
+      .feature-chip-desc { display: none; }
+    }
+  </style>
 </head>
 <body>
   <header>
     <a class="logo" href="index.html">
-      <div class="logo-mark"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect width="64" height="64" rx="14" fill="#0a0a0f"/><path d="M12 32 L20 32 L26 48 L34 16 L42 40 L50 32 L52 32" fill="none" stroke="#00e5ff" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M42 40 L50 32 L52 32" fill="none" stroke="#7c3aed" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/><circle cx="52" cy="32" r="4" fill="#00e5ff"/></svg></div>
+      <div class="logo-mark">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+          <rect width="64" height="64" rx="14" fill="#0a0a0f"/>
+          <path d="M12 32 L20 32 L26 48 L34 16 L42 40 L50 32 L52 32" fill="none" stroke="#00e5ff" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M42 40 L50 32 L52 32" fill="none" stroke="#7c3aed" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+          <circle cx="52" cy="32" r="4" fill="#00e5ff"/>
+        </svg>
+      </div>
       Web<span>Gadgets</span>
     </a>
     <nav>
       <a href="tools.html"><span data-i18n="nav_tools">Tools</span></a>
       <a href="mailto:jaredwang107@gmail.com"><span data-i18n="nav_contact">Contact</span></a>
-    
-    <div class="lang-wrap">
-      <button type="button" class="lang-btn" aria-label="Language"><span class="lang-code">EN</span> ▾</button>
-      <div class="lang-menu">
-        <button type="button" data-lang="en">English</button>
-        <button type="button" data-lang="es">Español</button>
-        <button type="button" data-lang="fr">Français</button>
-        <button type="button" data-lang="de">Deutsch</button>
-        <button type="button" data-lang="zh">中文</button>
-        <button type="button" data-lang="ja">日本語</button>
+      <div class="lang-wrap">
+        <button type="button" class="lang-btn" aria-label="Language"><span class="lang-code">EN</span> ▾</button>
+        <div class="lang-menu">
+          <button type="button" data-lang="en">English</button>
+          <button type="button" data-lang="es">Español</button>
+          <button type="button" data-lang="fr">Français</button>
+          <button type="button" data-lang="de">Deutsch</button>
+          <button type="button" data-lang="zh">中文</button>
+          <button type="button" data-lang="ja">日本語</button>
+        </div>
       </div>
-    </div>
     </nav>
   </header>
-  <div class="page">
-    <div class="hero-label"><span data-i18n="catalog">Catalog</span></div>
-    <h1><span data-i18n="all_tools">All tools</span></h1>
-    <p class="sub"><span data-i18n="catalog_sub">Search and open any free gadget — converters, calculators, timers, and more.</span></p>
+
+  <section class="hero">
+    <div class="hero-glow"></div>
+    <div class="hero-glow2"></div>
+    <div class="hero-badge"><span class="badge-dot"></span> <span data-i18n="hero_badge">Free online tools</span></div>
+    <h1><span data-i18n="hero_title" data-i18n-html="1">Useful little <span class="accent">gadgets</span> for the web.</span></h1>
+    <p class="hero-sub"><span data-i18n="hero_sub">A small collection of free, no-fuss tools built for everyday tasks. No sign-up. No ads. Just tools that work.</span></p>
+    <div class="hero-actions">
+      <a class="btn-primary" href="tools.html"><span data-i18n="nav_tools">Tools</span> →</a>
+      <a class="btn-ghost" href="convertflow.html">ConvertFlow</a>
+    </div>
+  </section>
+
+  <div class="divider"></div>
 
   <div class="features-row">
     <div class="feature-chip">
-      <div class="feature-chip-icon"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M13 2L4 14h7l-1 8 10-12h-7l1-8z"/></svg></div>
+      <div class="feature-chip-icon"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2L4 14h7l-1 8 10-12h-7l1-8z"/></svg></div>
       <div class="feature-chip-text">
         <div class="feature-chip-title" data-i18n="feat_fast_t">Fast conversion</div>
         <div class="feature-chip-desc" data-i18n="feat_fast_d">Quick processing</div>
       </div>
     </div>
     <div class="feature-chip">
-      <div class="feature-chip-icon"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 018 0v3"/></svg></div>
+      <div class="feature-chip-icon"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 018 0v3"/></svg></div>
       <div class="feature-chip-text">
         <div class="feature-chip-title" data-i18n="feat_priv_t">Private by design</div>
         <div class="feature-chip-desc" data-i18n="feat_priv_d">Handled securely</div>
       </div>
     </div>
     <div class="feature-chip">
-      <div class="feature-chip-icon"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 12a4 4 0 10-4-4 4 4 0 00-4 4 4 4 0 10-4 4 4 4 0 004-4 4 4 0 004 4 4 4 0 004-4z"/></svg></div>
+      <div class="feature-chip-icon"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 12a4 4 0 10-4-4 4 4 0 00-4 4 4 4 0 10-4 4 4 4 0 004-4 4 4 0 004 4 4 4 0 004-4z"/></svg></div>
       <div class="feature-chip-text">
         <div class="feature-chip-title" data-i18n="feat_lim_t">No limits games</div>
         <div class="feature-chip-desc" data-i18n="feat_lim_d">Generous free tier</div>
       </div>
     </div>
     <div class="feature-chip">
-      <div class="feature-chip-icon"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 3l1.5 6L20 12l-6.5 1.5L12 20l-1.5-6.5L4 12l6.5-1.5L12 3z"/></svg></div>
+      <div class="feature-chip-icon"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l1.5 6L20 12l-6.5 1.5L12 20l-1.5-6.5L4 12l6.5-1.5L12 3z"/></svg></div>
       <div class="feature-chip-text">
         <div class="feature-chip-title" data-i18n="feat_acc_t">No account needed</div>
         <div class="feature-chip-desc" data-i18n="feat_acc_d">Drop a file and go</div>
@@ -136,14 +380,14 @@
     </div>
   </div>
 
-    <div class="search-wrap">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3-3"/></svg>
-      <input type="search" id="q" placeholder="Search tools…" data-i18n-placeholder="search_ph" autocomplete="off">
+  <section class="tools-section">
+    <div class="section-header">
+      <div class="section-label"><span data-i18n="section_tools">Tools</span></div>
+      <a href="tools.html" class="section-count"><span data-i18n="view_all">View all</span> →</a>
     </div>
-    <div class="count"><span id="shown">38</span> / 38 tools</div>
-    <div class="tools-grid" id="grid">
-      <a class="tool-card" data-i18n-search="t_convertflow d_convertflow b_convertflow" href="convertflow.html" data-search="convertflow convert files between 900+ formats — images, video, audio, documents, archives, ebooks, and more. up to 2 gb. free · 900+ formats">
-        <div class="tool-icon-wrap"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7h10v4M17 17H7v-4"/><path d="M4 11l3-3M4 11l3 3M20 13l-3-3M20 13l-3 3"/></svg></div>
+    <div class="tools-grid">
+      <a class="tool-card" href="convertflow.html">
+        <div class="tool-icon-wrap"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"><path d="M7 7h10v4M17 17H7v-4"/><path d="M4 11l3-3M4 11l3 3M20 13l-3-3M20 13l-3 3"/></svg></div>
         <div class="tool-body">
           <div class="tool-name-row">
             <div class="tool-name" data-i18n="t_convertflow">ConvertFlow</div>
@@ -153,8 +397,8 @@
           <div class="tool-badge" data-i18n="b_convertflow">Free · 900+ formats</div>
         </div>
       </a>
-      <a class="tool-card" data-i18n-search="t_calculator d_calculator b_calculator" href="calculator.html" data-search="calculator scientific calculator with every function you need — trig, logs, powers, roots, constants, memory, and more. free · scientific">
-        <div class="tool-icon-wrap"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 7h8M8 12h2M12 12h2M16 12h2M8 16h2M12 16h2M16 16h2"/></svg></div>
+      <a class="tool-card" href="calculator.html">
+        <div class="tool-icon-wrap"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 7h8M8 12h2M12 12h2M16 12h2M8 16h2M12 16h2M16 16h2"/></svg></div>
         <div class="tool-body">
           <div class="tool-name-row">
             <div class="tool-name" data-i18n="t_calculator">Calculator</div>
@@ -164,96 +408,8 @@
           <div class="tool-badge" data-i18n="b_calculator">Free · Scientific</div>
         </div>
       </a>
-      <a class="tool-card" data-i18n-search="t_number_converter d_number_converter b_number_converter" href="number-converter.html" data-search="number converter convert between binary, octal, decimal, hexadecimal, and more number systems instantly. free · bases">
-        <div class="tool-icon-wrap"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M8 6h8M8 12h8M8 18h5"/><path d="M6 6v12"/></svg></div>
-        <div class="tool-body">
-          <div class="tool-name-row">
-            <div class="tool-name" data-i18n="t_number_converter">Number Converter</div>
-            <div class="tool-cta">Open <span>→</span></div>
-          </div>
-          <p class="tool-desc" data-i18n="d_number_converter">Convert between binary, octal, decimal, hexadecimal, and more number systems instantly.</p>
-          <div class="tool-badge" data-i18n="b_number_converter">Free · Bases</div>
-        </div>
-      </a>
-      <a class="tool-card" data-i18n-search="t_age_converter d_age_converter b_age_converter" href="age-converter.html" data-search="age converter calculate exact age in years, months, days, hours, and minutes from any birth date. free · exact age">
-        <div class="tool-icon-wrap"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></div>
-        <div class="tool-body">
-          <div class="tool-name-row">
-            <div class="tool-name" data-i18n="t_age_converter">Age Converter</div>
-            <div class="tool-cta">Open <span>→</span></div>
-          </div>
-          <p class="tool-desc" data-i18n="d_age_converter">Calculate exact age in years, months, days, hours, and minutes from any birth date.</p>
-          <div class="tool-badge" data-i18n="b_age_converter">Free · Exact age</div>
-        </div>
-      </a>
-      <a class="tool-card" data-i18n-search="t_distance_converter d_distance_converter b_distance_converter" href="distance-converter.html" data-search="distance converter convert miles, kilometers, meters, feet, yards, inches, nautical miles, and more. free · length">
-        <div class="tool-icon-wrap"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h16"/><path d="M7 9l-3 3 3 3M17 9l3 3-3 3"/></svg></div>
-        <div class="tool-body">
-          <div class="tool-name-row">
-            <div class="tool-name" data-i18n="t_distance_converter">Distance Converter</div>
-            <div class="tool-cta">Open <span>→</span></div>
-          </div>
-          <p class="tool-desc" data-i18n="d_distance_converter">Convert miles, kilometers, meters, feet, yards, inches, nautical miles, and more.</p>
-          <div class="tool-badge" data-i18n="b_distance_converter">Free · Length</div>
-        </div>
-      </a>
-      <a class="tool-card" data-i18n-search="t_weight_converter d_weight_converter b_weight_converter" href="weight-converter.html" data-search="weight converter convert kilograms, pounds, ounces, grams, stones, tons, and more mass units. free · mass">
-        <div class="tool-icon-wrap"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v3M8 20h8M9 7h6l1 13H8L9 7z"/></svg></div>
-        <div class="tool-body">
-          <div class="tool-name-row">
-            <div class="tool-name" data-i18n="t_weight_converter">Weight Converter</div>
-            <div class="tool-cta">Open <span>→</span></div>
-          </div>
-          <p class="tool-desc" data-i18n="d_weight_converter">Convert kilograms, pounds, ounces, grams, stones, tons, and more mass units.</p>
-          <div class="tool-badge" data-i18n="b_weight_converter">Free · Mass</div>
-        </div>
-      </a>
-      <a class="tool-card" data-i18n-search="t_gpa_calculator d_gpa_calculator b_gpa_calculator" href="gpa-calculator.html" data-search="gpa calculator calculate gpa from course grades and credit hours. supports 4.0 scale. free · academic">
-        <div class="tool-icon-wrap"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19V5l8-2 8 2v14l-8 2-8-2z"/><path d="M12 3v18"/></svg></div>
-        <div class="tool-body">
-          <div class="tool-name-row">
-            <div class="tool-name" data-i18n="t_gpa_calculator">GPA Calculator</div>
-            <div class="tool-cta">Open <span>→</span></div>
-          </div>
-          <p class="tool-desc" data-i18n="d_gpa_calculator">Calculate GPA from course grades and credit hours. Supports 4.0 scale.</p>
-          <div class="tool-badge" data-i18n="b_gpa_calculator">Free · Academic</div>
-        </div>
-      </a>
-      <a class="tool-card" data-i18n-search="t_grade_calculator d_grade_calculator b_grade_calculator" href="grade-calculator.html" data-search="grade calculator find the score you need on a final exam to hit your target grade. free · academic">
-        <div class="tool-icon-wrap"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20h16M7 16l3-8 3 5 2-3 2 6"/></svg></div>
-        <div class="tool-body">
-          <div class="tool-name-row">
-            <div class="tool-name" data-i18n="t_grade_calculator">Grade Calculator</div>
-            <div class="tool-cta">Open <span>→</span></div>
-          </div>
-          <p class="tool-desc" data-i18n="d_grade_calculator">Find the score you need on a final exam to hit your target grade.</p>
-          <div class="tool-badge" data-i18n="b_grade_calculator">Free · Academic</div>
-        </div>
-      </a>
-      <a class="tool-card" data-i18n-search="t_concrete_calculator d_concrete_calculator b_concrete_calculator" href="concrete-calculator.html" data-search="concrete calculator estimate concrete volume for slabs, footings, and columns in yd³ or m³. free · construction">
-        <div class="tool-icon-wrap"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M3 20h18M5 20V10l7-5 7 5v10"/><path d="M10 20v-6h4v6"/></svg></div>
-        <div class="tool-body">
-          <div class="tool-name-row">
-            <div class="tool-name" data-i18n="t_concrete_calculator">Concrete Calculator</div>
-            <div class="tool-cta">Open <span>→</span></div>
-          </div>
-          <p class="tool-desc" data-i18n="d_concrete_calculator">Estimate concrete volume for slabs, footings, and columns in yd³ or m³.</p>
-          <div class="tool-badge" data-i18n="b_concrete_calculator">Free · Construction</div>
-        </div>
-      </a>
-      <a class="tool-card" data-i18n-search="t_subnet_calculator d_subnet_calculator b_subnet_calculator" href="subnet-calculator.html" data-search="subnet calculator calculate network address, broadcast, mask, and host range from ip/cidr. free · network">
-        <div class="tool-icon-wrap"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="7" height="6" rx="1"/><rect x="14" y="4" width="7" height="6" rx="1"/><rect x="8" y="14" width="8" height="6" rx="1"/><path d="M6.5 10v2.5H12M17.5 10v2.5H12M12 12.5V14"/></svg></div>
-        <div class="tool-body">
-          <div class="tool-name-row">
-            <div class="tool-name" data-i18n="t_subnet_calculator">Subnet Calculator</div>
-            <div class="tool-cta">Open <span>→</span></div>
-          </div>
-          <p class="tool-desc" data-i18n="d_subnet_calculator">Calculate network address, broadcast, mask, and host range from IP/CIDR.</p>
-          <div class="tool-badge" data-i18n="b_subnet_calculator">Free · Network</div>
-        </div>
-      </a>
-      <a class="tool-card" data-i18n-search="t_password_generator d_password_generator b_password_generator" href="password-generator.html" data-search="password generator generate strong random passwords with custom length and character sets. free · security">
-        <div class="tool-icon-wrap"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 018 0v3"/><circle cx="12" cy="16" r="1.5"/></svg></div>
+      <a class="tool-card" href="password-generator.html">
+        <div class="tool-icon-wrap"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 018 0v3"/><circle cx="12" cy="16" r="1.5"/></svg></div>
         <div class="tool-body">
           <div class="tool-name-row">
             <div class="tool-name" data-i18n="t_password_generator">Password Generator</div>
@@ -263,8 +419,8 @@
           <div class="tool-badge" data-i18n="b_password_generator">Free · Security</div>
         </div>
       </a>
-      <a class="tool-card" data-i18n-search="t_bmi_calculator d_bmi_calculator b_bmi_calculator" href="bmi-calculator.html" data-search="bmi calculator calculate body mass index from height and weight with category. free · health">
-        <div class="tool-icon-wrap"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="5" r="2.5"/><path d="M12 8v5M9 21l3-8 3 8M8 12h8"/></svg></div>
+      <a class="tool-card" href="bmi-calculator.html">
+        <div class="tool-icon-wrap"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"><circle cx="12" cy="5" r="2.5"/><path d="M12 8v5M9 21l3-8 3 8M8 12h8"/></svg></div>
         <div class="tool-body">
           <div class="tool-name-row">
             <div class="tool-name" data-i18n="t_bmi_calculator">BMI Calculator</div>
@@ -274,292 +430,18 @@
           <div class="tool-badge" data-i18n="b_bmi_calculator">Free · Health</div>
         </div>
       </a>
-      <a class="tool-card" data-i18n-search="t_calorie_calculator d_calorie_calculator b_calorie_calculator" href="calorie-calculator.html" data-search="calorie calculator estimate daily calorie needs using the mifflin-st jeor formula. free · health">
-        <div class="tool-icon-wrap"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L4 14h7l-1 8 10-12h-7l1-8z"/></svg></div>
-        <div class="tool-body">
-          <div class="tool-name-row">
-            <div class="tool-name" data-i18n="t_calorie_calculator">Calorie Calculator</div>
-            <div class="tool-cta">Open <span>→</span></div>
-          </div>
-          <p class="tool-desc" data-i18n="d_calorie_calculator">Estimate daily calorie needs using the Mifflin-St Jeor formula.</p>
-          <div class="tool-badge" data-i18n="b_calorie_calculator">Free · Health</div>
-        </div>
-      </a>
-      <a class="tool-card" data-i18n-search="t_body_fat_calculator d_body_fat_calculator b_body_fat_calculator" href="body-fat-calculator.html" data-search="body fat calculator estimate body fat percentage using the u.s. navy method. free · health">
-        <div class="tool-icon-wrap"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8 12a4 4 0 018 0"/></svg></div>
-        <div class="tool-body">
-          <div class="tool-name-row">
-            <div class="tool-name" data-i18n="t_body_fat_calculator">Body Fat Calculator</div>
-            <div class="tool-cta">Open <span>→</span></div>
-          </div>
-          <p class="tool-desc" data-i18n="d_body_fat_calculator">Estimate body fat percentage using the U.S. Navy method.</p>
-          <div class="tool-badge" data-i18n="b_body_fat_calculator">Free · Health</div>
-        </div>
-      </a>
-      <a class="tool-card" data-i18n-search="t_bmr_calculator d_bmr_calculator b_bmr_calculator" href="bmr-calculator.html" data-search="bmr calculator calculate basal metabolic rate with mifflin-st jeor or harris-benedict. free · health">
-        <div class="tool-icon-wrap"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v3M12 18v3M3 12h3M18 12h3"/><circle cx="12" cy="12" r="5"/></svg></div>
-        <div class="tool-body">
-          <div class="tool-name-row">
-            <div class="tool-name" data-i18n="t_bmr_calculator">BMR Calculator</div>
-            <div class="tool-cta">Open <span>→</span></div>
-          </div>
-          <p class="tool-desc" data-i18n="d_bmr_calculator">Calculate Basal Metabolic Rate with Mifflin-St Jeor or Harris-Benedict.</p>
-          <div class="tool-badge" data-i18n="b_bmr_calculator">Free · Health</div>
-        </div>
-      </a>
-      <a class="tool-card" data-i18n-search="t_ideal_weight_calculator d_ideal_weight_calculator b_ideal_weight_calculator" href="ideal-weight-calculator.html" data-search="ideal weight calculator estimate ideal body weight using multiple formulas (devine, robinson, miller). free · health">
-        <div class="tool-icon-wrap"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v18M5 8h14M7 16h10"/></svg></div>
-        <div class="tool-body">
-          <div class="tool-name-row">
-            <div class="tool-name" data-i18n="t_ideal_weight_calculator">Ideal Weight Calculator</div>
-            <div class="tool-cta">Open <span>→</span></div>
-          </div>
-          <p class="tool-desc" data-i18n="d_ideal_weight_calculator">Estimate ideal body weight using multiple formulas (Devine, Robinson, Miller).</p>
-          <div class="tool-badge" data-i18n="b_ideal_weight_calculator">Free · Health</div>
-        </div>
-      </a>
-      <a class="tool-card" data-i18n-search="t_pace_calculator d_pace_calculator b_pace_calculator" href="pace-calculator.html" data-search="pace calculator convert between pace, speed, time, and distance for running or walking. free · fitness">
-        <div class="tool-icon-wrap"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2.5 1.5"/></svg></div>
-        <div class="tool-body">
-          <div class="tool-name-row">
-            <div class="tool-name" data-i18n="t_pace_calculator">Pace Calculator</div>
-            <div class="tool-cta">Open <span>→</span></div>
-          </div>
-          <p class="tool-desc" data-i18n="d_pace_calculator">Convert between pace, speed, time, and distance for running or walking.</p>
-          <div class="tool-badge" data-i18n="b_pace_calculator">Free · Fitness</div>
-        </div>
-      </a>
-      <a class="tool-card" data-i18n-search="t_mortgage_calculator d_mortgage_calculator b_mortgage_calculator" href="mortgage-calculator.html" data-search="mortgage calculator estimate monthly mortgage payment, total interest, and amortization. free · finance">
-        <div class="tool-icon-wrap"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M3 20h18M5 20V10l7-5 7 5v10"/><path d="M10 20v-5h4v5"/></svg></div>
-        <div class="tool-body">
-          <div class="tool-name-row">
-            <div class="tool-name" data-i18n="t_mortgage_calculator">Mortgage Calculator</div>
-            <div class="tool-cta">Open <span>→</span></div>
-          </div>
-          <p class="tool-desc" data-i18n="d_mortgage_calculator">Estimate monthly mortgage payment, total interest, and amortization.</p>
-          <div class="tool-badge" data-i18n="b_mortgage_calculator">Free · Finance</div>
-        </div>
-      </a>
-      <a class="tool-card" data-i18n-search="t_loan_calculator d_loan_calculator b_loan_calculator" href="loan-calculator.html" data-search="loan calculator general loan payment calculator for any principal, rate, and term. free · finance">
-        <div class="tool-icon-wrap"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="7" width="18" height="12" rx="2"/><path d="M3 11h18M7 15h4"/></svg></div>
-        <div class="tool-body">
-          <div class="tool-name-row">
-            <div class="tool-name" data-i18n="t_loan_calculator">Loan Calculator</div>
-            <div class="tool-cta">Open <span>→</span></div>
-          </div>
-          <p class="tool-desc" data-i18n="d_loan_calculator">General loan payment calculator for any principal, rate, and term.</p>
-          <div class="tool-badge" data-i18n="b_loan_calculator">Free · Finance</div>
-        </div>
-      </a>
-      <a class="tool-card" data-i18n-search="t_auto_loan_calculator d_auto_loan_calculator b_auto_loan_calculator" href="auto-loan-calculator.html" data-search="auto loan calculator estimate car loan payments including trade-in and down payment. free · finance">
-        <div class="tool-icon-wrap"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M4 16h16v3H4zM6 16l2-6h8l2 6"/><circle cx="7.5" cy="19" r="1.5"/><circle cx="16.5" cy="19" r="1.5"/></svg></div>
-        <div class="tool-body">
-          <div class="tool-name-row">
-            <div class="tool-name" data-i18n="t_auto_loan_calculator">Auto Loan Calculator</div>
-            <div class="tool-cta">Open <span>→</span></div>
-          </div>
-          <p class="tool-desc" data-i18n="d_auto_loan_calculator">Estimate car loan payments including trade-in and down payment.</p>
-          <div class="tool-badge" data-i18n="b_auto_loan_calculator">Free · Finance</div>
-        </div>
-      </a>
-      <a class="tool-card" data-i18n-search="t_interest_calculator d_interest_calculator b_interest_calculator" href="interest-calculator.html" data-search="interest calculator simple and compound interest calculator for any principal and rate. free · finance">
-        <div class="tool-icon-wrap"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M6 6l12 12M9 6h.01M15 18h.01"/></svg></div>
-        <div class="tool-body">
-          <div class="tool-name-row">
-            <div class="tool-name" data-i18n="t_interest_calculator">Interest Calculator</div>
-            <div class="tool-cta">Open <span>→</span></div>
-          </div>
-          <p class="tool-desc" data-i18n="d_interest_calculator">Simple and compound interest calculator for any principal and rate.</p>
-          <div class="tool-badge" data-i18n="b_interest_calculator">Free · Finance</div>
-        </div>
-      </a>
-      <a class="tool-card" data-i18n-search="t_payment_calculator d_payment_calculator b_payment_calculator" href="payment-calculator.html" data-search="payment calculator find the payment amount needed to pay off a balance in a set time. free · finance">
-        <div class="tool-icon-wrap"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h16v12H4z"/><path d="M4 10h16M8 14h4"/></svg></div>
-        <div class="tool-body">
-          <div class="tool-name-row">
-            <div class="tool-name" data-i18n="t_payment_calculator">Payment Calculator</div>
-            <div class="tool-cta">Open <span>→</span></div>
-          </div>
-          <p class="tool-desc" data-i18n="d_payment_calculator">Find the payment amount needed to pay off a balance in a set time.</p>
-          <div class="tool-badge" data-i18n="b_payment_calculator">Free · Finance</div>
-        </div>
-      </a>
-      <a class="tool-card" data-i18n-search="t_retirement_calculator d_retirement_calculator b_retirement_calculator" href="retirement-calculator.html" data-search="retirement calculator project retirement savings with contributions and compound growth. free · finance">
-        <div class="tool-icon-wrap"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="3"/><path d="M5 20c1.5-4 4-6 7-6s5.5 2 7 6"/></svg></div>
-        <div class="tool-body">
-          <div class="tool-name-row">
-            <div class="tool-name" data-i18n="t_retirement_calculator">Retirement Calculator</div>
-            <div class="tool-cta">Open <span>→</span></div>
-          </div>
-          <p class="tool-desc" data-i18n="d_retirement_calculator">Project retirement savings with contributions and compound growth.</p>
-          <div class="tool-badge" data-i18n="b_retirement_calculator">Free · Finance</div>
-        </div>
-      </a>
-      <a class="tool-card" data-i18n-search="t_amortization_calculator d_amortization_calculator b_amortization_calculator" href="amortization-calculator.html" data-search="amortization calculator full amortization schedule with principal and interest breakdown. free · finance">
-        <div class="tool-icon-wrap"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V6M4 20h16"/><path d="M8 16v4M12 12v8M16 8v12"/></svg></div>
-        <div class="tool-body">
-          <div class="tool-name-row">
-            <div class="tool-name" data-i18n="t_amortization_calculator">Amortization Calculator</div>
-            <div class="tool-cta">Open <span>→</span></div>
-          </div>
-          <p class="tool-desc" data-i18n="d_amortization_calculator">Full amortization schedule with principal and interest breakdown.</p>
-          <div class="tool-badge" data-i18n="b_amortization_calculator">Free · Finance</div>
-        </div>
-      </a>
-      <a class="tool-card" data-i18n-search="t_investment_calculator d_investment_calculator b_investment_calculator" href="investment-calculator.html" data-search="investment calculator project investment growth with regular contributions and returns. free · finance">
-        <div class="tool-icon-wrap"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M4 18l5-5 4 3 7-9"/><path d="M15 7h5v5"/></svg></div>
-        <div class="tool-body">
-          <div class="tool-name-row">
-            <div class="tool-name" data-i18n="t_investment_calculator">Investment Calculator</div>
-            <div class="tool-cta">Open <span>→</span></div>
-          </div>
-          <p class="tool-desc" data-i18n="d_investment_calculator">Project investment growth with regular contributions and returns.</p>
-          <div class="tool-badge" data-i18n="b_investment_calculator">Free · Finance</div>
-        </div>
-      </a>
-      <a class="tool-card" data-i18n-search="t_inflation_calculator d_inflation_calculator b_inflation_calculator" href="inflation-calculator.html" data-search="inflation calculator see how inflation erodes purchasing power over time. free · finance">
-        <div class="tool-icon-wrap"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8h4v12H4zM10 12h4v8h-4zM16 5h4v15h-4z"/></svg></div>
-        <div class="tool-body">
-          <div class="tool-name-row">
-            <div class="tool-name" data-i18n="t_inflation_calculator">Inflation Calculator</div>
-            <div class="tool-cta">Open <span>→</span></div>
-          </div>
-          <p class="tool-desc" data-i18n="d_inflation_calculator">See how inflation erodes purchasing power over time.</p>
-          <div class="tool-badge" data-i18n="b_inflation_calculator">Free · Finance</div>
-        </div>
-      </a>
-      <a class="tool-card" data-i18n-search="t_finance_calculator d_finance_calculator b_finance_calculator" href="finance-calculator.html" data-search="finance calculator time-value of money: solve for pv, fv, pmt, rate, or periods. free · finance">
-        <div class="tool-icon-wrap"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v18M8 8h6a3 3 0 010 6H9a3 3 0 000 6h7"/></svg></div>
-        <div class="tool-body">
-          <div class="tool-name-row">
-            <div class="tool-name" data-i18n="t_finance_calculator">Finance Calculator</div>
-            <div class="tool-cta">Open <span>→</span></div>
-          </div>
-          <p class="tool-desc" data-i18n="d_finance_calculator">Time-value of money: solve for PV, FV, PMT, rate, or periods.</p>
-          <div class="tool-badge" data-i18n="b_finance_calculator">Free · Finance</div>
-        </div>
-      </a>
-      <a class="tool-card" data-i18n-search="t_income_tax_calculator d_income_tax_calculator b_income_tax_calculator" href="income-tax-calculator.html" data-search="income tax calculator estimate us federal income tax using simplified 2024 brackets (single). free · finance">
-        <div class="tool-icon-wrap"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3l7 7-9 9H5v-7l9-9z"/></svg></div>
-        <div class="tool-body">
-          <div class="tool-name-row">
-            <div class="tool-name" data-i18n="t_income_tax_calculator">Income Tax Calculator</div>
-            <div class="tool-cta">Open <span>→</span></div>
-          </div>
-          <p class="tool-desc" data-i18n="d_income_tax_calculator">Estimate US federal income tax using simplified 2024 brackets (single).</p>
-          <div class="tool-badge" data-i18n="b_income_tax_calculator">Free · Finance</div>
-        </div>
-      </a>
-      <a class="tool-card" data-i18n-search="t_compound_interest_calculator d_compound_interest_calculator b_compound_interest_calculator" href="compound-interest-calculator.html" data-search="compound interest calculator detailed compound interest with starting balance and contributions. free · finance">
-        <div class="tool-icon-wrap"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17c4-2 6-6 6-10 2 4 5 7 9 8"/></svg></div>
-        <div class="tool-body">
-          <div class="tool-name-row">
-            <div class="tool-name" data-i18n="t_compound_interest_calculator">Compound Interest Calculator</div>
-            <div class="tool-cta">Open <span>→</span></div>
-          </div>
-          <p class="tool-desc" data-i18n="d_compound_interest_calculator">Detailed compound interest with starting balance and contributions.</p>
-          <div class="tool-badge" data-i18n="b_compound_interest_calculator">Free · Finance</div>
-        </div>
-      </a>
-      <a class="tool-card" data-i18n-search="t_salary_calculator d_salary_calculator b_salary_calculator" href="salary-calculator.html" data-search="salary calculator convert salary between hourly, monthly, and annual figures. free · finance">
-        <div class="tool-icon-wrap"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="3" width="12" height="18" rx="2"/><path d="M10 8h4M10 12h4M10 16h2"/></svg></div>
-        <div class="tool-body">
-          <div class="tool-name-row">
-            <div class="tool-name" data-i18n="t_salary_calculator">Salary Calculator</div>
-            <div class="tool-cta">Open <span>→</span></div>
-          </div>
-          <p class="tool-desc" data-i18n="d_salary_calculator">Convert salary between hourly, monthly, and annual figures.</p>
-          <div class="tool-badge" data-i18n="b_salary_calculator">Free · Finance</div>
-        </div>
-      </a>
-      <a class="tool-card" data-i18n-search="t_interest_rate_calculator d_interest_rate_calculator b_interest_rate_calculator" href="interest-rate-calculator.html" data-search="interest rate calculator solve for interest rate given principal, payment, and term. free · finance">
-        <div class="tool-icon-wrap"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M5 19l7-14 3 6 4-3"/></svg></div>
-        <div class="tool-body">
-          <div class="tool-name-row">
-            <div class="tool-name" data-i18n="t_interest_rate_calculator">Interest Rate Calculator</div>
-            <div class="tool-cta">Open <span>→</span></div>
-          </div>
-          <p class="tool-desc" data-i18n="d_interest_rate_calculator">Solve for interest rate given principal, payment, and term.</p>
-          <div class="tool-badge" data-i18n="b_interest_rate_calculator">Free · Finance</div>
-        </div>
-      </a>
-      <a class="tool-card" data-i18n-search="t_sales_tax_calculator d_sales_tax_calculator b_sales_tax_calculator" href="sales-tax-calculator.html" data-search="sales tax calculator add or remove sales tax from a price with any tax rate. free · finance">
-        <div class="tool-icon-wrap"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9h12l-1 10H7L6 9z"/><path d="M9 9V7a3 3 0 016 0v2"/></svg></div>
-        <div class="tool-body">
-          <div class="tool-name-row">
-            <div class="tool-name" data-i18n="t_sales_tax_calculator">Sales Tax Calculator</div>
-            <div class="tool-cta">Open <span>→</span></div>
-          </div>
-          <p class="tool-desc" data-i18n="d_sales_tax_calculator">Add or remove sales tax from a price with any tax rate.</p>
-          <div class="tool-badge" data-i18n="b_sales_tax_calculator">Free · Finance</div>
-        </div>
-      </a>
-      <a class="tool-card" data-i18n-search="t_stopwatch d_stopwatch b_stopwatch" href="stopwatch.html" data-search="stopwatch advanced stopwatch with laps, splits, and precise timing. free · time">
-        <div class="tool-icon-wrap"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l3 2M10 3h4M12 3v2"/></svg></div>
-        <div class="tool-body">
-          <div class="tool-name-row">
-            <div class="tool-name" data-i18n="t_stopwatch">Stopwatch</div>
-            <div class="tool-cta">Open <span>→</span></div>
-          </div>
-          <p class="tool-desc" data-i18n="d_stopwatch">Advanced stopwatch with laps, splits, and precise timing.</p>
-          <div class="tool-badge" data-i18n="b_stopwatch">Free · Time</div>
-        </div>
-      </a>
-      <a class="tool-card" data-i18n-search="t_timer d_timer b_timer" href="timer.html" data-search="timer countdown timer with presets, alerts, and custom durations. free · time">
-        <div class="tool-icon-wrap"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="13" r="8"/><path d="M12 9v4M9 3h6"/></svg></div>
-        <div class="tool-body">
-          <div class="tool-name-row">
-            <div class="tool-name" data-i18n="t_timer">Timer</div>
-            <div class="tool-cta">Open <span>→</span></div>
-          </div>
-          <p class="tool-desc" data-i18n="d_timer">Countdown timer with presets, alerts, and custom durations.</p>
-          <div class="tool-badge" data-i18n="b_timer">Free · Time</div>
-        </div>
-      </a>
-    
-      <a class="tool-card" data-i18n-search="t_character_counter d_character_counter b_character_counter" href="character-counter.html" data-search="character counter words chars sentences paragraphs reading time free · writing">
-        <div class="tool-icon-wrap"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M4 12h10M4 17h7"/><path d="M18 12v8M15 17h6"/></svg></div>
-        <div class="tool-body">
-          <div class="tool-name-row">
-            <div class="tool-name" data-i18n="t_character_counter">Character Counter</div>
-            <div class="tool-cta">Open <span>→</span></div>
-          </div>
-          <p class="tool-desc" data-i18n="d_character_counter">Count characters, words, sentences, paragraphs, and reading time as you type.</p>
-          <div class="tool-badge" data-i18n="b_character_counter">Free · Writing</div>
-        </div>
-      </a>
     </div>
-    
-      <a class="tool-card" href="due-date-calculator.html" data-search="due date calculator pregnancy due date last menstrual period" data-i18n-search="t_due d_due b_health">
-        <div class="tool-icon-wrap"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="5" width="16" height="16" rx="2"/><path d="M8 3v4M16 3v4M4 11h16"/></svg></div>
-        <div class="tool-body">
-          <div class="tool-name-row">
-            <div class="tool-name" data-i18n="t_due">Due Date Calculator</div>
-            <div class="tool-cta">Open <span>→</span></div>
-          </div>
-          <p class="tool-desc" data-i18n="d_due">Calculate pregnancy due date from last menstrual period (Naegele’s rule).</p>
-          <div class="tool-badge" data-i18n="b_health">Free · Health</div>
-        </div>
-      </a>
-    <div class="empty" id="empty"><span data-i18n="no_match">No tools match your search.</span></div>
-  </div>
-  <footer><a href="index.html">WebGadgets</a> · Free tools, no ads</footer>
-  <script>
-  const q=document.getElementById('q'), grid=document.getElementById('grid'), empty=document.getElementById('empty'), shown=document.getElementById('shown');
-  const cards=[...grid.querySelectorAll('.tool-card')];
-  q.addEventListener('input',()=>{
-    const s=q.value.trim().toLowerCase();
-    let n=0;
-    cards.forEach(c=>{
-      const ok=!s||c.dataset.search.includes(s);
-      c.classList.toggle('hidden',!ok);
-      if(ok) n++;
-    });
-    shown.textContent=n;
-    empty.style.display=n?'none':'block';
-  });
-  </script>
+  </section>
 
+  <footer>
+    <div class="donate-wrap">
+      <p class="donate-msg"><span data-i18n="donate_msg">These tools are free, with no ads and no sign-up. If they saved you time, a small donation helps keep them running.</span></p>
+      <a href="https://www.paypal.com/ncp/payment/L4DQ6J2JUJ8FC" target="_blank" rel="noopener" class="donate-btn">
+        <span data-i18n="donate">Donate</span>
+      </a>
+      <p class="donate-note"><span data-i18n="donate_note">Secure · No account needed</span></p>
+    </div>
+  </footer>
 <script>
 (function(){
   const T = {"en": {"nav_tools": "Tools", "nav_contact": "Contact", "hero_badge": "Free online tools", "hero_title": "Useful little <span class=\"accent\">gadgets</span> for the web.", "hero_sub": "A small collection of free, no-fuss tools built for everyday tasks. No sign-up. No ads. Just tools that work.", "feat_fast_t": "Fast conversion", "feat_fast_d": "Quick processing", "feat_priv_t": "Private by design", "feat_priv_d": "Handled securely", "feat_lim_t": "No limits games", "feat_lim_d": "Generous free tier", "feat_acc_t": "No account needed", "feat_acc_d": "Drop a file and go", "section_tools": "Tools", "view_all": "View all", "open": "Open", "donate_msg": "These tools are free, with no ads and no sign-up. If they saved you time, a small donation helps keep them running.", "donate": "Donate", "donate_note": "Secure · No account needed", "catalog": "Catalog", "all_tools": "All tools", "catalog_sub": "Search and open any free gadget — converters, calculators, timers, and more.", "search_ph": "Search tools…", "tools_count": "tools", "no_match": "No tools match your search.", "footer": "Free tools, no ads", "t_index": "ConvertFlow", "d_index": "Convert files between 900+ formats — images, video, audio, documents, archives, ebooks, and more. Up to 2 GB.", "b_index": "Free · 900+ formats", "t_calculator": "Calculator", "d_calculator": "Scientific calculator with every function you need — trig, logs, powers, roots, constants, memory, and more.", "b_calculator": "Free · Scientific", "t_number_converter": "Number Converter", "d_number_converter": "Convert between binary, octal, decimal, hexadecimal, and more number systems instantly.", "b_number_converter": "Free · Bases", "t_age_converter": "Age Converter", "d_age_converter": "Calculate exact age in years, months, days, hours, and minutes from any birth date.", "b_age_converter": "Free · Exact age", "t_distance_converter": "Distance Converter", "d_distance_converter": "Convert miles, kilometers, meters, feet, yards, inches, nautical miles, and more.", "b_distance_converter": "Free · Length", "t_weight_converter": "Weight Converter", "d_weight_converter": "Convert kilograms, pounds, ounces, grams, stones, tons, and more mass units.", "b_weight_converter": "Free · Mass", "t_gpa_calculator": "GPA Calculator", "d_gpa_calculator": "Calculate GPA from course grades and credit hours. Supports 4.0 scale.", "b_gpa_calculator": "Free · Academic", "t_grade_calculator": "Grade Calculator", "d_grade_calculator": "Find the score you need on a final exam to hit your target grade.", "b_grade_calculator": "Free · Academic", "t_concrete_calculator": "Concrete Calculator", "d_concrete_calculator": "Estimate concrete volume for slabs, footings, and columns in yd³ or m³.", "b_concrete_calculator": "Free · Construction", "t_subnet_calculator": "Subnet Calculator", "d_subnet_calculator": "Calculate network address, broadcast, mask, and host range from IP/CIDR.", "b_subnet_calculator": "Free · Network", "t_password_generator": "Password Generator", "d_password_generator": "Generate strong random passwords with custom length and character sets.", "b_password_generator": "Free · Security", "t_bmi_calculator": "BMI Calculator", "d_bmi_calculator": "Calculate Body Mass Index from height and weight with category.", "b_bmi_calculator": "Free · Health", "t_calorie_calculator": "Calorie Calculator", "d_calorie_calculator": "Estimate daily calorie needs using the Mifflin-St Jeor formula.", "b_calorie_calculator": "Free · Health", "t_body_fat_calculator": "Body Fat Calculator", "d_body_fat_calculator": "Estimate body fat percentage using the U.S. Navy method.", "b_body_fat_calculator": "Free · Health", "t_bmr_calculator": "BMR Calculator", "d_bmr_calculator": "Calculate Basal Metabolic Rate with Mifflin-St Jeor or Harris-Benedict.", "b_bmr_calculator": "Free · Health", "t_ideal_weight_calculator": "Ideal Weight Calculator", "d_ideal_weight_calculator": "Estimate ideal body weight using multiple formulas (Devine, Robinson, Miller).", "b_ideal_weight_calculator": "Free · Health", "t_pace_calculator": "Pace Calculator", "d_pace_calculator": "Convert between pace, speed, time, and distance for running or walking.", "b_pace_calculator": "Free · Fitness", "t_mortgage_calculator": "Mortgage Calculator", "d_mortgage_calculator": "Estimate monthly mortgage payment, total interest, and amortization.", "b_mortgage_calculator": "Free · Finance", "t_loan_calculator": "Loan Calculator", "d_loan_calculator": "General loan payment calculator for any principal, rate, and term.", "b_loan_calculator": "Free · Finance", "t_auto_loan_calculator": "Auto Loan Calculator", "d_auto_loan_calculator": "Estimate car loan payments including trade-in and down payment.", "b_auto_loan_calculator": "Free · Finance", "t_interest_calculator": "Interest Calculator", "d_interest_calculator": "Simple and compound interest calculator for any principal and rate.", "b_interest_calculator": "Free · Finance", "t_payment_calculator": "Payment Calculator", "d_payment_calculator": "Find the payment amount needed to pay off a balance in a set time.", "b_payment_calculator": "Free · Finance", "t_retirement_calculator": "Retirement Calculator", "d_retirement_calculator": "Project retirement savings with contributions and compound growth.", "b_retirement_calculator": "Free · Finance", "t_amortization_calculator": "Amortization Calculator", "d_amortization_calculator": "Full amortization schedule with principal and interest breakdown.", "b_amortization_calculator": "Free · Finance", "t_investment_calculator": "Investment Calculator", "d_investment_calculator": "Project investment growth with regular contributions and returns.", "b_investment_calculator": "Free · Finance", "t_inflation_calculator": "Inflation Calculator", "d_inflation_calculator": "See how inflation erodes purchasing power over time.", "b_inflation_calculator": "Free · Finance", "t_finance_calculator": "Finance Calculator", "d_finance_calculator": "Time-value of money: solve for PV, FV, PMT, rate, or periods.", "b_finance_calculator": "Free · Finance", "t_income_tax_calculator": "Income Tax Calculator", "d_income_tax_calculator": "Estimate US federal income tax using simplified 2024 brackets (single).", "b_income_tax_calculator": "Free · Finance", "t_compound_interest_calculator": "Compound Interest Calculator", "d_compound_interest_calculator": "Detailed compound interest with starting balance and contributions.", "b_compound_interest_calculator": "Free · Finance", "t_salary_calculator": "Salary Calculator", "d_salary_calculator": "Convert salary between hourly, monthly, and annual figures.", "b_salary_calculator": "Free · Finance", "t_interest_rate_calculator": "Interest Rate Calculator", "d_interest_rate_calculator": "Solve for interest rate given principal, payment, and term.", "b_interest_rate_calculator": "Free · Finance", "t_sales_tax_calculator": "Sales Tax Calculator", "d_sales_tax_calculator": "Add or remove sales tax from a price with any tax rate.", "b_sales_tax_calculator": "Free · Finance", "t_stopwatch": "Stopwatch", "d_stopwatch": "Advanced stopwatch with laps, splits, and precise timing.", "b_stopwatch": "Free · Time", "t_timer": "Timer", "d_timer": "Countdown timer with presets, alerts, and custom durations.", "b_timer": "Free · Time", "t_character_counter": "Character Counter", "d_character_counter": "Count characters, words, sentences, paragraphs, and reading time as you type.", "b_character_counter": "Free · Writing", "t_due_date_calculator": "Due Date Calculator", "d_due_date_calculator": "Calculate pregnancy due date from last menstrual period (Naegele’s rule).", "b_due_date_calculator": "Free · Health"}, "es": {"nav_tools": "Herramientas", "nav_contact": "Contacto", "hero_badge": "Herramientas gratis en línea", "hero_title": "Pequeños <span class=\"accent\">gadgets</span> útiles para la web.", "hero_sub": "Una colección de herramientas gratis y sencillas para el día a día. Sin registro. Sin anuncios. Solo herramientas que funcionan.", "feat_fast_t": "Conversión rápida", "feat_fast_d": "Procesamiento ágil", "feat_priv_t": "Privacidad primero", "feat_priv_d": "Manejo seguro", "feat_lim_t": "Sin trucos de límites", "feat_lim_d": "Plan gratuito generoso", "feat_acc_t": "Sin cuenta", "feat_acc_d": "Úsalo al instante", "section_tools": "Herramientas", "view_all": "Ver todas", "open": "Abrir", "donate_msg": "Estas herramientas son gratis, sin anuncios ni registro. Si te ahorraron tiempo, una donación ayuda a mantenerlas.", "donate": "Donar", "donate_note": "Seguro · Sin cuenta", "catalog": "Catálogo", "all_tools": "Todas las herramientas", "catalog_sub": "Busca y abre cualquier gadget gratis — conversores, calculadoras, temporizadores y más.", "search_ph": "Buscar herramientas…", "tools_count": "herramientas", "no_match": "Ninguna herramienta coincide con tu búsqueda.", "footer": "Herramientas gratis, sin anuncios", "t_index": "ConvertFlow", "d_index": "Convert files between 900+ formats — images, video, audio, documents, archives, ebooks, and more. Up to 2 GB.", "b_index": "Gratis · 900+ formatos", "t_calculator": "Calculadora", "d_calculator": "Calculadora científica con trigonométricas, logaritmos, potencias, raíces, constantes y memoria.", "b_calculator": "Gratis · Científica", "t_number_converter": "Conversor de números", "d_number_converter": "Convierte entre binario, octal, decimal, hexadecimal y más sistemas numéricos.", "b_number_converter": "Gratis · Bases", "t_age_converter": "Conversor de edad", "d_age_converter": "Calcula la edad exacta en años, meses, días, horas y minutos desde una fecha de nacimiento.", "b_age_converter": "Gratis · Edad exacta", "t_distance_converter": "Conversor de distancia", "d_distance_converter": "Convierte millas, kilómetros, metros, pies, yardas, pulgadas y más.", "b_distance_converter": "Gratis · Longitud", "t_weight_converter": "Conversor de peso", "d_weight_converter": "Convierte kilogramos, libras, onzas, gramos, piedras, toneladas y más.", "b_weight_converter": "Gratis · Masa", "t_gpa_calculator": "Calculadora de GPA", "d_gpa_calculator": "Calcula el GPA a partir de calificaciones y créditos. Escala 4.0.", "b_gpa_calculator": "Gratis · Académico", "t_grade_calculator": "Calculadora de notas", "d_grade_calculator": "Descubre qué nota necesitas en el examen final para alcanzar tu objetivo.", "b_grade_calculator": "Gratis · Académico", "t_concrete_calculator": "Calculadora de concreto", "d_concrete_calculator": "Estima el volumen de concreto para losas y columnas en yd³ o m³.", "b_concrete_calculator": "Gratis · Construcción", "t_subnet_calculator": "Calculadora de subred", "d_subnet_calculator": "Calcula red, broadcast, máscara y rango de hosts desde IP/CIDR.", "b_subnet_calculator": "Gratis · Red", "t_password_generator": "Generador de contraseñas", "d_password_generator": "Genera contraseñas seguras con longitud y conjuntos de caracteres personalizados.", "b_password_generator": "Gratis · Seguridad", "t_bmi_calculator": "Calculadora de IMC", "d_bmi_calculator": "Calcula el índice de masa corporal a partir de altura y peso.", "b_bmi_calculator": "Gratis · Salud", "t_calorie_calculator": "Calculadora de calorías", "d_calorie_calculator": "Estima las calorías diarias con la fórmula Mifflin-St Jeor.", "b_calorie_calculator": "Gratis · Salud", "t_body_fat_calculator": "Calculadora de grasa corporal", "d_body_fat_calculator": "Estima el porcentaje de grasa corporal (método U.S. Navy).", "b_body_fat_calculator": "Gratis · Salud", "t_bmr_calculator": "Calculadora de TMB", "d_bmr_calculator": "Calcula la tasa metabólica basal (Mifflin-St Jeor o Harris-Benedict).", "b_bmr_calculator": "Gratis · Salud", "t_ideal_weight_calculator": "Peso ideal", "d_ideal_weight_calculator": "Estima el peso ideal con varias fórmulas médicas.", "b_ideal_weight_calculator": "Gratis · Salud", "t_pace_calculator": "Calculadora de ritmo", "d_pace_calculator": "Convierte entre ritmo, velocidad, tiempo y distancia.", "b_pace_calculator": "Gratis · Fitness", "t_mortgage_calculator": "Calculadora hipotecaria", "d_mortgage_calculator": "Estima la cuota mensual de la hipoteca y el interés total.", "b_mortgage_calculator": "Gratis · Finanzas", "t_loan_calculator": "Calculadora de préstamos", "d_loan_calculator": "Calcula la cuota de cualquier préstamo según capital, tasa y plazo.", "b_loan_calculator": "Gratis · Finanzas", "t_auto_loan_calculator": "Préstamo de auto", "d_auto_loan_calculator": "Estima cuotas de auto con entrada y trade-in.", "b_auto_loan_calculator": "Gratis · Finanzas", "t_interest_calculator": "Calculadora de interés", "d_interest_calculator": "Interés simple y compuesto para cualquier capital y tasa.", "b_interest_calculator": "Gratis · Finanzas", "t_payment_calculator": "Calculadora de pagos", "d_payment_calculator": "Cuánto pagar cada período para liquidar un saldo.", "b_payment_calculator": "Gratis · Finanzas", "t_retirement_calculator": "Calculadora de jubilación", "d_retirement_calculator": "Proyecta el ahorro para la jubilación con aportes y crecimiento.", "b_retirement_calculator": "Gratis · Finanzas", "t_amortization_calculator": "Amortización", "d_amortization_calculator": "Tabla de amortización con capital e interés.", "b_amortization_calculator": "Gratis · Finanzas", "t_investment_calculator": "Calculadora de inversión", "d_investment_calculator": "Proyecta el crecimiento de inversiones con aportes regulares.", "b_investment_calculator": "Gratis · Finanzas", "t_inflation_calculator": "Calculadora de inflación", "d_inflation_calculator": "Cómo la inflación reduce el poder adquisitivo con el tiempo.", "b_inflation_calculator": "Gratis · Finanzas", "t_finance_calculator": "Calculadora financiera", "d_finance_calculator": "Valor del dinero en el tiempo: PV, FV, PMT, tasa o períodos.", "b_finance_calculator": "Gratis · Finanzas", "t_income_tax_calculator": "Impuesto sobre la renta", "d_income_tax_calculator": "Estimación simplificada del impuesto federal (EE.UU., soltero).", "b_income_tax_calculator": "Gratis · Finanzas", "t_compound_interest_calculator": "Interés compuesto", "d_compound_interest_calculator": "Interés compuesto con saldo inicial y aportes.", "b_compound_interest_calculator": "Gratis · Finanzas", "t_salary_calculator": "Calculadora de salario", "d_salary_calculator": "Convierte salario entre hora, mes y año.", "b_salary_calculator": "Gratis · Finanzas", "t_interest_rate_calculator": "Tasa de interés", "d_interest_rate_calculator": "Resuelve la tasa dados capital, cuota y plazo.", "b_interest_rate_calculator": "Gratis · Finanzas", "t_sales_tax_calculator": "Impuesto de ventas", "d_sales_tax_calculator": "Añade o quita el impuesto de ventas a un precio.", "b_sales_tax_calculator": "Gratis · Finanzas", "t_stopwatch": "Cronómetro", "d_stopwatch": "Cronómetro avanzado con vueltas y tiempos parciales.", "b_stopwatch": "Gratis · Tiempo", "t_timer": "Temporizador", "d_timer": "Cuenta atrás con preajustes y alerta.", "b_timer": "Gratis · Tiempo", "t_character_counter": "Contador de caracteres", "d_character_counter": "Cuenta caracteres, palabras, oraciones, párrafos y tiempo de lectura.", "b_character_counter": "Gratis · Escritura", "t_due_date_calculator": "Fecha de parto", "d_due_date_calculator": "Calcula la fecha probable de parto a partir de la última menstruación.", "b_due_date_calculator": "Gratis · Salud", "d_convertflow": "Convierte archivos entre más de 900 formatos: imágenes, video, audio, documentos y más. Hasta 2 GB.", "t_convertflow": "ConvertFlow"}, "fr": {"nav_tools": "Outils", "nav_contact": "Contact", "hero_badge": "Outils gratuits en ligne", "hero_title": "De petits <span class=\"accent\">gadgets</span> utiles pour le web.", "hero_sub": "Une collection d'outils gratuits et simples pour le quotidien. Sans inscription. Sans pubs. Juste des outils qui marchent.", "feat_fast_t": "Conversion rapide", "feat_fast_d": "Traitement rapide", "feat_priv_t": "Privé par conception", "feat_priv_d": "Traitement sécurisé", "feat_lim_t": "Sans jeux de limites", "feat_lim_d": "Offre gratuite généreuse", "feat_acc_t": "Sans compte", "feat_acc_d": "Utilisez tout de suite", "section_tools": "Outils", "view_all": "Tout voir", "open": "Ouvrir", "donate_msg": "Ces outils sont gratuits, sans pubs ni inscription. S'ils vous ont fait gagner du temps, un don aide à les maintenir.", "donate": "Faire un don", "donate_note": "Sécurisé · Sans compte", "catalog": "Catalogue", "all_tools": "Tous les outils", "catalog_sub": "Recherchez et ouvrez n'importe quel gadget gratuit — convertisseurs, calculateurs, minuteries et plus.", "search_ph": "Rechercher des outils…", "tools_count": "outils", "no_match": "Aucun outil ne correspond à votre recherche.", "footer": "Outils gratuits, sans pubs", "t_index": "ConvertFlow", "d_index": "Convert files between 900+ formats — images, video, audio, documents, archives, ebooks, and more. Up to 2 GB.", "b_index": "Gratuit · 900+ formats", "t_calculator": "Calculatrice", "d_calculator": "Calculatrice scientifique : trigonométrie, logs, puissances, racines, constantes et mémoire.", "b_calculator": "Gratuit · Scientifique", "t_number_converter": "Convertisseur de nombres", "d_number_converter": "Convertissez entre binaire, octal, décimal, hexadécimal et d’autres bases.", "b_number_converter": "Gratuit · Bases", "t_age_converter": "Convertisseur d'âge", "d_age_converter": "Âge exact en années, mois, jours, heures et minutes à partir d’une date de naissance.", "b_age_converter": "Gratuit · Âge exact", "t_distance_converter": "Convertisseur de distance", "d_distance_converter": "Convertissez miles, kilomètres, mètres, pieds, yards, pouces et plus.", "b_distance_converter": "Gratuit · Longueur", "t_weight_converter": "Convertisseur de poids", "d_weight_converter": "Convertissez kilogrammes, livres, onces, grammes, stones, tonnes et plus.", "b_weight_converter": "Gratuit · Masse", "t_gpa_calculator": "Calculateur de GPA", "d_gpa_calculator": "Calculez le GPA à partir des notes et crédits. Échelle 4.0.", "b_gpa_calculator": "Gratuit · Scolaire", "t_grade_calculator": "Calculateur de notes", "d_grade_calculator": "Note requise à l’examen final pour atteindre votre objectif.", "b_grade_calculator": "Gratuit · Scolaire", "t_concrete_calculator": "Calculateur de béton", "d_concrete_calculator": "Volume de béton pour dalles et colonnes en yd³ ou m³.", "b_concrete_calculator": "Gratuit · Construction", "t_subnet_calculator": "Calculateur de sous-réseau", "d_subnet_calculator": "Adresse réseau, broadcast, masque et plage d’hôtes depuis IP/CIDR.", "b_subnet_calculator": "Gratuit · Réseau", "t_password_generator": "Générateur de mots de passe", "d_password_generator": "Mots de passe forts avec longueur et jeux de caractères personnalisés.", "b_password_generator": "Gratuit · Sécurité", "t_bmi_calculator": "Calculateur d'IMC", "d_bmi_calculator": "Indice de masse corporelle à partir de la taille et du poids.", "b_bmi_calculator": "Gratuit · Santé", "t_calorie_calculator": "Calculateur de calories", "d_calorie_calculator": "Besoins caloriques quotidiens (formule Mifflin-St Jeor).", "b_calorie_calculator": "Gratuit · Santé", "t_body_fat_calculator": "Graisse corporelle", "d_body_fat_calculator": "Pourcentage de graisse corporelle (méthode U.S. Navy).", "b_body_fat_calculator": "Gratuit · Santé", "t_bmr_calculator": "Calculateur de MB", "d_bmr_calculator": "Métabolisme de base (Mifflin-St Jeor ou Harris-Benedict).", "b_bmr_calculator": "Gratuit · Santé", "t_ideal_weight_calculator": "Poids idéal", "d_ideal_weight_calculator": "Poids idéal selon plusieurs formules médicales.", "b_ideal_weight_calculator": "Gratuit · Santé", "t_pace_calculator": "Calculateur d'allure", "d_pace_calculator": "Allure, vitesse, temps et distance pour la course ou la marche.", "b_pace_calculator": "Gratuit · Fitness", "t_mortgage_calculator": "Calculateur hypothécaire", "d_mortgage_calculator": "Mensualité hypothécaire, intérêts totaux et amortissement.", "b_mortgage_calculator": "Gratuit · Finance", "t_loan_calculator": "Calculateur de prêt", "d_loan_calculator": "Mensualité pour tout prêt selon capital, taux et durée.", "b_loan_calculator": "Gratuit · Finance", "t_auto_loan_calculator": "Prêt auto", "d_auto_loan_calculator": "Mensualités auto avec apport et reprise.", "b_auto_loan_calculator": "Gratuit · Finance", "t_interest_calculator": "Calculateur d'intérêts", "d_interest_calculator": "Intérêts simples et composés pour tout capital et taux.", "b_interest_calculator": "Gratuit · Finance", "t_payment_calculator": "Calculateur de paiements", "d_payment_calculator": "Paiement périodique pour rembourser un solde.", "b_payment_calculator": "Gratuit · Finance", "t_retirement_calculator": "Calculateur de retraite", "d_retirement_calculator": "Projection d’épargne retraite avec cotisations et croissance.", "b_retirement_calculator": "Gratuit · Finance", "t_amortization_calculator": "Amortissement", "d_amortization_calculator": "Tableau d’amortissement capital / intérêts.", "b_amortization_calculator": "Gratuit · Finance", "t_investment_calculator": "Investissement", "d_investment_calculator": "Croissance d’investissement avec versements réguliers.", "b_investment_calculator": "Gratuit · Finance", "t_inflation_calculator": "Inflation", "d_inflation_calculator": "Effet de l’inflation sur le pouvoir d’achat.", "b_inflation_calculator": "Gratuit · Finance", "t_finance_calculator": "Calculateur financier", "d_finance_calculator": "Valeur temps de l’argent : PV, FV, PMT, taux ou périodes.", "b_finance_calculator": "Gratuit · Finance", "t_income_tax_calculator": "Impôt sur le revenu", "d_income_tax_calculator": "Estimation simplifiée de l’impôt fédéral US (célibataire).", "b_income_tax_calculator": "Gratuit · Finance", "t_compound_interest_calculator": "Intérêts composés", "d_compound_interest_calculator": "Intérêts composés avec solde initial et versements.", "b_compound_interest_calculator": "Gratuit · Finance", "t_salary_calculator": "Calculateur de salaire", "d_salary_calculator": "Conversion salaire horaire, mensuel et annuel.", "b_salary_calculator": "Gratuit · Finance", "t_interest_rate_calculator": "Taux d'intérêt", "d_interest_rate_calculator": "Taux à partir du capital, de la mensualité et de la durée.", "b_interest_rate_calculator": "Gratuit · Finance", "t_sales_tax_calculator": "Taxe de vente", "d_sales_tax_calculator": "Ajouter ou retirer une taxe de vente à un prix.", "b_sales_tax_calculator": "Gratuit · Finance", "t_stopwatch": "Chronomètre", "d_stopwatch": "Chronomètre avancé avec tours et temps intermédiaires.", "b_stopwatch": "Gratuit · Temps", "t_timer": "Minuteur", "d_timer": "Compte à rebours avec préréglages et alerte.", "b_timer": "Gratuit · Temps", "t_character_counter": "Compteur de caractères", "d_character_counter": "Caractères, mots, phrases, paragraphes et temps de lecture.", "b_character_counter": "Gratuit · Écriture", "t_due_date_calculator": "Date d'accouchement", "d_due_date_calculator": "Date prévue d’accouchement à partir des dernières règles.", "b_due_date_calculator": "Gratuit · Santé", "t_convertflow": "ConvertFlow", "d_convertflow": "Convertissez des fichiers entre 900+ formats — images, vidéo, audio, documents et plus. Jusqu'à 2 Go."}, "de": {"nav_tools": "Tools", "nav_contact": "Kontakt", "hero_badge": "Kostenlose Online-Tools", "hero_title": "Nützliche kleine <span class=\"accent\">Gadgets</span> fürs Web.", "hero_sub": "Eine Sammlung kostenloser, unkomplizierter Tools für den Alltag. Keine Anmeldung. Keine Werbung. Einfach Tools, die funktionieren.", "feat_fast_t": "Schnelle Konvertierung", "feat_fast_d": "Schnelle Verarbeitung", "feat_priv_t": "Privat by Design", "feat_priv_d": "Sicher verarbeitet", "feat_lim_t": "Keine Limit-Tricks", "feat_lim_d": "Großzügiges Gratis-Angebot", "feat_acc_t": "Kein Konto nötig", "feat_acc_d": "Sofort loslegen", "section_tools": "Tools", "view_all": "Alle ansehen", "open": "Öffnen", "donate_msg": "Diese Tools sind kostenlos, ohne Werbung und ohne Anmeldung. Wenn sie dir Zeit gespart haben, hilft eine Spende.", "donate": "Spenden", "donate_note": "Sicher · Kein Konto nötig", "catalog": "Katalog", "all_tools": "Alle Tools", "catalog_sub": "Suche und öffne kostenlose Gadgets — Konverter, Rechner, Timer und mehr.", "search_ph": "Tools suchen…", "tools_count": "Tools", "no_match": "Keine Tools passen zu deiner Suche.", "footer": "Kostenlose Tools, keine Werbung", "t_index": "ConvertFlow", "d_index": "Convert files between 900+ formats — images, video, audio, documents, archives, ebooks, and more. Up to 2 GB.", "b_index": "Kostenlos · 900+ Formate", "t_calculator": "Taschenrechner", "d_calculator": "Wissenschaftlicher Taschenrechner mit Trig, Log, Potenzen, Wurzeln, Konstanten und Speicher.", "b_calculator": "Kostenlos · Wissenschaftlich", "t_number_converter": "Zahlenumrechner", "d_number_converter": "Umrechnung zwischen Binär, Oktal, Dezimal, Hexadezimal und weiteren Basen.", "b_number_converter": "Kostenlos · Basen", "t_age_converter": "Altersrechner", "d_age_converter": "Genaues Alter in Jahren, Monaten, Tagen, Stunden und Minuten ab Geburtstag.", "b_age_converter": "Kostenlos · Genaues Alter", "t_distance_converter": "Entfernungsumrechner", "d_distance_converter": "Meilen, Kilometer, Meter, Fuß, Yards, Zoll und mehr umrechnen.", "b_distance_converter": "Kostenlos · Länge", "t_weight_converter": "Gewichtsumrechner", "d_weight_converter": "Kilogramm, Pfund, Unzen, Gramm, Stone, Tonnen und mehr.", "b_weight_converter": "Kostenlos · Masse", "t_gpa_calculator": "GPA-Rechner", "d_gpa_calculator": "GPA aus Noten und Credits berechnen. 4.0-Skala.", "b_gpa_calculator": "Kostenlos · Schule", "t_grade_calculator": "Notenrechner", "d_grade_calculator": "Benötigte Abschlussklausur-Note für die Zielnote.", "b_grade_calculator": "Kostenlos · Schule", "t_concrete_calculator": "Betonrechner", "d_concrete_calculator": "Betonvolumen für Platten und Stützen in yd³ oder m³.", "b_concrete_calculator": "Kostenlos · Bau", "t_subnet_calculator": "Subnetzrechner", "d_subnet_calculator": "Netzwerk, Broadcast, Maske und Host-Bereich aus IP/CIDR.", "b_subnet_calculator": "Kostenlos · Netzwerk", "t_password_generator": "Passwort-Generator", "d_password_generator": "Starke Passwörter mit Länge und Zeichensätzen nach Wahl.", "b_password_generator": "Kostenlos · Sicherheit", "t_bmi_calculator": "BMI-Rechner", "d_bmi_calculator": "Body-Mass-Index aus Größe und Gewicht.", "b_bmi_calculator": "Kostenlos · Gesundheit", "t_calorie_calculator": "Kalorienrechner", "d_calorie_calculator": "Täglicher Kalorienbedarf (Mifflin-St Jeor).", "b_calorie_calculator": "Kostenlos · Gesundheit", "t_body_fat_calculator": "Körperfett-Rechner", "d_body_fat_calculator": "Körperfettanteil (U.S.-Navy-Methode).", "b_body_fat_calculator": "Kostenlos · Gesundheit", "t_bmr_calculator": "Grundumsatz-Rechner", "d_bmr_calculator": "Grundumsatz (Mifflin-St Jeor oder Harris-Benedict).", "b_bmr_calculator": "Kostenlos · Gesundheit", "t_ideal_weight_calculator": "Idealgewicht", "d_ideal_weight_calculator": "Idealgewicht nach mehreren Formeln.", "b_ideal_weight_calculator": "Kostenlos · Gesundheit", "t_pace_calculator": "Tempo-Rechner", "d_pace_calculator": "Tempo, Geschwindigkeit, Zeit und Distanz umrechnen.", "b_pace_calculator": "Kostenlos · Fitness", "t_mortgage_calculator": "Hypothekenrechner", "d_mortgage_calculator": "Monatliche Hypothekenrate und Gesamtzinsen.", "b_mortgage_calculator": "Kostenlos · Finanzen", "t_loan_calculator": "Kreditrechner", "d_loan_calculator": "Rate für jeden Kredit nach Betrag, Zins und Laufzeit.", "b_loan_calculator": "Kostenlos · Finanzen", "t_auto_loan_calculator": "Autokredit", "d_auto_loan_calculator": "Autokreditrate inkl. Anzahlung und Inzahlungnahme.", "b_auto_loan_calculator": "Kostenlos · Finanzen", "t_interest_calculator": "Zinsrechner", "d_interest_calculator": "Einfache und Zinseszinsen für Betrag und Zinssatz.", "b_interest_calculator": "Kostenlos · Finanzen", "t_payment_calculator": "Zahlungsrechner", "d_payment_calculator": "Rate zum Abbezahlen eines Saldos in gegebener Zeit.", "b_payment_calculator": "Kostenlos · Finanzen", "t_retirement_calculator": "Rentenrechner", "d_retirement_calculator": "Altersvorsorge mit Beiträgen und Wachstum.", "b_retirement_calculator": "Kostenlos · Finanzen", "t_amortization_calculator": "Tilgungsplan", "d_amortization_calculator": "Tilgungsplan mit Zins- und Tilgungsanteil.", "b_amortization_calculator": "Kostenlos · Finanzen", "t_investment_calculator": "Investitionsrechner", "d_investment_calculator": "Anlagewachstum mit regelmäßigen Einzahlungen.", "b_investment_calculator": "Kostenlos · Finanzen", "t_inflation_calculator": "Inflationsrechner", "d_inflation_calculator": "Kaufkraftverlust durch Inflation über die Zeit.", "b_inflation_calculator": "Kostenlos · Finanzen", "t_finance_calculator": "Finanzrechner", "d_finance_calculator": "Zeitwert des Geldes: BW, EW, Rate, Zins oder Perioden.", "b_finance_calculator": "Kostenlos · Finanzen", "t_income_tax_calculator": "Einkommensteuer", "d_income_tax_calculator": "Vereinfachte US-Bundeseinkommensteuer (ledig).", "b_income_tax_calculator": "Kostenlos · Finanzen", "t_compound_interest_calculator": "Zinseszins", "d_compound_interest_calculator": "Zinseszins mit Startkapital und Einzahlungen.", "b_compound_interest_calculator": "Kostenlos · Finanzen", "t_salary_calculator": "Gehaltsrechner", "d_salary_calculator": "Gehalt zwischen Stunde, Monat und Jahr umrechnen.", "b_salary_calculator": "Kostenlos · Finanzen", "t_interest_rate_calculator": "Zinssatz-Rechner", "d_interest_rate_calculator": "Zinssatz aus Betrag, Rate und Laufzeit.", "b_interest_rate_calculator": "Kostenlos · Finanzen", "t_sales_tax_calculator": "Umsatzsteuer", "d_sales_tax_calculator": "Umsatzsteuer zu einem Preis hinzufügen oder entfernen.", "b_sales_tax_calculator": "Kostenlos · Finanzen", "t_stopwatch": "Stoppuhr", "d_stopwatch": "Stoppuhr mit Runden und Zwischenzeiten.", "b_stopwatch": "Kostenlos · Zeit", "t_timer": "Timer", "d_timer": "Countdown mit Vorgaben und Alarm.", "b_timer": "Kostenlos · Zeit", "t_character_counter": "Zeichenzähler", "d_character_counter": "Zeichen, Wörter, Sätze, Absätze und Lesezeit zählen.", "b_character_counter": "Kostenlos · Schreiben", "t_due_date_calculator": "Geburtstermin", "d_due_date_calculator": "Geburtstermin aus dem ersten Tag der letzten Periode.", "b_due_date_calculator": "Kostenlos · Gesundheit", "t_convertflow": "ConvertFlow", "d_convertflow": "Dateien zwischen 900+ Formaten konvertieren — Bilder, Video, Audio, Dokumente und mehr. Bis 2 GB."}, "zh": {"nav_tools": "工具", "nav_contact": "联系", "hero_badge": "免费在线工具", "hero_title": "实用的网页小<span class=\"accent\">工具</span>。", "hero_sub": "一组免费、简单的日常工具。无需注册，无广告，即开即用。", "feat_fast_t": "快速转换", "feat_fast_d": "处理迅速", "feat_priv_t": "注重隐私", "feat_priv_d": "安全处理", "feat_lim_t": "无套路限制", "feat_lim_d": "慷慨免费额度", "feat_acc_t": "无需账户", "feat_acc_d": "直接使用", "section_tools": "工具", "view_all": "查看全部", "open": "打开", "donate_msg": "这些工具完全免费，无广告、无需注册。如果帮到了你，欢迎小额支持。", "donate": "捐赠", "donate_note": "安全 · 无需账户", "catalog": "目录", "all_tools": "全部工具", "catalog_sub": "搜索并打开任意免费工具 — 转换器、计算器、计时器等。", "search_ph": "搜索工具…", "tools_count": "个工具", "no_match": "没有匹配的工具。", "footer": "免费工具，无广告", "t_index": "ConvertFlow", "d_index": "Convert files between 900+ formats — images, video, audio, documents, archives, ebooks, and more. Up to 2 GB.", "b_index": "免费 · 900+ 格式", "t_calculator": "计算器", "d_calculator": "科学计算器：三角、对数、幂、根、常数与记忆功能。", "b_calculator": "免费 · 科学计算", "t_number_converter": "进制转换", "d_number_converter": "在二进制、八进制、十进制、十六进制等进制之间转换。", "b_number_converter": "免费 · 进制", "t_age_converter": "年龄计算", "d_age_converter": "根据出生日期计算精确年龄（年、月、日、时、分）。", "b_age_converter": "免费 · 精确年龄", "t_distance_converter": "距离换算", "d_distance_converter": "英里、公里、米、英尺、码、英寸等长度换算。", "b_distance_converter": "免费 · 长度", "t_weight_converter": "重量换算", "d_weight_converter": "千克、磅、盎司、克、英石、吨等质量换算。", "b_weight_converter": "免费 · 质量", "t_gpa_calculator": "GPA计算器", "d_gpa_calculator": "根据成绩与学分计算 GPA（4.0 分制）。", "b_gpa_calculator": "免费 · 学业", "t_grade_calculator": "成绩计算器", "d_grade_calculator": "计算期末考试需要多少分才能达到目标成绩。", "b_grade_calculator": "免费 · 学业", "t_concrete_calculator": "混凝土计算", "d_concrete_calculator": "估算楼板与柱的混凝土体积（立方码或立方米）。", "b_concrete_calculator": "免费 · 建筑", "t_subnet_calculator": "子网计算", "d_subnet_calculator": "根据 IP/CIDR 计算网络地址、广播、掩码与主机范围。", "b_subnet_calculator": "免费 · 网络", "t_password_generator": "密码生成器", "d_password_generator": "按长度与字符集生成强密码。", "b_password_generator": "免费 · 安全", "t_bmi_calculator": "BMI计算器", "d_bmi_calculator": "根据身高体重计算身体质量指数。", "b_bmi_calculator": "免费 · 健康", "t_calorie_calculator": "卡路里计算", "d_calorie_calculator": "用 Mifflin-St Jeor 公式估算每日热量需求。", "b_calorie_calculator": "免费 · 健康", "t_body_fat_calculator": "体脂计算", "d_body_fat_calculator": "用美国海军方法估算体脂率。", "b_body_fat_calculator": "免费 · 健康", "t_bmr_calculator": "基础代谢", "d_bmr_calculator": "计算基础代谢率（Mifflin-St Jeor 或 Harris-Benedict）。", "b_bmr_calculator": "免费 · 健康", "t_ideal_weight_calculator": "理想体重", "d_ideal_weight_calculator": "用多种公式估算理想体重。", "b_ideal_weight_calculator": "免费 · 健康", "t_pace_calculator": "配速计算", "d_pace_calculator": "配速、速度、时间与距离互算。", "b_pace_calculator": "免费 · 健身", "t_mortgage_calculator": "房贷计算", "d_mortgage_calculator": "估算房贷月供与总利息。", "b_mortgage_calculator": "免费 · 财务", "t_loan_calculator": "贷款计算", "d_loan_calculator": "根据本金、利率与期限计算贷款月供。", "b_loan_calculator": "免费 · 财务", "t_auto_loan_calculator": "车贷计算", "d_auto_loan_calculator": "含首付与置换的车贷月供估算。", "b_auto_loan_calculator": "免费 · 财务", "t_interest_calculator": "利息计算", "d_interest_calculator": "任意本金与利率的单利与复利。", "b_interest_calculator": "免费 · 财务", "t_payment_calculator": "还款计算", "d_payment_calculator": "在指定期限内还清余额所需的每期付款。", "b_payment_calculator": "免费 · 财务", "t_retirement_calculator": "退休储蓄", "d_retirement_calculator": "根据缴费与复利增长预测退休储蓄。", "b_retirement_calculator": "免费 · 财务", "t_amortization_calculator": "摊销表", "d_amortization_calculator": "本金与利息明细的摊销表。", "b_amortization_calculator": "免费 · 财务", "t_investment_calculator": "投资计算", "d_investment_calculator": "定期投入下的投资增长预测。", "b_investment_calculator": "免费 · 财务", "t_inflation_calculator": "通胀计算", "d_inflation_calculator": "通胀如何随时间侵蚀购买力。", "b_inflation_calculator": "免费 · 财务", "t_finance_calculator": "财务计算", "d_finance_calculator": "货币时间价值：现值、终值、付款、利率或期数。", "b_finance_calculator": "免费 · 财务", "t_income_tax_calculator": "所得税", "d_income_tax_calculator": "简化的美国联邦所得税估算（单身）。", "b_income_tax_calculator": "免费 · 财务", "t_compound_interest_calculator": "复利计算", "d_compound_interest_calculator": "含初始余额与供款的复利计算。", "b_compound_interest_calculator": "免费 · 财务", "t_salary_calculator": "薪资换算", "d_salary_calculator": "时薪、月薪与年薪互算。", "b_salary_calculator": "免费 · 财务", "t_interest_rate_calculator": "利率计算", "d_interest_rate_calculator": "根据本金、付款与期限反算利率。", "b_interest_rate_calculator": "免费 · 财务", "t_sales_tax_calculator": "销售税", "d_sales_tax_calculator": "为价格加减销售税。", "b_sales_tax_calculator": "免费 · 财务", "t_stopwatch": "秒表", "d_stopwatch": "带圈速与分段的高级秒表。", "b_stopwatch": "免费 · 时间", "t_timer": "倒计时", "d_timer": "带预设与提醒的倒计时。", "b_timer": "免费 · 时间", "t_character_counter": "字符统计", "d_character_counter": "统计字符、词、句、段与阅读时间。", "b_character_counter": "免费 · 写作", "t_due_date_calculator": "预产期计算", "d_due_date_calculator": "根据末次月经计算预产期。", "b_due_date_calculator": "免费 · 健康", "t_convertflow": "ConvertFlow", "d_convertflow": "在 900+ 种格式之间转换文件——图片、视频、音频、文档等。最大 2 GB。"}, "ja": {"nav_tools": "ツール", "nav_contact": "お問い合わせ", "hero_badge": "無料オンラインツール", "hero_title": "ウェブのための便利な小さな<span class=\"accent\">ガジェット</span>。", "hero_sub": "日常向けの無料・シンプルなツール集。登録不要。広告なし。すぐに使えます。", "feat_fast_t": "高速変換", "feat_fast_d": "素早い処理", "feat_priv_t": "プライバシー重視", "feat_priv_d": "安全に処理", "feat_lim_t": "制限の罠なし", "feat_lim_d": "十分な無料枠", "feat_acc_t": "アカウント不要", "feat_acc_d": "すぐ使える", "section_tools": "ツール", "view_all": "すべて見る", "open": "開く", "donate_msg": "これらのツールは無料で、広告も登録もありません。役立った場合はご支援いただけると助かります。", "donate": "寄付する", "donate_note": "安全 · アカウント不要", "catalog": "カタログ", "all_tools": "すべてのツール", "catalog_sub": "無料ガジェットを検索して開く — 変換、電卓、タイマーなど。", "search_ph": "ツールを検索…", "tools_count": "ツール", "no_match": "一致するツールがありません。", "footer": "無料ツール、広告なし", "t_index": "ConvertFlow", "d_index": "Convert files between 900+ formats — images, video, audio, documents, archives, ebooks, and more. Up to 2 GB.", "b_index": "無料 · 900+形式", "t_calculator": "電卓", "d_calculator": "三角関数・対数・累乗・根・定数・メモリ付き関数電卓。", "b_calculator": "無料 · 関数電卓", "t_number_converter": "進数変換", "d_number_converter": "2進・8進・10進・16進など進数の変換。", "b_number_converter": "無料 · 進数", "t_age_converter": "年齢計算", "d_age_converter": "生年月日から年・月・日・時・分の正確な年齢を計算。", "b_age_converter": "無料 · 正確な年齢", "t_distance_converter": "距離換算", "d_distance_converter": "マイル・キロ・メートル・フィート・ヤード・インチなど。", "b_distance_converter": "無料 · 長さ", "t_weight_converter": "重量換算", "d_weight_converter": "キロ・ポンド・オンス・グラム・ストーン・トンなど。", "b_weight_converter": "無料 · 質量", "t_gpa_calculator": "GPA計算", "d_gpa_calculator": "成績と単位からGPAを計算（4.0スケール）。", "b_gpa_calculator": "無料 · 学習", "t_grade_calculator": "成績計算", "d_grade_calculator": "目標成績に必要な期末試験の点数を算出。", "b_grade_calculator": "無料 · 学習", "t_concrete_calculator": "コンクリート計算", "d_concrete_calculator": "スラブや柱のコンクリート体積（yd³/m³）。", "b_concrete_calculator": "無料 · 建設", "t_subnet_calculator": "サブネット計算", "d_subnet_calculator": "IP/CIDRからネットワーク・ブロードキャスト・マスク・ホスト範囲。", "b_subnet_calculator": "無料 · ネットワーク", "t_password_generator": "パスワード生成", "d_password_generator": "長さと文字種を指定して強力なパスワードを生成。", "b_password_generator": "無料 · セキュリティ", "t_bmi_calculator": "BMI計算", "d_bmi_calculator": "身長と体重からBMIを計算。", "b_bmi_calculator": "無料 · 健康", "t_calorie_calculator": "カロリー計算", "d_calorie_calculator": "Mifflin-St Jeor式で1日の必要カロリーを推定。", "b_calorie_calculator": "無料 · 健康", "t_body_fat_calculator": "体脂肪計算", "d_body_fat_calculator": "米海軍方式で体脂肪率を推定。", "b_body_fat_calculator": "無料 · 健康", "t_bmr_calculator": "基礎代謝", "d_bmr_calculator": "基礎代謝量（Mifflin-St Jeor / Harris-Benedict）。", "b_bmr_calculator": "無料 · 健康", "t_ideal_weight_calculator": "理想体重", "d_ideal_weight_calculator": "複数の式で理想体重を推定。", "b_ideal_weight_calculator": "無料 · 健康", "t_pace_calculator": "ペース計算", "d_pace_calculator": "ペース・速度・時間・距離の変換。", "b_pace_calculator": "無料 · フィットネス", "t_mortgage_calculator": "住宅ローン", "d_mortgage_calculator": "住宅ローンの月々返済額と総利息。", "b_mortgage_calculator": "無料 · 金融", "t_loan_calculator": "ローン計算", "d_loan_calculator": "元金・金利・期間からローン返済額を計算。", "b_loan_calculator": "無料 · 金融", "t_auto_loan_calculator": "自動車ローン", "d_auto_loan_calculator": "頭金・下取り込みの自動車ローン。", "b_auto_loan_calculator": "無料 · 金融", "t_interest_calculator": "利息計算", "d_interest_calculator": "任意の元金・金利の単利と複利。", "b_interest_calculator": "無料 · 金融", "t_payment_calculator": "支払計算", "d_payment_calculator": "残高を期限内に返済する支払額。", "b_payment_calculator": "無料 · 金融", "t_retirement_calculator": "退職貯蓄", "d_retirement_calculator": "積立と複利成長による退職貯蓄の予測。", "b_retirement_calculator": "無料 · 金融", "t_amortization_calculator": "償却表", "d_amortization_calculator": "元金と利息の内訳付き返済表。", "b_amortization_calculator": "無料 · 金融", "t_investment_calculator": "投資計算", "d_investment_calculator": "定期積立での投資成長予測。", "b_investment_calculator": "無料 · 金融", "t_inflation_calculator": "インフレ計算", "d_inflation_calculator": "インフレによる購買力の目減り。", "b_inflation_calculator": "無料 · 金融", "t_finance_calculator": "ファイナンス", "d_finance_calculator": "貨幣の時間価値：PV・FV・PMT・金利・期間。", "b_finance_calculator": "無料 · 金融", "t_income_tax_calculator": "所得税", "d_income_tax_calculator": "米国連邦所得税の簡易見積（独身）。", "b_income_tax_calculator": "無料 · 金融", "t_compound_interest_calculator": "複利計算", "d_compound_interest_calculator": "元本と積立付きの複利計算。", "b_compound_interest_calculator": "無料 · 金融", "t_salary_calculator": "給与換算", "d_salary_calculator": "時給・月給・年収の換算。", "b_salary_calculator": "無料 · 金融", "t_interest_rate_calculator": "金利計算", "d_interest_rate_calculator": "元金・支払・期間から金利を逆算。", "b_interest_rate_calculator": "無料 · 金融", "t_sales_tax_calculator": "消費税", "d_sales_tax_calculator": "価格に消費税を加算／控除。", "b_sales_tax_calculator": "無料 · 金融", "t_stopwatch": "ストップウォッチ", "d_stopwatch": "ラップ・スプリット付きストップウォッチ。", "b_stopwatch": "無料 · 時間", "t_timer": "タイマー", "d_timer": "プリセットと通知付きカウントダウン。", "b_timer": "無料 · 時間", "t_character_counter": "文字数カウント", "d_character_counter": "文字・語・文・段落・読書時間をカウント。", "b_character_counter": "無料 · 文章", "t_due_date_calculator": "出産予定日", "d_due_date_calculator": "最終月経日から出産予定日を計算。", "b_due_date_calculator": "無料 · 健康", "t_convertflow": "ConvertFlow", "d_convertflow": "900以上の形式でファイル変換 — 画像・動画・音声・文書など。最大2GB。"}};
@@ -636,6 +518,5 @@
   });
 })();
 </script>
-
 </body>
 </html>
