@@ -285,18 +285,6 @@
       gap: 1rem; max-width: 400px; text-align: center;
     }
     .donate-msg { font-size: 0.82rem; color: var(--muted); line-height: 1.65; }
-    .donate-btn {
-      appearance: none;
-      -webkit-appearance: none;
-      font: inherit;
-      display: inline-flex; align-items: center; justify-content: center; gap: 0.55rem;
-      padding: 0.9rem 2.25rem;
-      background: linear-gradient(135deg, var(--accent2), var(--accent));
-      border: none; border-radius: 8px; color: #fff; text-decoration: none;
-      font-family: 'Syne', sans-serif; font-size: 1rem; font-weight: 700;
-    }
-    .donate-btn:hover { opacity: 0.92; }
-
     .donate-form {
       margin: 0;
       display: flex;
@@ -305,8 +293,26 @@
     .donate-btn {
       appearance: none;
       -webkit-appearance: none;
-      font: inherit;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.55rem;
+      padding: 0.9rem 2.25rem;
+      background: linear-gradient(135deg, var(--accent2), var(--accent));
+      border: none;
+      border-radius: 8px;
+      color: #fff;
+      text-decoration: none;
+      font-family: 'Syne', sans-serif;
+      font-size: 1rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
       cursor: pointer;
+    }
+    .donate-btn:hover { opacity: 0.92; }
+    .donate-btn span {
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
     }
 
     .donate-note { font-size: 0.68rem; color: var(--muted); }
