@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WeChat Donate — Web Gadgets</title>
+  <meta name="description" content="Support Web Gadgets via WeChat Pay. Scan the QR code to donate.">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230a0a0f'/%3E%3Cpath d='M12 32 L20 32 L26 48 L34 16 L42 40 L50 32 L52 32' fill='none' stroke='%2300e5ff' stroke-width='3.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3Ccircle cx='52' cy='32' r='4' fill='%2300e5ff'/%3E%3C/svg%3E">
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    :root{--bg:#0a0a0f;--surface:#12121a;--card:#1a1a26;--border:#2a2a3a;--accent:#00e5ff;--accent2:#7c3aed;--text:#e8e8f0;--muted:#6b6b88;--wechat:#07c160}
+    html,body{min-height:100%;background:var(--bg);color:var(--text);font-family:'DM Mono',monospace}
+    header{padding:1.15rem 2rem;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--border);background:rgba(10,10,15,.92);position:sticky;top:0;z-index:50}
+    .logo{display:flex;align-items:center;gap:.55rem;font-family:'Syne',sans-serif;font-weight:800;font-size:1.15rem;color:var(--text);text-decoration:none}
+    .logo span{color:var(--accent)}
+    .logo-mark{width:28px;height:28px;border-radius:7px;overflow:hidden;border:1px solid rgba(0,229,255,.25)}
+    .logo-mark svg{width:100%;height:100%;display:block}
+    nav a{color:var(--muted);font-size:.78rem;margin-left:1.1rem;text-decoration:none}
+    nav a:hover{color:var(--text)}
+    main{max-width:420px;margin:0 auto;padding:2.5rem 1.25rem 3.5rem;text-align:center}
+    .label{font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;color:var(--wechat);margin-bottom:.5rem}
+    h1{font-family:'Syne',sans-serif;font-weight:800;font-size:1.75rem;letter-spacing:-.03em;margin-bottom:.5rem}
+    .sub{font-size:.85rem;color:var(--muted);line-height:1.6;margin-bottom:1.75rem}
+    .qr-card{
+      background:var(--card);border:1px solid var(--border);border-radius:20px;
+      padding:1.25rem;display:inline-block;max-width:100%;
+      box-shadow:0 16px 48px rgba(7,193,96,.12);
+    }
+    .qr-card img{
+      width:min(100%,320px);height:auto;display:block;border-radius:12px;
+    }
+    .hint{margin-top:1.5rem;font-size:.78rem;color:var(--muted);line-height:1.6}
+    .hint strong{color:var(--text)}
+    .back{display:inline-block;margin-top:1.75rem;font-size:.8rem;color:var(--accent);text-decoration:none}
+    .back:hover{text-decoration:underline}
+    footer{border-top:1px solid var(--border);padding:1.25rem;text-align:center;font-size:.72rem;color:var(--muted)}
+    footer a{color:var(--muted);text-decoration:none;margin:0 .5rem}
+    footer a:hover{color:var(--accent)}
+  </style>
+</head>
+<body>
+  <header>
+    <a class="logo" href="index.html">
+      <div class="logo-mark"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect width="64" height="64" rx="14" fill="#0a0a0f"/><path d="M12 32 L20 32 L26 48 L34 16 L42 40 L50 32 L52 32" fill="none" stroke="#00e5ff" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/><circle cx="52" cy="32" r="4" fill="#00e5ff"/></svg></div>
+      Web<span>Gadgets</span>
+    </a>
+    <nav>
+      <a href="tools.html">Tools</a>
+      <a href="mailto:jaredwang107@gmail.com">Contact</a>
+    </nav>
+  </header>
+  <main>
+    <div class="label">Support</div>
+    <h1>WeChat Pay</h1>
+    <p class="sub">Scan the QR code with WeChat to send a donation. Thank you for supporting free tools.</p>
+    <div class="qr-card">
+      <img src="wechat-qr.jpg" alt="WeChat Pay QR code — 推荐使用微信支付" width="320" height="480">
+    </div>
+    <p class="hint">
+      <strong>How to pay:</strong> Open WeChat → Scan → Point at this QR code → Confirm payment.<br>
+      打开微信 → 扫一扫 → 扫描上方二维码完成支付。
+    </p>
+    <a class="back" href="index.html">← Back to home</a>
+  </main>
+  <footer>
+    <a href="privacy.html">Privacy</a>
+    <a href="terms.html">Terms</a>
+    <a href="mailto:jaredwang107@gmail.com">Contact</a>
+  </footer>
+</body>
+</html>
